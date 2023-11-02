@@ -7,6 +7,9 @@
 <title>로그인</title>
 </head>
 <body>
+	<!-- 메뉴 시작 -->
+	<jsp:include page="/inc/menubar.jsp"></jsp:include>
+	<!-- 메뉴 끝 -->
 	<h2>ㅇㅇ</h2>
 
 </body>
