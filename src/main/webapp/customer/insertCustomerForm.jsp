@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-   
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 	<style>
 	.msg {color : #FF0000;}
@@ -21,7 +22,31 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-</head>
+ <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Shop Homepage</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+    <!-- 메뉴 시작 -->
+	<jsp:include page="/inc/menubar.jsp"></jsp:include>
+	<!-- 메뉴 끝 -->
+        <!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Shop in style</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                </div>
+            </div>
+</header>
 <body>
 	<!-- 메뉴 시작 -->
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
@@ -109,7 +134,7 @@
 			   $('#idMsg').text('ID를 4자 이상 입력하세요')
 			   $('#id').focus();
 		   } else {
-			   $('#idMsg').html('')
+			   $('#idMsg').text('')
 			   $('#pw').focus();
 		   }
 	   });
@@ -121,7 +146,7 @@
 			   $('#pwMsg').text('PW를 4자 이상 입력하세요')
 			   $('#pw').focus();
 		   } else {
-			   $('#pwMsg').html('')
+			   $('#pwMsg').text('')
 			   $('#pwch').focus();
 		   }
 	   });
@@ -132,7 +157,7 @@
 			   $('#pwMsg').text('PW를 확인하세요')
 			   $('#pw').focus();
 		   } else {
-			   $('#pwMsg').html('')
+			   $('#pwMsg').text('')
 			   $('#name').focus();
 		   }
 	   });
@@ -143,19 +168,13 @@
 			   $('#nameMsg').text('이름을 입력하세요')
 			   $('#name').focus();
 		   } else {
-			   $('#nameMsg').html('')
+			   $('#nameMsg').text('')
 			   $('#birth').focus();
 		   }
 	   });
 
 
 </script>
-
-
-
-
-
-
 
 </body>
 </html>

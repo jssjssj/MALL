@@ -5,7 +5,7 @@ public class Customer {
 	private	String customerId;
 	private	String customerPw;
 	private	String createdate;
-	private	String updatdatre;
+	private	String updatedate;
 	private	String active;
 	public int getCustomerNo() {
 		return customerNo;
@@ -31,11 +31,11 @@ public class Customer {
 	public void setCreatedate(String createdate) {
 		this.createdate = createdate;
 	}
-	public String getUpdatdatre() {
-		return updatdatre;
+	public String getUpdatedate() {
+		return updatedate;
 	}
-	public void setUpdatdatre(String updatdatre) {
-		this.updatdatre = updatdatre;
+	public void setUpdatedate(String updatedate) {
+		this.updatedate = updatedate;
 	}
 	public String getActive() {
 		return active;
