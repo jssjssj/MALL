@@ -6,7 +6,7 @@ public class Cart {
 	private	int customerNo;
 	private	int quantity;
 	private	String createdate;
-	private	String updatadata;
+	private	String updatedate;
 	public int getCartNo() {
 		return cartNo;
 	}
@@ -38,10 +38,10 @@ public class Cart {
 		this.createdate = createdate;
 	}
 	public String getUpdatadata() {
-		return updatadata;
+		return updatedate;
 	}
-	public void setUpdatadata(String updatadata) {
-		this.updatadata = updatadata;
+	public void setUpdatadata(String updatedate) {
+		this.updatedate = updatedate;
 	}
 	
 }
