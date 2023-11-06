@@ -21,6 +21,8 @@
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/customer/insertCustomerForm.jsp">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="">About</a></li>                        
                 <li class="nav-item"><a class="nav-link" href="">AllGoods</a></li>
+                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/goods/insertGoodsForm.jsp">About</a></li>                        
+                <li class="nav-item"><a class="nav-link" href="">AllGoods</a></li> 
             </ul>
             <form class="d-flex">
                 <button class="btn btn-outline-dark" type="submit">

@@ -37,10 +37,18 @@ public class Cart {
 	public void setCreatedate(String createdate) {
 		this.createdate = createdate;
 	}
+<<<<<<< HEAD
 	public String getUpdatedate() {
+=======
+	public String getUpdatadata() {
+>>>>>>> branch 'master' of https://github.com/jssjssj/MALL.git
 		return updatedate;
 	}
+<<<<<<< HEAD
 	public void setUpdatadate(String updatedate) {
+=======
+	public void setUpdatadata(String updatedate) {
+>>>>>>> branch 'master' of https://github.com/jssjssj/MALL.git
 		this.updatedate = updatedate;
 	}
 	
