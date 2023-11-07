@@ -113,53 +113,58 @@ public class ManagerDao {
         }
     }
 
-    // 매니저 정보 삭제
+ // 매니저 정보 삭제
     public int deleteManager(String managerId) throws Exception {
-        // db연결
+    	//db 연결
         DBUtil dbUtil = new DBUtil();
         Connection conn = dbUtil.getConnection();
 
-        // 삭제 SQL
-        String sql = "DELETE FROM manager WHERE manager_id=?";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setString(1, managerId);
+        try {
+            String sql = "DELETE FROM manager WHERE manager_id=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, managerId);
 
-        int row = stmt.executeUpdate();
+            int row = stmt.executeUpdate();
 
-        if (row == 1) {
-            System.out.println("삭제 성공");
-        } else {
-            System.out.println("삭제 실패");
+            if (row == 1) {
+                System.out.println("삭제 성공");
+            } else {
+                System.out.println("삭제 실패");
+            }
+
+            return row;
+        } finally {
+            conn.close(); // 연결 닫기
         }
-        
-        return row;
     }
 
-    // 매니저 정보 조회
+
+ // 매니저 정보 조회
     public List<Manager> selectManager() throws Exception {
-        // db연결
         DBUtil dbUtil = new DBUtil();
         Connection conn = dbUtil.getConnection();
 
-        // 조회 SQL
-        String sql = "SELECT * FROM manager";
-        PreparedStatement stmt = conn.prepareStatement(sql);
+        try {
+            String sql = "SELECT * FROM manager";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            List<Manager> managers = new ArrayList<>();
 
-        ResultSet rs = stmt.executeQuery();
-        List<Manager> managers = new ArrayList<>();
+            while (rs.next()) {
+                Manager manager = new Manager();
+                manager.setManagerNo(rs.getInt("manager_no"));
+                manager.setManagerId(rs.getString("manager_id"));
+                manager.setManagerPw(rs.getString("manager_pw"));
+                manager.setManagerName(rs.getString("manager_name"));
+                manager.setCreatedate(rs.getString("createdate"));
+                manager.setUpdatedate(rs.getString("updatedate"));
+                manager.setActive(rs.getString("active"));
+                managers.add(manager);
+            }
 
-        while (rs.next()) {
-            Manager manager = new Manager();
-            manager.setManagerNo(rs.getInt("manager_no"));
-            manager.setManagerId(rs.getString("manager_id"));
-            manager.setManagerPw(rs.getString("manager_pw"));
-            manager.setManagerName(rs.getString("manager_name"));
-            manager.setCreatedate(rs.getString("createdate"));
-            manager.setUpdatedate(rs.getString("updatedate"));
-            manager.setActive(rs.getString("active"));
-            managers.add(manager);
+            return managers;
+        } finally {
+            conn.close(); // 연결 닫기
         }
-        
-        return managers;
     }
-}
+}    
