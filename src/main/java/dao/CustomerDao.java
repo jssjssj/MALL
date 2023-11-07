@@ -6,16 +6,19 @@ import java.sql.*;
 import util.DBUtil;
 import vo.Customer;
 
-	//insert
+	
 public class CustomerDao {
 	public int insertCustomer(Customer customer) throws Exception {
 		// DB연결
+		
+		
+		//insertAction
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
-		String sql = "INSERT INTO customer"
-						+ "(customer_id , customer_pw , createdate , updatedate , active)"
-						+ "VALUES (? , PASSWORD(?) , NOW() , NOW() , ?)";
-				
+		String sql = """
+				INSERT INTO customer(customer_id , customer_pw , createdate , updatedate , active)
+				VALUES (? , PASSWORD(?) , NOW() , NOW() , ?)
+				""";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		int row = 0;
 		stmt.setString(1, customer.getCustomerId());
@@ -29,7 +32,7 @@ public class CustomerDao {
 	}
 	
 
-	//delete
+	//deleteAction
 	public int deleteCustomer(int no) throws Exception {
 		int row = 0;
 		// DB연결
@@ -43,7 +46,7 @@ public class CustomerDao {
 		return row;		
 	}
 
-	//select
+	//select / updateForm
 	public Customer selectCustomerOne(int no) throws Exception {
 		Customer customer = null;
 		DBUtil dbUtil = new DBUtil();
@@ -62,7 +65,7 @@ public class CustomerDao {
 		return customer;
 	}
 	
-	//update
+	//updateAction
 	public int updateCustomer(Customer customer) throws Exception {
 		int row = 0;
 		// DB연결
@@ -77,7 +80,6 @@ public class CustomerDao {
 		return row;		
 	}
 }
-
 
 
 
