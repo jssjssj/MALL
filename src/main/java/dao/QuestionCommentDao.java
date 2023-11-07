@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.DBUtil;
-import vo.Question;
+import vo.QuestionComment;
 
-public class QuestionDao {
-    // 문의사항 추가
-    public int insertQuestion(Question insertQuestion) throws Exception {
+public class QuestionCommentDao {
+    // 문의사항 댓글 추가
+    public int insertQuestionComment(QuestionComment insertQuestionComment) throws Exception {
         Connection conn = null;
         PreparedStatement stmt = null;
 
@@ -20,21 +20,20 @@ public class QuestionDao {
             conn = dbUtil.getConnection();
 
             // 입력(insert) SQL
-            String sql = "INSERT INTO question"
-                + "(goods_no, customer_no, question_title, question_content, createdate, updatedate) "
-                + "VALUES(?, ?, ?, ?, now(), now())";
+            String sql = "INSERT INTO questionComment"
+                + "(question_no, manager_no, comment, createdate, updatedate) "
+                + "VALUES(?, ?, ?, now(), now())";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, insertQuestion.getGoodsNo());
-            stmt.setInt(2, insertQuestion.getCustomerNo());
-            stmt.setString(3, insertQuestion.getQuestionTitle());
-            stmt.setString(4, insertQuestion.getQuestionContent());
+            stmt.setInt(1, insertQuestionComment.getQuestionNo());
+            stmt.setInt(2, insertQuestionComment.getManagerNo());
+            stmt.setString(3, insertQuestionComment.getComment());
 
             int row = stmt.executeUpdate();
 
             if (row == 1) {
-                System.out.println("문의사항 생성 성공");
+                System.out.println("문의사항 댓글 생성 성공");
             } else {
-                System.out.println("문의사항 생성 실패");
+                System.out.println("문의사항 댓글 생성 실패");
             }
 
             return row;
@@ -51,8 +50,8 @@ public class QuestionDao {
         }
     }
 
-    // 문의사항 정보 업데이트
-    public int updateQuestion(Question updateQuestion) throws Exception {
+    // 문의사항 댓글 정보 업데이트 (수정)
+    public int updateQuestionComment(QuestionComment updateQuestionComment) throws Exception {
         Connection conn = null;
         PreparedStatement stmt = null;
 
@@ -61,20 +60,17 @@ public class QuestionDao {
             conn = dbUtil.getConnection();
 
             // 업데이트 SQL
-            String sql = "UPDATE question SET question_title=?,"
-                + " question_content=?, updatedate=now() "
-                + "WHERE questionNO=?";
+            String sql = "UPDATE questionComment SET comment=?, updatedate=now() WHERE questionCommentNo=?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, updateQuestion.getQuestionTitle());
-            stmt.setString(2, updateQuestion.getQuestionContent());
-            stmt.setInt(3, updateQuestion.getQuestionNO());
+            stmt.setString(1, updateQuestionComment.getComment());
+            stmt.setInt(2, updateQuestionComment.getQuestionCommentNo());
 
             int row = stmt.executeUpdate();
 
             if (row == 1) {
-                System.out.println("문의사항 업데이트 성공");
+                System.out.println("문의사항 댓글 업데이트 성공");
             } else {
-                System.out.println("문의사항 업데이트 실패");
+                System.out.println("문의사항 댓글 업데이트 실패");
             }
 
             return row;
@@ -91,8 +87,8 @@ public class QuestionDao {
         }
     }
 
-    // 문의사항 정보 삭제
-    public int deleteQuestion(int questionNO) throws Exception {
+    // 문의사항 댓글 정보 삭제
+    public int deleteQuestionComment(int questionCommentNo, int managerNo) throws Exception {
         Connection conn = null;
         PreparedStatement stmt = null;
 
@@ -100,17 +96,18 @@ public class QuestionDao {
             DBUtil dbUtil = new DBUtil();
             conn = dbUtil.getConnection();
 
-            // 삭제 SQL
-            String sql = "DELETE FROM question WHERE questionNO=?";
+            // 삭제 SQL - managerNo를 확인하여 삭제 권한을 부여
+            String sql = "DELETE FROM questionComment WHERE questionCommentNo=? AND manager_no=?";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, questionNO);
+            stmt.setInt(1, questionCommentNo);
+            stmt.setInt(2, managerNo);
 
             int row = stmt.executeUpdate();
 
             if (row == 1) {
-                System.out.println("문의사항 삭제 성공");
+                System.out.println("문의사항 댓글 삭제 성공");
             } else {
-                System.out.println("문의사항 삭제 실패");
+                System.out.println("문의사항 댓글 삭제 실패");
             }
 
             return row;
@@ -127,8 +124,8 @@ public class QuestionDao {
         }
     }
 
-    // 문의사항 정보 조회
-    public List<Question> selectQuestion() throws Exception {
+    // 문의사항 댓글 정보 조회
+    public List<QuestionComment> selectQuestionComments(int questionNo) throws Exception {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -138,25 +135,25 @@ public class QuestionDao {
             conn = dbUtil.getConnection();
 
             // 조회 SQL
-            String sql = "SELECT * FROM question";
+            String sql = "SELECT * FROM questionComment WHERE question_no=?";
             stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, questionNo);
             rs = stmt.executeQuery();
 
-            List<Question> questionList = new ArrayList<>();
+            List<QuestionComment> questionCommentList = new ArrayList<>();
 
             while (rs.next()) {
-                Question question = new Question();
-                question.setQuestionNO(rs.getInt("questionNO"));
-                question.setGoodsNo(rs.getInt("goods_no"));
-                question.setCustomerNo(rs.getInt("customer_no"));
-                question.setQuestionTitle(rs.getString("question_title"));
-                question.setQuestionContent(rs.getString("question_content"));
-                question.setCreatedate(rs.getString("createdate"));
-                question.setUpdatedate(rs.getString("updatedate"));
-                questionList.add(question);
+                QuestionComment questionComment = new QuestionComment();
+                questionComment.setQuestionCommentNo(rs.getInt("questionCommentNo"));
+                questionComment.setQuestionNo(rs.getInt("question_no"));
+                questionComment.setManagerNo(rs.getInt("manager_no"));
+                questionComment.setComment(rs.getString("comment"));
+                questionComment.setCreatedate(rs.getString("createdate"));
+                questionComment.setUpdatedate(rs.getString("updatedate"));
+                questionCommentList.add(questionComment);
             }
 
-            return questionList;
+            return questionCommentList;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
