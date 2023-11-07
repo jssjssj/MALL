@@ -8,7 +8,7 @@
 	<!-- Bootstrap icons-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 	<!-- Core theme CSS (includes Bootstrap)-->
-	<link href="css/styles.css" rel="stylesheet" />    
+	<link href="http://localhost/mall/css/styles.css" rel="stylesheet" />    
 <!-- 메뉴 네비게이션-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
@@ -18,7 +18,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="<%=request.getContextPath()%>/110011/index.jsp">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/customer/insertCustomerForm.jsp">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/customer/customerLogin.jsp">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/goods/goodsList.jsp">상품보기</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/question/insertQuestionForm.jsp">문의하기</a></li>                        
                 <li class="nav-item"><a class="nav-link" href="">개발중</a></li> 

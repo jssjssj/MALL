@@ -16,16 +16,13 @@ public class CustomerDao {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		String sql = """
-				INSERT INTO customer(customer_id , customer_pw , createdate , updatedate , active)
-				VALUES (? , PASSWORD(?) , NOW() , NOW() , ?)
+				INSERT INTO customer(customer_id , customer_pw , createdate , updatedate )
+				VALUES (? , PASSWORD(?) , NOW() , NOW() )
 				""";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		int row = 0;
 		stmt.setString(1, customer.getCustomerId());
 		stmt.setString(2, customer.getCustomerPw());
-		stmt.setString(3, customer.getCreatedate());
-		stmt.setString(4, customer.getUpdatedate());
-		stmt.setString(5, customer.getActive());
 		System.out.println(stmt + " <-- stmt insertCustomer()");
 		row = stmt.executeUpdate();
 		return row;		
@@ -38,7 +35,7 @@ public class CustomerDao {
 		// DB연결
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();		
-		String sql = "DELETE FROM customer a  WHERE customer_no = ?";
+		String sql = "DELETE FROM customer WHERE customer_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, no);
 		System.out.println(stmt + " <-- stmt deleteCustomer()");

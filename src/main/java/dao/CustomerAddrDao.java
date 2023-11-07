@@ -12,7 +12,7 @@ public class CustomerAddrDao {
 	
 	//updateForm
 
-	public Customer selectCustomerOne(int customerAddrNo) throws Exception {
+	public Customer selectCustomerAddrOne(int customerAddrNo) throws Exception {
 		Customer customer = null;
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();	
@@ -31,7 +31,7 @@ public class CustomerAddrDao {
 	
 	//updateAction
 	
-	public int updateCustomer(CustomerAddr customerAddr) throws Exception {
+	public int updateCustomerAddr(CustomerAddr customerAddr) throws Exception {
 		int row = 0;
 		// DB연결
 		DBUtil dbUtil = new DBUtil();
@@ -39,8 +39,7 @@ public class CustomerAddrDao {
 		String sql = "UPDATE customer_addr SET address = ? , updatedate = NOW() WHERE customer_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, customerAddr.getAddress());
-		stmt.setString(2, customerAddr.getUpdatedate());
-		stmt.setInt(3, customerAddr.getCustomerNo());
+		stmt.setInt(2, customerAddr.getCustomerNo());
 		System.out.println(stmt + " <-- stmt updateCustomer()");
 		row = stmt.executeUpdate();
 		return row;		
@@ -48,17 +47,16 @@ public class CustomerAddrDao {
 	
 	//insertAction
 	
-		public int insertCustomer(CustomerAddr customerAddr) throws Exception {
+		public int insertCustomerAddr(CustomerAddr customerAddr) throws Exception {
 			int row = 0;
 			// DB연결
 			DBUtil dbUtil = new DBUtil();
 			Connection conn = dbUtil.getConnection();		
-			String sql = "INSERT INTO customer_addr(customer_no , address , createdate , updatedate) VALUES (? , ? , NOW() , NOW())";
+			String sql = "INSERT INTO customer_addr"
+					+ "(customer_no ,address , createdate , updatedate) "
+					+ "VALUES (LAST_INSERT_ID(), ? , NOW() , NOW())";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, customerAddr.getCustomerNo());
-			stmt.setString(2, customerAddr.getAddress());
-			stmt.setString(3, customerAddr.getCreatedate());
-			stmt.setString(4, customerAddr.getUpdatedate());
+			stmt.setString(1, customerAddr.getAddress());
 			System.out.println(stmt + " <-- stmt insertCustomer()");
 			row = stmt.executeUpdate();
 			return row;		
