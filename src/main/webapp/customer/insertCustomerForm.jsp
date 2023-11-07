@@ -48,14 +48,14 @@
 <div class="outer">
   <div class="inner">
 	<h2>회원가입</h2>
-   <form id="signinForm" action="/js1219/signinAction.jsp">
+   <form method="post" id="signinForm" action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp">
       <table border="1">
             
          <!-- 아이디 -->
          <tr>
             <td>아이디</td>
             <td>
-               <input type="text" name="costomerId" id="id"> 
+               <input type="text" name="customerId" id="id"> 
                <span id="idMsg" class="msg"></span>
             </td>
          </tr>
@@ -67,46 +67,36 @@
             </td>
             <td>
                <div>
-                  <input type="password" name="costomerPw" id="pw">
+                  <input type="password" name="customerPw" id="pw">
                   <span id="pwMsg" class="msg"></span>
                </div>
                <div>
-                  <input type="password" name="costomerPwCk" id="pwck">
+                  <input type="password" name="customerPwCk" id="pwck">
                </div>
             </td>
          </tr>
-         <!-- 이름 -->
+         
          <tr>
             <td>이름</td>
             <td>
-               <input type="text" name="costomerName" id="name">
+               <input type="text" name="customerName" id="name">
                <span id="nameMsg" class="msg"></span>
             </td>
          </tr>
-                
-         <!-- 성별 -->
-         <tr>
-            <td>성별</td>
-            <td>
-               <input type="radio" name="gender" class="gender">남 
-               <input type="radio" name="gender" class="gender">여
-               <span id="genderMsg" class="msg"></span>
-            </td>   
-        </tr>
          
          <tr>
          	<td>주소</td>
-         	<td><input type="text" name="address"></td>
+         	<td><input type="text" id="address" name="address"></td>
          </tr>
-         
+       
          <tr>
-         	<td>전화번호</td>
-         	<td><input type="text" name="CustomerPhone" id="CustomerPhone"></td>
+        	<td>전화번호</td>
+         	<td><input type="text" id = "customerPhone" name="customerPhone" id="customerPhone"></td>
          </tr>
-        
+     
          
       </table>
-      <button type="button" id="signinBtn">회원가입</button>      
+      <button type="submit" id="signinBtn">가입하기</button>      
    </form>
   </div>
 </div>
@@ -157,6 +147,19 @@
 			   $('#birth').focus();
 		   }
 	   });
+		
+		$('#signinBtn').click(function() {
+			 if(($('#id').val().length < 0||
+				($('#pw').val().length < 0)||
+				($('#pwMsg').val().length < 0)||
+				($('#name').val().length < 0)||
+				($('#address').val().length < 0)||
+				($('#customerPhone').val().length < 0)
+				) {
+				 alert('필수입력사항을 확인하세요');
+				 return;
+			 }
+		});
 
 
 </script>

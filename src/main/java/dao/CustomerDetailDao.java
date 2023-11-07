@@ -28,7 +28,7 @@ public class CustomerDetailDao {
 	
 	//updateForm
 
-		public CustomerDetail selectCustomerOne(int customerNo) throws Exception {
+		public CustomerDetail selectCustomerDetailOne(int customerNo) throws Exception {
 			CustomerDetail customerDetail = null;
 			DBUtil dbUtil = new DBUtil();
 			Connection conn = dbUtil.getConnection();	
