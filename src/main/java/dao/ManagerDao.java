@@ -22,13 +22,19 @@ public class ManagerDao {
             conn.setAutoCommit(false);
 
             // 비밀번호를 managerPwHistory 테이블에 저장
-            String insertHistorySql = "INSERT INTO managerPwHistory(manager_no, manager_pw, createdate) VALUES(LAST_INSERT_ID(), ?, now())";
+            String insertHistorySql = """
+            							INSERT INTO managerPwHistory
+            							(manager_no, manager_pw, createdate)
+            							VALUES(LAST_INSERT_ID(), ?, now()) 
+            							""";
             PreparedStatement historyStmt = conn.prepareStatement(insertHistorySql);
             historyStmt.setString(1, insertManager.getManagerPw());
             historyStmt.executeUpdate();
 
             // 매니저 정보 추가
-            String insertSql = "INSERT INTO manager(manager_id, manager_pw, manager_name, createdate, updatedate, active) VALUES(?, ?, ?, now(), now(), ?)";
+            String insertSql = "INSERT INTO manager"
+			            		+ "(manager_id, manager_pw, manager_name, createdate, updatedate, active) "
+			            		+ "VALUES(?, ?, ?, now(), now(), ?)";
             PreparedStatement stmt = conn.prepareStatement(insertSql);
             stmt.setString(1, insertManager.getManagerId());
             stmt.setString(2, insertManager.getManagerPw());
@@ -67,14 +73,19 @@ public class ManagerDao {
             conn.setAutoCommit(false);
 
             // 이전 비밀번호를 managerPwHistory 테이블에 저장
-            String insertHistorySql = "INSERT INTO managerPwHistory(manager_no, manager_pw, createdate) VALUES((SELECT manager_no FROM manager WHERE manager_id=?), (SELECT manager_pw FROM manager WHERE manager_id=?), now())";
+            String insertHistorySql = "INSERT INTO managerPwHistory"
+				            		+ "(manager_no, manager_pw, createdate) "
+				            		+ "VALUES((SELECT manager_no FROM manager WHERE manager_id=?), "
+				            		+ "(SELECT manager_pw FROM manager WHERE manager_id=?), now())";
             PreparedStatement historyStmt = conn.prepareStatement(insertHistorySql);
             historyStmt.setString(1, updateManager.getManagerId());
             historyStmt.setString(2, updateManager.getManagerId());
             historyStmt.executeUpdate();
 
             // 매니저 비밀번호 업데이트
-            String updateSql = "UPDATE manager SET manager_pw=?, manager_name=?, updatedate=now(), active=? WHERE manager_id=?";
+            String updateSql = "UPDATE manager SET manager_pw=?, "
+			            		+ "manager_name=?, updatedate=now(), active=? "
+			            		+ "WHERE manager_id=?";
             PreparedStatement stmt = conn.prepareStatement(updateSql);
             stmt.setString(1, updateManager.getManagerPw());
             stmt.setString(2, updateManager.getManagerName());

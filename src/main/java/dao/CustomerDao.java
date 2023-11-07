@@ -12,10 +12,9 @@ public class CustomerDao {
 		// DB연결
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
-		String sql = """
-				INSERT INTO customer(customer_id , customer_pw , createdate , updatedate , active)
-				VALUES (? , PASSWORD(?) , NOW() , NOW() , ?)
-				""";
+		String sql = "INSERT INTO customer"
+						+ "(customer_id , customer_pw , createdate , updatedate , active)"
+						+ "VALUES (? , PASSWORD(?) , NOW() , NOW() , ?)";
 				
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		int row = 0;
@@ -28,6 +27,7 @@ public class CustomerDao {
 		row = stmt.executeUpdate();
 		return row;		
 	}
+	
 
 	//delete
 	public int deleteCustomer(int no) throws Exception {

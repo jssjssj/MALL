@@ -19,9 +19,7 @@
 	
 <meta charset="UTF-8">
 <title>MALL : 회원가입</title>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
  <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
@@ -39,27 +37,14 @@
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
 	<!-- 메뉴 끝 -->
         <!-- Header-->
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Shop in style</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
-                </div>
-            </div>
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Shop in style</h1>
+            <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+        </div>
+    </div>
 </header>
-<body>
-	<!-- 메뉴 시작 -->
-	<jsp:include page="/inc/menubar.jsp"></jsp:include>
-	<!-- 메뉴 끝 -->
-	<header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Shop in style</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
-                </div>
-            </div>
-        </header>
-        
 <div class="outer">
   <div class="inner">
 	<h2>회원가입</h2>
@@ -175,19 +160,5 @@
 
 
 </script>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-

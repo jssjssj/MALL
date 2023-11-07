@@ -8,15 +8,20 @@ import java.util.List;
 
 import util.DBUtil;
 import vo.Goods;
+import vo.GoodsImg;
 
 	public class GoodsDao {
+		// 굿즈 등록 수정 삭제 시 이미지 조회를 위해 public GoodsImg  goodsimg= new GoodsImg(); 사용
+		public GoodsImg  goodsimg= new GoodsImg(); 
 	    // 상품 추가
 	    public int insertGoods(Goods insertGoods) throws Exception {
 	        DBUtil dbUtil = new DBUtil();
 	        Connection conn = dbUtil.getConnection();
 
 	        // 입력(insert) SQL
-	        String sql = "INSERT INTO goods(goods_title, goods_price, soldout, goods_memo, createdate, updatedate) VALUES(?, ?, ?, ?, now(), now())";
+	        String sql = "INSERT INTO goods"
+			        		+ "(goods_title, goods_price, soldout, goods_memo, createdate, updatedate) "
+			        		+ "VALUES(?, ?, ?, ?, now(), now())";
 	        PreparedStatement stmt = conn.prepareStatement(sql);
 	        stmt.setString(1, insertGoods.getGoodsTitle());
 	        stmt.setInt(2, insertGoods.getGoodsPrice());
@@ -40,7 +45,9 @@ import vo.Goods;
 	        Connection conn = dbUtil.getConnection();
 
 	        // 업데이트 SQL
-	        String sql = "UPDATE goods SET goods_title=?, goods_price=?, soldout=?, goods_memo=?, updatedate=now() WHERE goods_no=?";
+	        String sql = "UPDATE goods SET goods_title=?, "
+			        		+ "goods_price=?, soldout=?, goods_memo=?, updatedate=now() "
+			        		+ "WHERE goods_no=?";
 	        PreparedStatement stmt = conn.prepareStatement(sql);
 	        stmt.setString(1, updateGoods.getGoodsTitle());
 	        stmt.setInt(2, updateGoods.getGoodsPrice());

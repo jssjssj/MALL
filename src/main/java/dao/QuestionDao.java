@@ -16,7 +16,9 @@ public class QuestionDao {
         Connection conn = dbUtil.getConnection();
 
         // 입력(insert) SQL
-        String sql = "INSERT INTO question(goods_no, customer_no, question_title, question_content, createdate, updatedate) VALUES(?, ?, ?, ?, now(), now())";
+        String sql = "INSERT INTO question"
+		        		+ "(goods_no, customer_no, question_title, question_content, createdate, updatedate) "
+		        		+ "VALUES(?, ?, ?, ?, now(), now())";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, insertQuestion.getGoodsNo());
         stmt.setInt(2, insertQuestion.getCustomerNo());
@@ -39,7 +41,9 @@ public class QuestionDao {
         Connection conn = dbUtil.getConnection();
 
         // 업데이트 SQL
-        String sql = "UPDATE question SET question_title=?, question_content=?, updatedate=now() WHERE questionNO=?";
+        String sql = "UPDATE question SET question_title=?,"
+		        		+ " question_content=?, updatedate=now() "
+		        		+ "WHERE questionNO=?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, updateQuestion.getQuestionTitle());
         stmt.setString(2, updateQuestion.getQuestionContent());
