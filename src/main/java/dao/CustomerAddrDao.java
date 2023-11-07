@@ -52,9 +52,9 @@ public class CustomerAddrDao {
 			// DB연결
 			DBUtil dbUtil = new DBUtil();
 			Connection conn = dbUtil.getConnection();		
-			String sql = "INSERT INTO customer_addr"
-					+ "(customer_no ,address , createdate , updatedate) "
-					+ "VALUES (LAST_INSERT_ID(), ? , NOW() , NOW())";
+			String sql = "INSERT INTO customer_addr("
+					+ "customer_no , address , createdate , updatedate) "
+					+ "VALUES (LAST_INSERT_ID() ,  ? , NOW() , NOW());";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, customerAddr.getAddress());
 			System.out.println(stmt + " <-- stmt insertCustomer()");
