@@ -1,15 +1,15 @@
 package vo;
 
-public class CustomePwHistory {
-	private	int customePwHistoryNo;
+public class CustomerPwHistory {
+	private	int customerPwHistoryNo;
 	private	int customerNo;
 	private	String customerPw;
 	private	String createdate;
-	public int getCustomePwHistoryNo() {
-		return customePwHistoryNo;
+	public int getCustomerPwHistoryNo() {
+		return customerPwHistoryNo;
 	}
-	public void setCustomePwHistoryNo(int customePwHistoryNo) {
-		this.customePwHistoryNo = customePwHistoryNo;
+	public void setCustomerPwHistoryNo(int customerPwHistoryNo) {
+		this.customerPwHistoryNo = customerPwHistoryNo;
 	}
 	public int getCustomerNo() {
 		return customerNo;
@@ -29,5 +29,4 @@ public class CustomePwHistory {
 	public void setCreatedate(String createdate) {
 		this.createdate = createdate;
 	}
-	
-}
+}	
