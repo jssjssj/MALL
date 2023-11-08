@@ -19,8 +19,6 @@ public class CustomerDetailDao {
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, customerDetail.getCustomerName());
 		stmt.setString(2, customerDetail.getCustomerPhone());
-		stmt.setString(3, customerDetail.getCreatedate());
-		stmt.setString(4, customerDetail.getUpdatedate());
 		System.out.println(stmt + " <-- stmt insertCustomerDetail()");
 		row = stmt.executeUpdate();
 		return row;		
@@ -60,8 +58,7 @@ public class CustomerDetailDao {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, customerDetail.getCustomerName());
 			stmt.setString(2, customerDetail.getCustomerPhone());
-			stmt.setString(3, customerDetail.getUpdatedate());
-			stmt.setInt(4, customerDetail.getCustomerNo());
+			stmt.setInt(3, customerDetail.getCustomerNo());
 			System.out.println(stmt + " <-- stmt updateCustomer()");
 			row = stmt.executeUpdate();
 			return row;		

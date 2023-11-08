@@ -5,7 +5,7 @@
 
 <head>
 	<style>
-	.msg {color : #FF0000;}
+	
 	.outer{position:relative;
 			width:100%;
 			height:100%;
@@ -45,123 +45,96 @@
         </div>
     </div>
 </header>
-<div class="outer">
-  <div class="inner">
-	<h2>회원가입</h2>
+
+	
    <form method="post" id="signinForm" action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp">
+   <div class="outer">
+  <div class="inner">
+  <fieldset>
+  <legend>회원가입</legend>
       <table border="1">
             
          <!-- 아이디 -->
          <tr>
-            <td>아이디</td>
+            <th>ID</th>
             <td>
-               <input type="text" name="customerId" id="id"> 
+               <input type="text" name="customerId" id="id" class="id"> 
                <span id="idMsg" class="msg"></span>
             </td>
          </tr>
          <!-- 비밀번호 -->
          <tr>
+            <th>PW</th>
             <td>
-               <div>비밀번호</div>
-               <div>비밀번호확인</div>
+               <input type="password" name="customerPw" id="pw" class="pw"> 
+               <span id="pwMsg" class="msg"></span>
             </td>
+         </tr>
+         
+          <tr>
+            <th>PW확인</th>
             <td>
-               <div>
-                  <input type="password" name="customerPw" id="pw">
-                  <span id="pwMsg" class="msg"></span>
-               </div>
-               <div>
-                  <input type="password" name="customerPwCk" id="pwck">
-               </div>
+               <input type="password" name="customerPwck" id="pwck" class="pwck"> 
+               <span id="pwckMsg" class="msg"></span>
             </td>
          </tr>
          
          <tr>
-            <td>이름</td>
-            <td>
-               <input type="text" name="customerName" id="name">
-               <span id="nameMsg" class="msg"></span>
+         	<td>
+               <button type="submit" id="signinBtn" >가입하기</button>
             </td>
          </tr>
          
-         <tr>
-         	<td>주소</td>
-         	<td><input type="text" id="address" name="address"></td>
-         </tr>
-       
-         <tr>
-        	<td>전화번호</td>
-         	<td><input type="text" id = "customerPhone" name="customerPhone" id="customerPhone"></td>
-         </tr>
-     
+         
          
       </table>
-      <button type="submit" id="signinBtn">가입하기</button>      
-   </form>
-  </div>
+    
+      
+      </fieldset>    
+        </div>
 </div>
+   </form>
+
 
 <script>
-	$('id').focus();
-	   // id폼 유효성체크
-	   $('#id').blur(function() {
-		   if($('#id').val().length < 4) {
-			   $('#idMsg').text('ID를 4자 이상 입력하세요')
-			   $('#id').focus();
-		   } else {
-			   $('#idMsg').text('')
-			   $('#pw').focus();
-		   }
-	   });
-	   
-	   
-		// pw폼 유효성체크
-		$('#pw').blur(function() {
-		   if($('#pw').val().length < 4) {
-			   $('#pwMsg').text('PW를 4자 이상 입력하세요')
-			   $('#pw').focus();
-		   } else {
-			   $('#pwMsg').text('')
-			   $('#pwch').focus();
-		   }
-	   });
-		
-		// pwck폼 유효성체크
-		$('#pwck').blur(function() {
-		   if($('#pw').val()!= $('#pwck').val()) {
-			   $('#pwMsg').text('PW를 확인하세요')
-			   $('#pw').focus();
-		   } else {
-			   $('#pwMsg').text('')
-			   $('#name').focus();
-		   }
-	   });
-		
-		// name폼 유효성체크
-		$('#name').blur(function() {
-		   if($('#name').val().length < 1) { // $('#name').val() == ''
-			   $('#nameMsg').text('이름을 입력하세요')
-			   $('#name').focus();
-		   } else {
-			   $('#nameMsg').text('')
-			   $('#birth').focus();
-		   }
-	   });
-		
-		$('#signinBtn').click(function() {
-			 if(($('#id').val().length < 0||
-				($('#pw').val().length < 0)||
-				($('#pwMsg').val().length < 0)||
-				($('#name').val().length < 0)||
-				($('#address').val().length < 0)||
-				($('#customerPhone').val().length < 0)
-				) {
-				 alert('필수입력사항을 확인하세요');
-				 return;
-			 }
-		});
+	
+	$('#id').keyup(function() {
+		if($('#id').val().length<4) {
+		$('#idMsg').text('ID는 4자 이상입니다.');
+	}	else{
+		$('#idMsg').text('');
+		}
+	});
+	
+	$('#pw').keyup(function() {
+		if($('#pw').val().length<4) {
+		$('#pwMsg').text('PW는 4자 이상입니다.');
+		} else {
+			$('#pwMsg').text('');	
+		}
+	});
+	
+	$('#pwck').keyup(function() {
+		if($('#pw').val()!=$('#pwck').val()){
+			$('#pwckMsg').text('PW와 일치하지 않습니다.');
+		} else {
+			$('#pwckMsg').text('PW와 일치합니다!');
+		}
+	})
+	
+	$('#signinBtn').click(function() {
+	 if ($('#id').val().length<4 || $('#pw').val().length<4 || $('#pw').val()!=$('#pwck').val()) {
+		 alert('ID , PW 필수조건을 확인하세요.')
+		 return;
+		 } else{
+			 alert('회원가입 성공 , 로그인 후 이용해주세요~');
+		$('#signinForm').submit();
+		 }
+	});
+	
 
-
-</script>
+	
+	
+	</script>
 </body>
 </html>

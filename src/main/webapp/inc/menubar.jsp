@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	String customerId = (String)(session.getAttribute("loginId"));
+%>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
@@ -17,16 +20,23 @@
         <div class="collapse navbar-collapse" id="http://localhost/mall/110011/loginForm.jsp">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="<%=request.getContextPath()%>/110011/index.jsp">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/customer/customerLogin.jsp">Login</a></li>
+                
+                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/customer/customerLoginForm.jsp">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/goods/goodsList.jsp">상품보기</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/question/insertQuestionForm.jsp">문의하기</a></li>                        
                 <li class="nav-item"><a class="nav-link" href="">개발중</a></li> 
             </ul>
+            <%
+	            if(customerId!=null) {
+	        %>	        
+            <div class="nav-link"><%=customerId%>님 반갑습니다.</div>
+            <%    	
+	            }
+            %>
 		     <form class="d-flex">
-		     <button onclick="location.href='<%=request.getContextPath()%>/cart/cartListForm.jsp'">
-		     test button
-		     </button >
+		     <a href="<%=request.getContextPath()%>/customer/customerOne.jsp">
+		     마이페이지
+		     </a>
 		         <button class="btn btn-outline-dark" type="submit" onclick="<%=request.getContextPath()%>/cart/cartListForm.jsp"> 
 		             <i class="bi-cart-fill me-1"></i>0.
 		             장바구니 보러가기 

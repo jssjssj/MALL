@@ -8,11 +8,9 @@ import vo.Customer;
 
 	
 public class CustomerDao {
+	//insertAction
 	public int insertCustomer(Customer customer) throws Exception {
-		// DB연결
-		
-		
-		//insertAction
+		// DB연결	
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		String sql = """
@@ -30,32 +28,32 @@ public class CustomerDao {
 	
 
 	//deleteAction
-	public int deleteCustomer(int no) throws Exception {
+	public int deleteCustomer(int customerNo) throws Exception {
 		int row = 0;
 		// DB연결
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();		
 		String sql = "DELETE FROM customer WHERE customer_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, no);
+		stmt.setInt(1, customerNo);
 		System.out.println(stmt + " <-- stmt deleteCustomer()");
 		row = stmt.executeUpdate();
 		return row;		
 	}
 
-	//select / updateForm
-	public Customer selectCustomerOne(int no) throws Exception {
+	// updateForm
+	public Customer selectCustomerOne(int customerNo) throws Exception {
 		Customer customer = null;
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();	
 		String sql = "SELECT customer_id, createdate , updatedate FROM customer WHERE customer_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, no);
+		stmt.setInt(1, customerNo);
 		System.out.println(stmt + " <-- stmt selectOne()");
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) {
 			customer = new Customer();
-			customer.setCustomerId(rs.getString("no"));
+			customer.setCustomerId(rs.getString("customerNo"));
 			customer.setCreatedate(rs.getString("createdate"));
 			customer.setUpdatedate(rs.getString("updatedate"));
 		}
@@ -76,6 +74,9 @@ public class CustomerDao {
 		row = stmt.executeUpdate();
 		return row;		
 	}
+	
+
+	
 }
 
 
