@@ -1,5 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLEncoder" %>
+<%
+	if(session.getAttribute("loginId")==null){
+		String msg3 = URLEncoder.encode("로그인 후 사용이 가능합니다!");
+		response.sendRedirect("http://localhost/mall/customer/customerLoginForm.jsp?msg3="+msg3);
+	}
+ %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,9 +22,9 @@
 <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body>
-	
 <!-- 메뉴 시작 -->
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
 <!-- 메뉴 끝 -->	
+<h3>장바구니~</h3>
 </body>
 </html>

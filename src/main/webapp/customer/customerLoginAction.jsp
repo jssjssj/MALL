@@ -19,11 +19,12 @@
 	stmt.setString(2, customerPw);
 	ResultSet rs = stmt.executeQuery();
 	if(rs.next()) { // 로그인 성공
+		
 		System.out.println("로그인 성공");
-		session.setAttribute("loginId", rs.getString("customerId"));
-		response.sendRedirect(request.getContextPath()+"110011/privateIndex.jsp");
+		session.setAttribute("loginId", customerId);
+		response.sendRedirect("http://localhost/mall/110011/index.jsp");
 	} else { // 로그인 실패
-		System.out.println("로그인 실패");
+		System.out.println("로그인 실패" + customerId + customerPw);
 		String msg = URLEncoder.encode("아이디와 비밀번호를 확인하세요");
 		response.sendRedirect("customerLoginForm.jsp?msg="+msg);	
 	}

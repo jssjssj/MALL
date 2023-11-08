@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%	
-	if(session.getAttribute("loginId")!=null){
-		response.sendRedirect(request.getContextPath()+"/110011/privateIndex.jsp");
-	}
+	
 	String msg1 = request.getParameter("msg1");
+	String msg2 = request.getParameter("msg2");
 %>
 
 

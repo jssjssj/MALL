@@ -5,9 +5,9 @@
    
 <%    
 // 비가입자 접근 불가기능 / 테스트 중 비활성화
-		/* if(session.getAttribute("loginId") == null) {
+		 if(session.getAttribute("loginId") == null) {
 		response.sendRedirect("customerLoginForm.jsp");
-			} */
+			} 
 		
 		String customerId = (String)(session.getAttribute("customerId"));
 
