@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 
@@ -123,14 +124,14 @@
 	})
 	
 	$('#signinBtn').click(function() {
-	 if ($('#id').val().length<4 || $('#pw').val().length<4 || $('#pw').val()!=$('#pwck').val()) {
-		 alert('ID , PW 필수조건을 확인하세요.')
-		 return;
-		 } else{
+		 if( ($('#id').val().length>=4) && ($('#pw').val().length>=4) && ($('#pw').val()==$('#pwck').val())  ) {
 			 alert('회원가입 성공 , 로그인 후 이용해주세요~');
-		$('#signinForm').submit();
-		 }
-	});
+				$('#signinForm').submit();
+			 } else{
+				 alert('ID , PW 조건을 확인해주세요');
+			$('#signinForm').submit();
+			 }
+		});
 	
 
 	

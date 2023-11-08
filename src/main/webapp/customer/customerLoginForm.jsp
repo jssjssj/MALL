@@ -3,8 +3,13 @@
 <%@ page import="java.net.URLEncoder"%>
 <%
 	String msg = request.getParameter("msg");
-%>
+	String msg3= request.getParameter("msg3");
 
+	if(session.getAttribute("loginId") != null) {
+		String msg2 = URLEncoder.encode("로그인 상태입니다!");
+		response.sendRedirect("http://localhost/mall/110011/index.jsp?msg2="+msg2);
+		}
+%>
 
 <!DOCTYPE html>
 <html>
@@ -46,6 +51,14 @@
   <div class="inner">
   
      <fieldset> 
+<%
+if(msg3 != null) {
+%>
+	<div class="msg"><%=msg3%></div>
+	
+<%
+}
+%>
 	<div>로그인</div>
 	
 <%
@@ -56,15 +69,16 @@ if(msg != null) {
 <%
 }
 %>
+
 		<table border="1" >
 			<tr>
-				<th>ID</th>  <th><input type="text" id="id"></th>
-				<td><span id="idMsg"></span></td>
+				<th>ID</th>  <th><input type="text" name="customerId" id="id"></th>
+				<td><span id="idMsg" ></span></td>
 			</tr>
 			
 			<tr>
-				<th>PW</th>  <th><input type="password" id="pw"></th>
-				<td><span id="pwMsg"></span></td>
+				<th>PW</th>  <th><input type="password" name="customerPw" id="pw"></th>
+				<td><span id="pwMsg" ></span></td>
 			</tr>
 			
 			<tr>
