@@ -1,35 +1,38 @@
-<%@page import="vo.*"%>
-<%@page import="dao.*"%>
-<%@page import="java.net.URLEncoder" %>
-<%@ page import="java.net.URLEncoder"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page import="vo.*" %>
+<%@ page import="dao.*" %>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 
-<% 
-	// 객체 값 넣기
-	String noticeTitle = request.getParameter("noticeTitle");
-	String noticeContent = request.getParameter("noticeContent");
-	
-	
-	// 지정
-	NoticeDao noticeDao = new NoticeDao(); 
-	Notice notice = new Notice();
-	
-	
-	notice.setNoticeTitle(noticeTitle);
-	notice.setNoticeContent(noticeContent);
-	
+<%
+// 매니저 세션 확인
+Manager loginManager = (Manager)session.getAttribute("loginManager");
+if (loginManager == null) {
+    // 매니저가 로그인되어 있지 않으면 로그인 페이지로 이동
+    response.sendRedirect(request.getContextPath() + "/manager/managerLoginForm.jsp");
+} else {
+    // 매니저가 로그인되어 있으면 공지사항 등록 처리
+    String noticeTitle = request.getParameter("noticeTitle");
+    String noticeContent = request.getParameter("noticeContent");
 
-	
-	int row1 = noticeDao.insertNotice(notice);
-	
-	
-	if(row1 == 1) {
-		System.out.println("공지사항 등록 완료.");
-		response.sendRedirect(request.getContextPath()+"/110011/index.jsp"
-		);
-	}
-	
+    // 객체 생성
+    Notice notice = new Notice();
+    NoticeDao noticeDao = new NoticeDao();
+
+    // 값 설정
+    notice.setNoticeTitle(noticeTitle);
+    notice.setNoticeContent(noticeContent);
+ 
+    // 공지사항 등록
+    int row = noticeDao.insertNotice(request, insertNotice);
+
+    if (row == 1) {
+        System.out.println("공지사항 등록 완료.");
+        response.sendRedirect(request.getContextPath() + "/110011/index.jsp");
+    } else {
+        out.println("공지사항 등록 실패.");
+    }
+}
 %>

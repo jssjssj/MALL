@@ -1,39 +1,52 @@
 package dao;
-import java.sql.*;
-import java.util.*;
-import util.DBUtil;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.http.*;
+
+import util.DBUtil;
+import vo.Manager;
 import vo.Notice;
 
 public class NoticeDao {
-    // 공지사항 추가
-    public int insertNotice(Notice insertNotice) throws Exception {
-        DBUtil dbUtil = new DBUtil();
-        Connection conn = dbUtil.getConnection();
+	// 공지사항 추가
+	public int insertNotice(HttpServletRequest request, Notice insertNotice) throws Exception {
+	    DBUtil dbUtil = new DBUtil();
+	    Connection conn = dbUtil.getConnection();
 
-        try {
-            // 입력(insert) SQL
-            String sql = "INSERT INTO notice"
-		            		+ "(manager_no, notice_title, notice_content, createdate, updatedate) "
-		            		+ "VALUES(?, ?, ?, now(), now())";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, insertNotice.getManagerNo());
-            stmt.setString(2, insertNotice.getNoticeTitle());
-            stmt.setString(3, insertNotice.getNoticeContent());
+	    try {
+	        // 매니저의 manager_no 가져오기
+	        HttpSession session = request.getSession();
+	        Manager loginManager = (Manager) session.getAttribute("loginManager");
+	        int managerNo = loginManager.getManagerNo();
 
-            int row = stmt.executeUpdate();
+	        // 입력(insert) SQL
+	        String sql = "INSERT INTO notice"
+	                     + "(manager_no, notice_title, notice_content, createdate, updatedate) "
+	                     + "VALUES(?, ?, ?, now(), now())";
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	        stmt.setInt(1, managerNo); // 매니저의 manager_no 설정
+	        stmt.setString(2, insertNotice.getNoticeTitle());
+	        stmt.setString(3, insertNotice.getNoticeContent());
 
-            if (row == 1) {
-                System.out.println("공지사항 생성 성공");
-            } else {
-                System.out.println("공지사항 생성 실패");
-            }
+	        int row = stmt.executeUpdate();
 
-            return row;
-        } finally {
-            conn.close(); // 연결 닫기
-        }
-    }
+	        if (row == 1) {
+	            System.out.println("공지사항 생성 성공");
+	        } else {
+	            System.out.println("공지사항 생성 실패");
+	        }
+
+	        return row;
+	    } finally {
+	        conn.close(); // 연결 닫기
+	    }
+	}
+
+
 
     // 공지사항 정보 업데이트
     public int updateNotice(Notice updateNotice) throws Exception {

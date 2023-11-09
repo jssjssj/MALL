@@ -146,6 +146,38 @@ public class ManagerDao {
         }
     }
 
+ // 매니저의 이전 비밀번호 목록 가져오기
+    public List<String> getManagerPasswordHistory(int managerNo) throws Exception {
+        DBUtil dbUtil = new DBUtil();
+        Connection conn = dbUtil.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT manager_pw FROM manager_pw_history WHERE manager_no = ? ORDER BY createdate DESC";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, managerNo);
+
+            rs = stmt.executeQuery();
+
+            List<String> passwordHistory = new ArrayList<>();
+            while (rs.next()) {
+                passwordHistory.add(rs.getString("manager_pw"));
+            }
+
+            return passwordHistory;
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
 
 
 
@@ -191,5 +223,34 @@ public class ManagerDao {
         manager.setActive((String) managerData.get("active"));
         return manager;
     }
+ // 매니저 아이디와 패스워드로 매니저 조회
+    public Manager getManagerByIdAndPassword(String managerId, String managerPw) throws Exception {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        DBUtil dbUtil = new DBUtil();
+        Connection conn = null;
+
+        try {
+            conn = dbUtil.getConnection(); // db 연결
+
+            String sql = "SELECT * FROM manager WHERE manager_id = ? AND manager_pw = PASSWORD(?)";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, managerId);
+            stmt.setString(2, managerPw);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Manager manager = new Manager();
+                manager.setManagerNo(rs.getInt("manager_no"));
+                manager.setManagerId(rs.getString("manager_id"));
+                return manager;
+            } else {
+                return null; // 매니저가 없음
+            }
+        } finally {
+            dbUtil.close(rs, stmt, conn); // DB 자원 닫기
+        }
+    }
+
 
 }    
