@@ -81,8 +81,32 @@
          </tr>
          
          <tr>
+            <th>이름</th>
+            <td>
+               <input type="text" name="customerName" id="name" class="name"> 
+               <span id="nameMsg" class="msg"></span>
+            </td>
+         </tr>
+         
+         <tr>
+            <th>주소</th>
+            <td>
+               <input type="text" name="address" id="address" class="address"> 
+               <span id="addressMsg" class="msg"></span>
+            </td>
+         </tr>
+         
+         <tr>
+            <th>전화번호</th>
+            <td>
+               <input type="text" name="customerPhone" id="tel" class="tel"> 
+               <span id="telMsg" class="msg"></span>
+            </td>
+         </tr>
+         
+         <tr>
          	<td>
-               <button type="submit" id="signinBtn" >가입하기</button>
+               <button type="button" id="signinBtn" >가입하기</button>
             </td>
          </tr>
          
@@ -121,15 +145,40 @@
 		} else {
 			$('#pwckMsg').text('PW와 일치합니다!');
 		}
-	})
+	});
+	
+	$('#name').keyup(function() {
+		if($('#name').val().length < 2){
+			$('#nameMsg').text('2글자 이상 입력해주세요.');
+		} else {
+			$('#nameMsg').text('');
+		}
+	});
+	
+	$('#address').keyup(function() {
+		if($('#address').val().length < 2){
+			$('#addressMsg').text('2글자 이상 입력해주세요.');
+		} else {
+			$('#addressMsg').text('');
+		}
+	});
+	
+	$('#tel').keyup(function() {
+		if($('#tel').val().length < 10){
+			$('#telMsg').text('10글자 이상 입력해주세요.');
+		} else {
+			$('#telMsg').text('');
+		}
+	});
 	
 	$('#signinBtn').click(function() {
-		 if( ($('#id').val().length>=4) && ($('#pw').val().length>=4) && ($('#pw').val()==$('#pwck').val())  ) {
+		 if( ($('#id').val().length>=4) && ($('#pw').val().length>=4) && ($('#pw').val()==$('#pwck').val()) 
+				 && ($('#name').val().length>=2) && ($('#tel').val().length>=10) && ($('#address').val().length>=2) ) {
 			 alert('회원가입 성공 , 로그인 후 이용해주세요~');
 				$('#signinForm').submit();
 			 } else{
 				 alert('ID , PW 조건을 확인해주세요');
-			$('#signinForm').submit();
+			return;
 			 }
 		});
 	
