@@ -10,7 +10,7 @@
 
 <% 
 	// 객체 값 넣기
-	
+	request.setCharacterEncoding("UTF-8");
 	String managerId = request.getParameter("managerId");
 	String managerPw = request.getParameter("managerPw");
 	String managerName = request.getParameter("managerName");

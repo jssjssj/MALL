@@ -1,17 +1,19 @@
-<<<<<<< HEAD
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-=======
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%	
 	
 	String msg1 = request.getParameter("msg1");
 	String msg2 = request.getParameter("msg2");
+	String msg4 = request.getParameter("msg4");
+	
 %>
-
-
-
->>>>>>> branch 'master' of https://github.com/jssjssj/MALL.git
+<%
+if (msg4 != null) {
+%>
+<div><%=msg4%></div>
+<%
+}
+%>
 <!DOCTYPE html>
 <html>
     <head>

@@ -12,7 +12,7 @@
 	<!-- Bootstrap icons-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 	<!-- Core theme CSS (includes Bootstrap)-->
-	<link href="http://localhost/mall/css/styles.css" rel="stylesheet" />    
+	<link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet" />    
 <!-- 메뉴 네비게이션-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
@@ -53,6 +53,6 @@
 		             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span> 
 		         </button>
 		     </form>
-        </div>
+        </div> 
     </div>
 </nav> 

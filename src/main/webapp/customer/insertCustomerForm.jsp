@@ -1,6 +1,9 @@
+<%@page import="org.eclipse.jdt.internal.compiler.parser.RecoveredRequiresStatement"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%String msg4= request.getParameter("msg4");
+String msg5= request.getParameter("msg5");
+%>
 <!DOCTYPE html>
 <html>
 
@@ -53,6 +56,12 @@
   <div class="inner">
   <fieldset>
   <legend>회원가입</legend>
+  	<% if(msg5 != null){
+  	%> 
+  		<div><%=msg5%></div>
+  		<%  
+  		}
+  	    %>
       <table border="1">
             
          <!-- 아이디 -->
@@ -174,7 +183,6 @@
 	$('#signinBtn').click(function() {
 		 if( ($('#id').val().length>=4) && ($('#pw').val().length>=4) && ($('#pw').val()==$('#pwck').val()) 
 				 && ($('#name').val().length>=2) && ($('#tel').val().length>=10) && ($('#address').val().length>=2) ) {
-			 alert('회원가입 성공 , 로그인 후 이용해주세요~');
 				$('#signinForm').submit();
 			 } else{
 				 alert('ID , PW 조건을 확인해주세요');

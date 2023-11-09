@@ -4,18 +4,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<style>
-	
-	.outer{position:relative;
-			width:100%;
-			height:100%;
-			font-size:25px;
-			margin:50;}
-	.inner{position: absolute;
-			transform; transate{50%,-50%};
-			left:50%;
-			top:50%;}
-	</style>
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
  <meta charset="utf-8" />
@@ -54,14 +42,15 @@
 						<!-- 제목 -->
 						<tr>
 							<th>제목</th>
-							<td><input type="text" name="noticeTitle" id="title"
+							<td><input type="text"  name="noticeTitle" id="title"
 								class="title"> <span id="titleMsg" class="msg"></span></td>
 						</tr>
 						<!-- 내용 -->
 						<tr>
 							<th>내용</th>
-							<td><input type="text" name="noticeContent" id="content"
-								class="content"> <span id="contentMsg" class="msg"></span>
+							<td><textarea cols="100	" rows="20" name="noticeContent" id="content"  class="content">
+							</textarea>
+							<span id="contentMsg" class="msg"></span>
 							</td>
 						</tr>
 
