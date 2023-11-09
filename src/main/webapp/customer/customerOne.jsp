@@ -56,7 +56,7 @@
 						</tr>	
 						
 					</table>
-					<button type="submit">정보수정</button>
+					<button type="submit">정보수정</button>					
 			</fieldset>
 		</div>
 	</form>

@@ -24,22 +24,37 @@
 						<table border="1" width="300" height="200">
 							<tr>
 								<th>ID</th>
-								<td></td>				
+								<td><input type="text" readonly="readonly" value="히히"></td>
+							</tr>
+							
+							<tr>
+								<th>현재PW</th>
+								<td><input type="password" name="customerPw"></td>	
+							</tr>
+							
+							<tr>
+								<th>변경PW</th>
+								<td><input type="password" name="newPw"></td>	
+							</tr>
+							
+							<tr>
+								<th>변경PW확인</th>
+								<td><input type="password" name="newPwck"></td>	
 							</tr>
 							
 							<tr>
 								<th>이름</th>
-								<td></td>	
+								<td><input type="text" value="히히"></td>	
 							</tr>
 							
 							<tr>
 								<th>주소</th>
-								<td></td>	
+								<td><input type="text" value="히히"></td>	
 							</tr>
 							
 							<tr>
 								<th>전화번호</th>
-								<td></td>	
+								<td><input type="text" value="히히"></td>	
 							</tr>
 								
 						</table>
