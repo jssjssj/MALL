@@ -21,5 +21,26 @@
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
 <!-- 메뉴 끝 -->
 	
+	<form method="get" action="insertQuestionAction.jsp">
+		<fieldset>
+			<h3>Q.A</h3>
+				<table border = "1"> <!-- ArrayList 예정 -->
+				 <tr>
+				 	<th>제목</th><!-- 제목 클릭 시 상세보기 및 답변으로 이동기능 예정 -->
+				 	<td>작성자ID</td>
+				 </tr>
+				 
+				 <tr>
+				 	<th>제목</th><!-- 제목 클릭 시 상세보기 및 답변으로 이동기능 예정 -->
+				 	<td>작성자ID</td>
+				 </tr>
+				 
+				 <tr>
+				 	<th>제목</th><!-- 제목 클릭 시 상세보기 및 답변으로 이동기능 예정 -->
+				 	<td>작성자ID</td>
+				 </tr>
+				</table>
+		</fieldset>	
+	</form>
 </body> 
 </html>

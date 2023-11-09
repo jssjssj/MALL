@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
-
 <head>
+<meta charset="UTF-8">
 	<style>
 	
 	.outer{position:relative;
@@ -17,15 +16,13 @@
 			left:50%;
 			top:50%;}
 	</style>
-	
-<meta charset="UTF-8">
-<title>MALL : 회원가입</title>
+<title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
  <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Shop Homepage</title>
+        <title>공지사항 수정</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -33,11 +30,12 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
     </head>
-    <body>
-    <!-- 메뉴 시작 -->
+<body>
+<!-- 메뉴 시작 -->
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
-	<!-- 메뉴 끝 -->
-        <!-- Header-->
+<!-- 메뉴 끝 -->
+
+<!-- Header-->
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
@@ -46,9 +44,7 @@
         </div>
     </div>
 </header>
-
-	
-   <form method="post" id="signinForm" action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp">
+<form method="post" id="signinForm" action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp">
    <div class="outer">
   <div class="inner">
   <fieldset>
@@ -57,7 +53,7 @@
             
          <!-- 아이디 -->
          <tr>
-            <th>ID</th>
+            <th>제목</th>
             <td>
                <input type="text" name="customerId" id="id" class="id"> 
                <span id="idMsg" class="msg"></span>
@@ -81,32 +77,8 @@
          </tr>
          
          <tr>
-            <th>이름</th>
-            <td>
-               <input type="text" name="customerName" id="name" class="name"> 
-               <span id="nameMsg" class="msg"></span>
-            </td>
-         </tr>
-         
-         <tr>
-            <th>주소</th>
-            <td>
-               <input type="text" name="address" id="address" class="address"> 
-               <span id="addressMsg" class="msg"></span>
-            </td>
-         </tr>
-         
-         <tr>
-            <th>전화번호</th>
-            <td>
-               <input type="text" name="customerPhone" id="tel" class="tel"> 
-               <span id="telMsg" class="msg"></span>
-            </td>
-         </tr>
-         
-         <tr>
          	<td>
-               <button type="button" id="signinBtn" >가입하기</button>
+               <button type="submit" id="signinBtn" >가입하기</button>
             </td>
          </tr>
          
@@ -145,42 +117,17 @@
 		} else {
 			$('#pwckMsg').text('PW와 일치합니다!');
 		}
-	});
-	
-	$('#name').keyup(function() {
-		if($('#name').val().length < 2){
-			$('#nameMsg').text('2글자 이상 입력해주세요.');
-		} else {
-			$('#nameMsg').text('');
-		}
-	});
-	
-	$('#address').keyup(function() {
-		if($('#address').val().length < 2){
-			$('#addressMsg').text('2글자 이상 입력해주세요.');
-		} else {
-			$('#addressMsg').text('');
-		}
-	});
-	
-	$('#tel').keyup(function() {
-		if($('#tel').val().length < 10){
-			$('#telMsg').text('10글자 이상 입력해주세요.');
-		} else {
-			$('#telMsg').text('');
-		}
-	});
+	})
 	
 	$('#signinBtn').click(function() {
-		 if( ($('#id').val().length>=4) && ($('#pw').val().length>=4) && ($('#pw').val()==$('#pwck').val()) 
-				 && ($('#name').val().length>=2) && ($('#tel').val().length>=10) && ($('#address').val().length>=2) ) {
+	 if ($('#id').val().length<4 || $('#pw').val().length<4 || $('#pw').val()!=$('#pwck').val()) {
+		 alert('ID , PW 필수조건을 확인하세요.')
+		 return;
+		 } else{
 			 alert('회원가입 성공 , 로그인 후 이용해주세요~');
-				$('#signinForm').submit();
-			 } else{
-				 alert('ID , PW 조건을 확인해주세요');
-			return;
-			 }
-		});
+		$('#signinForm').submit();
+		 }
+	});
 	
 
 	

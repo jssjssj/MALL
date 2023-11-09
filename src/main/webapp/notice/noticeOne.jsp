@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div>ㅠㅠ</div>
+
 </body>
 </html>

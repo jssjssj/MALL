@@ -19,7 +19,7 @@
 	</style>
 	
 <meta charset="UTF-8">
-<title>MALL : 회원가입</title>
+<title>관리자 계정 추가</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
  <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -48,18 +48,18 @@
 </header>
 
 	
-   <form method="post" id="signinForm" action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp">
+   <form method="post" id="signinForm" action="<%=request.getContextPath()%>/manager/insertManagerAction.jsp">
    <div class="outer">
   <div class="inner">
   <fieldset>
-  <legend>회원가입</legend>
+  <legend>admin 생성</legend>
       <table border="1">
             
          <!-- 아이디 -->
          <tr>
             <th>ID</th>
             <td>
-               <input type="text" name="customerId" id="id" class="id"> 
+               <input type="text" name="managerId" id="id" class="id"> 
                <span id="idMsg" class="msg"></span>
             </td>
          </tr>
@@ -67,7 +67,7 @@
          <tr>
             <th>PW</th>
             <td>
-               <input type="password" name="customerPw" id="pw" class="pw"> 
+               <input type="password" name="managerPw" id="pw" class="pw"> 
                <span id="pwMsg" class="msg"></span>
             </td>
          </tr>
@@ -75,46 +75,28 @@
           <tr>
             <th>PW확인</th>
             <td>
-               <input type="password" name="customerPwck" id="pwck" class="pwck"> 
+               <input type="password" name="managerPwck" id="pwck" class="pwck"> 
                <span id="pwckMsg" class="msg"></span>
             </td>
          </tr>
          
+          <!-- 이름 -->
          <tr>
             <th>이름</th>
             <td>
-               <input type="text" name="customerName" id="name" class="name"> 
+               <input type="text" name="managerName" id="name" class="name"> 
                <span id="nameMsg" class="msg"></span>
             </td>
          </tr>
          
          <tr>
-            <th>주소</th>
-            <td>
-               <input type="text" name="address" id="address" class="address"> 
-               <span id="addressMsg" class="msg"></span>
-            </td>
-         </tr>
-         
-         <tr>
-            <th>전화번호</th>
-            <td>
-               <input type="text" name="customerPhone" id="tel" class="tel"> 
-               <span id="telMsg" class="msg"></span>
-            </td>
-         </tr>
-         
-         <tr>
          	<td>
-               <button type="button" id="signinBtn" >가입하기</button>
+               <button type="button" id="signinBtn" >계정 생성</button>
             </td>
          </tr>
-         
-         
          
       </table>
     
-      
       </fieldset>    
         </div>
 </div>
@@ -145,46 +127,17 @@
 		} else {
 			$('#pwckMsg').text('PW와 일치합니다!');
 		}
-	});
-	
-	$('#name').keyup(function() {
-		if($('#name').val().length < 2){
-			$('#nameMsg').text('2글자 이상 입력해주세요.');
-		} else {
-			$('#nameMsg').text('');
-		}
-	});
-	
-	$('#address').keyup(function() {
-		if($('#address').val().length < 2){
-			$('#addressMsg').text('2글자 이상 입력해주세요.');
-		} else {
-			$('#addressMsg').text('');
-		}
-	});
-	
-	$('#tel').keyup(function() {
-		if($('#tel').val().length < 10){
-			$('#telMsg').text('10글자 이상 입력해주세요.');
-		} else {
-			$('#telMsg').text('');
-		}
-	});
+	})
 	
 	$('#signinBtn').click(function() {
-		 if( ($('#id').val().length>=4) && ($('#pw').val().length>=4) && ($('#pw').val()==$('#pwck').val()) 
-				 && ($('#name').val().length>=2) && ($('#tel').val().length>=10) && ($('#address').val().length>=2) ) {
-			 alert('회원가입 성공 , 로그인 후 이용해주세요~');
+		 if( ($('#id').val().length>=4) && ($('#pw').val().length>=4) && ($('#pw').val()==$('#pwck').val())  ) {
+			 alert('매니저 계정 생성 성공 ');
 				$('#signinForm').submit();
 			 } else{
 				 alert('ID , PW 조건을 확인해주세요');
-			return;
+			 	return;
 			 }
 		});
-	
-
-	
-	
 	</script>
 </body>
 </html>
