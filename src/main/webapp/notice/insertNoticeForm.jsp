@@ -44,7 +44,7 @@
         </div>
     </div>
 </header>
-	<form method="post" id="insertNoticeForm"
+	<form method="post" id="createNoticeForm"
 		action="<%=request.getContextPath()%>/notice/insertNoticeAction.jsp">
 		<div class="outer">
 			<div class="inner">
@@ -67,7 +67,7 @@
 
 						<tr>
 							<td>
-								<button type="submit" id="insertNoticeForm">등록하기</button>
+								<button type="submit" id="createBtn">등록하기</button>
 							</td>
 						</tr>
 					</table>
