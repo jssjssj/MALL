@@ -20,13 +20,14 @@ if (loginManager == null) {
     // 객체 생성
     Notice notice = new Notice();
     NoticeDao noticeDao = new NoticeDao();
+    
 
     // 값 설정
     notice.setNoticeTitle(noticeTitle);
     notice.setNoticeContent(noticeContent);
  
     // 공지사항 등록
-    int row = noticeDao.insertNotice(request, insertNotice);
+    int row = noticeDao.insertNotice(request, notice);
 
     if (row == 1) {
         System.out.println("공지사항 등록 완료.");
