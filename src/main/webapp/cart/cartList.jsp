@@ -25,6 +25,10 @@
 <!-- 메뉴 시작 -->
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
 <!-- 메뉴 끝 -->	
-<h3>장바구니~</h3>
+<h3>장바구니~</h3> 
+
+<!-- footer 시작 -->
+   <jsp:include page="/inc/footer.jsp"></jsp:include>
+<!-- footer 끝 -->
 </body>
 </html>

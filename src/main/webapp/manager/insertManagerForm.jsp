@@ -37,16 +37,6 @@
     <!-- 메뉴 시작 -->
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
 	<!-- 메뉴 끝 -->
-        <!-- Header-->
-<header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Shop in style</h1>
-            <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
-        </div>
-    </div>
-</header>
-
 	
    <form method="post" id="signinForm" action="<%=request.getContextPath()%>/manager/insertManagerAction.jsp">
    <div class="outer">
@@ -139,5 +129,9 @@
 			 }
 		});
 	</script>
+	
+<!-- footer 시작 -->
+   <jsp:include page="/inc/footer.jsp"></jsp:include>
+<!-- footer 끝 -->	
 </body>
 </html>

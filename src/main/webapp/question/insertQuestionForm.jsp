@@ -42,5 +42,9 @@
 				</table>
 		</fieldset>	
 	</form>
+	
+<!-- footer 시작 -->
+   <jsp:include page="/inc/footer.jsp"></jsp:include>
+<!-- footer 끝 -->	
 </body> 
 </html>

@@ -18,6 +18,10 @@
     </script>
 </head>
 <body>
+<!-- 메뉴 시작 -->
+	<jsp:include page="/inc/menubar.jsp"></jsp:include>
+<!-- 메뉴 끝 -->	
+
     <form name="passwordForm" action="updateManagerPasswordAction.jsp" method="post" onsubmit="return validateForm()">
         <%-- 매니저 세션 가져오기 --%>
         <% Manager loginManager = (Manager)session.getAttribute("loginManager"); %>
@@ -29,5 +33,10 @@
         확인 비밀번호: <input type="password" name="confirmPassword"><br>
         <input type="submit" value="비밀번호 수정">
     </form>
+    
+
+<!-- footer 시작 -->
+   <jsp:include page="/inc/footer.jsp"></jsp:include>
+<!-- footer 끝 -->    
 </body>
 </html>
