@@ -90,40 +90,83 @@ public class CustomerDao {
 	        return -1;
 	    }
 	}
+	
 
+	public Customer customerOne(String customerId) throws Exception {
+	    Customer customer = null;
+	    DBUtil dbUtil = new DBUtil();
 
-	// customerOne
-	public Customer selectCustomerOne(int customerNo) throws Exception {
-		Customer customer = null;
-		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();	
-		String sql = "SELECT customer_id, createdate , updatedate FROM customer WHERE customer_no = ?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, customerNo);
-		System.out.println(stmt + " <-- stmt selectOne()");
-		ResultSet rs = stmt.executeQuery();
-		if(rs.next()) {
-			customer = new Customer();
-			customer.setCustomerId(rs.getString("customerNo"));
-			customer.setCreatedate(rs.getString("createdate"));
-			customer.setUpdatedate(rs.getString("updatedate"));
-		}
-		return customer;
+	    try (Connection conn = dbUtil.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement("SELECT a.customer_no, a.customer_id, a.customer_pw, a.createdate, a.updatedate, a.active, "
+	                 + "b.address, c.customer_name, c.customer_phone FROM customer a "
+	                 + "INNER JOIN customer_addr b ON a.customer_no = b.customer_no "
+	                 + "INNER JOIN customer_detail c ON a.customer_no = c.customer_no "
+	                 + "WHERE a.customer_id = ?")) {
+	        stmt.setString(1, customerId);
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                customer = new Customer();
+	                CustomerAddr customerAddr = new CustomerAddr();
+	                CustomerDetail customerDetail = new CustomerDetail();
+
+	                customer.setCustomerNo(rs.getInt("customer_no"));
+	                customer.setCustomerId(rs.getString("customer_id"));
+	                customer.setCustomerPw(rs.getString("customer_pw"));
+	                customer.setCreatedate(rs.getString("createdate"));
+	                customer.setUpdatedate(rs.getString("updatedate"));
+	                customer.setActive(rs.getString("active"));
+	                customerDetail.setCustomerName(rs.getString("customer_name"));
+	                customerDetail.setCustomerPhone(rs.getString("customer_phone"));
+	                customerAddr.setAddress(rs.getString("address"));
+
+	                customer.setCustomerDetail(customerDetail);
+	                customer.setCustomerAddr(customerAddr);
+	            }
+	        }
+	    }
+
+	    return customer;
 	}
+	
+	
 	
 	// updateAction
 	public int updateCustomer(Customer customer) throws Exception {
-		int row = 0;
-		// DB연결
-		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();		
-		String sql = "UPDATE customer SET customer_pw = PASSWORD(?) WHERE customer_no = ?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, customer.getCustomerPw());
-		stmt.setInt(2, customer.getCustomerNo());
-		System.out.println(stmt + " <-- stmt updateCustomer()");
-		row = stmt.executeUpdate();
-		return row;		
+	    int row = 0;
+	    // DB연결
+	    DBUtil dbUtil = new DBUtil();
+	    Connection conn = dbUtil.getConnection();
+
+	    // 고객 정보 업데이트 쿼리
+	    String updateCustomerQuery = "UPDATE customer SET customer_pw = PASSWORD(?), createdate = NOW(), updatedate = NOW() WHERE customer_no = ?";
+	    try (PreparedStatement stmt = conn.prepareStatement(updateCustomerQuery)) {
+	        stmt.setString(1, customer.getCustomerPw());
+	        stmt.setInt(2, customer.getCustomerNo());
+	        System.out.println(stmt + " <-- stmt updateCustomer()");
+	        row = stmt.executeUpdate();
+	    }
+
+	    // 고객 상세 정보 업데이트 쿼리
+	    String updateCustomerDetailQuery = "UPDATE customer_detail SET customer_name = ?, customer_phone = ? WHERE customer_no = ?";
+	    try (PreparedStatement stmt = conn.prepareStatement(updateCustomerDetailQuery)) {
+	        stmt.setString(1, customer.getCustomerDetail().getCustomerName());
+	        stmt.setString(2, customer.getCustomerDetail().getCustomerPhone());
+	        stmt.setInt(3, customer.getCustomerNo());
+	        System.out.println(stmt + " <-- stmt updateCustomerDetail()");
+	        stmt.executeUpdate();
+	    }
+
+	    // 고객 주소 정보 업데이트 쿼리
+	    String updateCustomerAddrQuery = "UPDATE customer_addr SET address = ? WHERE customer_no = ?";
+	    try (PreparedStatement stmt = conn.prepareStatement(updateCustomerAddrQuery)) {
+	        stmt.setString(1, customer.getCustomerAddr().getAddress());
+	        stmt.setInt(2, customer.getCustomerNo());
+	        System.out.println(stmt + " <-- stmt updateCustomerAddr()");
+	        stmt.executeUpdate();
+	    }
+
+	    return row;
 	}
 	
 	public List<Customer> selectCustomer() throws Exception {
@@ -133,16 +176,21 @@ public class CustomerDao {
         try {
             String sql = "SELECT a.customer_no , a.customer_id , a.customer_pw , a.createdate , a.updatedate , a.active ,"
             		+ "b.address , c.customer_name , c.customer_phone FROM customer a INNER JOIN customer_addr b"
-            		+ "on a.customer_no = b.customer_no INNER JOIN a.customer_no = c.customer_no";
+            		+ "ON a.customer_no = b.customer_no INNER JOIN customer_detail c ON a.customer_no = c.customer_no";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             List<Customer> customers = new ArrayList<>();
 
             while (rs.next()) {
                 Customer customer = new Customer();
+                CustomerAddr customerAddr = new CustomerAddr();
+                CustomerDetail customerDetail = new CustomerDetail();
                 customer.setCustomerNo(rs.getInt("customer_no"));
                 customer.setCustomerId(rs.getString("customer_id"));
                 customer.setCustomerPw(rs.getString("customer_pw"));
+                customerDetail.setCustomerName(rs.getString("customer_name"));
+                customerDetail.setCustomerPhone(rs.getString("customer_phone"));
+                customerAddr.setAddress(rs.getString("address"));
                 customer.setCreatedate(rs.getString("createdate"));
                 customer.setUpdatedate(rs.getString("updatedate"));
                 customer.setActive(rs.getString("active"));

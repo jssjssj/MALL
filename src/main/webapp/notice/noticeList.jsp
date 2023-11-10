@@ -12,7 +12,7 @@
     <!-- 메뉴 시작 -->
     <jsp:include page="/inc/menubar.jsp"></jsp:include>
     <!-- 메뉴 끝 -->
-
+	
     <!-- 내용 시작 -->
     <div>
         <h1>공지사항 목록</h1>

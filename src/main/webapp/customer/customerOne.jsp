@@ -3,14 +3,24 @@
 <%@ page import="dao.*"%>
 <%@ page import="java.sql.*" %>
    
-<%    
-// 비가입자 접근 불가기능 / 테스트 중 비활성화
-		/*  if(session.getAttribute("loginId") == null) {
-		response.sendRedirect("customerLoginForm.jsp");
-			} 
-		
-		String customerId = (String)(session.getAttribute("customerId")); */	
+<%
+    CustomerDao customerDao = new CustomerDao();
+
+    // 기존 변수명인 customerId 사용
+    String customerId = (String)(session.getAttribute("loginId"));
+
+    // customerDao.customerOne 메서드에서 null을 반환하는 경우를 처리
+    Customer customer = customerDao.customerOne(customerId);
+    CustomerDetail customerDetail = null;
+    CustomerAddr customerAddr = null;
+
+    if (customer != null) {
+        customerDetail = customer.getCustomerDetail();
+        customerAddr = customer.getCustomerAddr();
+    }
 %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,37 +32,40 @@
 	}
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>마이페이지</title>
 </head>
 <body>
 <!-- 메뉴 시작 -->
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
 <!-- 메뉴 끝 -->
 
-	
-	<form method="post" action="updateCustomerForm.jsp">
+	<!-- customer가 null이 아닌 경우에만 속성에 접근 -->
+    <% 
+    	if (customer != null) { 
+    %>    
+    <form method="post" action="updateCustomerForm.jsp">
 		<div class="container">
 			<fieldset>
 				<legend>내정보</legend>
 					<table border="1" width="300" height="200">
 						<tr>
 							<th>ID</th>
-							<td></td>				
-						</tr>
+							<td><%=customer.getCustomerId()%></td>				
+						</tr> 
 						
 						<tr>
 							<th>이름</th>
-							<td></td>	
+							<td><%=customerDetail.getCustomerName()%></td>	
 						</tr>
 						
 						<tr>
 							<th>주소</th>
-							<td></td>	
+							<td><%=customerAddr.getAddress()%></td>	
 						</tr>
 						
 						<tr>
 							<th>전화번호</th>
-							<td></td>	
+							<td><%=customerDetail.getCustomerPhone()%></td>	
 						</tr>	
 						
 					</table>
@@ -60,8 +73,32 @@
 			</fieldset>
 		</div>
 	</form>
+	<%		
+    	} 
+     	else { %>
+        <p>상단 메뉴에서 로그인 후 조회해주세요!</p>
+        
+    <% 
+    	} 
+    %>
 <!-- footer 시작 -->
    <jsp:include page="/inc/footer.jsp"></jsp:include>
 <!-- footer 끝 -->	
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

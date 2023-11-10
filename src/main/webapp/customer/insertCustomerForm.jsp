@@ -120,7 +120,9 @@ String msg5= request.getParameter("msg5");
 </div>
    </form>
 
-
+<!-- footer 시작 -->
+   <jsp:include page="/inc/footer.jsp"></jsp:include>
+<!-- footer 끝 -->	
 <script>
 	
 	$('#id').keyup(function() {
@@ -185,8 +187,6 @@ String msg5= request.getParameter("msg5");
 	
 	
 	</script>
-<!-- footer 시작 -->
-   <jsp:include page="/inc/footer.jsp"></jsp:include>
-<!-- footer 끝 -->	
+
 </body>
 </html>

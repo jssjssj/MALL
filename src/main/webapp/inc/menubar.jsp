@@ -25,10 +25,10 @@
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/customer/customerLoginForm.jsp">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/goods/goodsList.jsp">상품보기</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/question/insertQuestionForm.jsp">문의하기</a></li>                        
-                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/notice/insertNoticeForm.jsp">공지사항</a></li>
+                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/notice/noticeList.jsp">공지사항</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/manager/managerLoginForm.jsp">관리자페이지</a></li> 
             </ul>
-            <%
+            <% 
             	if(msg2!=null) {
             %>
             	<div><%=msg2%></div>

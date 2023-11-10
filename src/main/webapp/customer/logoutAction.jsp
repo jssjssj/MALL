@@ -4,7 +4,7 @@
 
 <%
 		session.invalidate();
-		response.sendRedirect("http://localhost/mall/110011/index.jsp");
+		response.sendRedirect(request.getContextPath()+"/110011/index.jsp");
 %>
 
 

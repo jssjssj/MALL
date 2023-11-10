@@ -12,7 +12,8 @@ if (msg4 != null) {
 %>
 <div><%=msg4%></div>
 <%
-}
+} 
+
 %>
 <!DOCTYPE html>
 <html>
