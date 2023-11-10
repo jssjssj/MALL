@@ -3,7 +3,7 @@
 <%
 	if(session.getAttribute("loginId")==null){
 		String msg3 = URLEncoder.encode("로그인 후 사용이 가능합니다!");
-		response.sendRedirect("http://localhost/mall/customer/customerLoginForm.jsp?msg3="+msg3);
+		response.sendRedirect(request.getContextPath()+"/customer/customerLoginForm.jsp?msg3="+msg3);
 	}
  %>
 <!DOCTYPE html>

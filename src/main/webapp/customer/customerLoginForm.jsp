@@ -7,7 +7,7 @@
 
 	if(session.getAttribute("loginId") != null) {
 		String msg2 = URLEncoder.encode("로그인 상태입니다!");
-		response.sendRedirect("http://localhost/mall/110011/index.jsp?msg2="+msg2);
+		response.sendRedirect(request.getContextPath()+"/110011/index.jsp?msg2="+msg2);
 		}
 %>
 

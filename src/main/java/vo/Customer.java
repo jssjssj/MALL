@@ -8,6 +8,8 @@ public class Customer {
 	private	String updatedate;
 	private	String active;
 	
+
+	
 	CustomerAddr customerAddr; 
     CustomerDetail customerDetail; 
 	public CustomerAddr getCustomerAddr() {
