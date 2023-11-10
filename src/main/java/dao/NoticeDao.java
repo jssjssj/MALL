@@ -102,23 +102,29 @@ public class NoticeDao {
         }
     }
 
-    // 공지사항 정보 조회
+ // 공지사항 정보 조회
     public List<Notice> selectNotice() throws Exception {
         DBUtil dbUtil = new DBUtil();
         Connection conn = dbUtil.getConnection();
 
         try {
-            // 조회 SQL
-            String sql = "SELECT * FROM notice";
+            // 조회 SQL (manager 테이블과 조인)
+            String sql = "SELECT n.*, m.manager_name " +
+                         "FROM notice n " +
+                         "JOIN manager m ON n.manager_no = m.manager_no";
             PreparedStatement stmt = conn.prepareStatement(sql);
+            System.out.println(stmt + "<--stmt");
             ResultSet rs = stmt.executeQuery();
 
             List<Notice> noticeList = new ArrayList<>();
 
             while (rs.next()) {
                 Notice notice = new Notice();
-                notice.setNoticeNo(rs.getInt("noticeNo"));
+                Manager manager = new Manager();
+                notice.setManager(manager);
+                notice.setNoticeNo(rs.getInt("notice_no"));
                 notice.setManagerNo(rs.getInt("manager_no"));
+                manager.setManagerName(rs.getString("manager_name"));
                 notice.setNoticeTitle(rs.getString("notice_title"));
                 notice.setNoticeContent(rs.getString("notice_content"));
                 notice.setCreatedate(rs.getString("createdate"));

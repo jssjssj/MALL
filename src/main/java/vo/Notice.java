@@ -7,6 +7,20 @@ public class Notice {
 	private	String noticeContent;
 	private	String createdate;
 	private	String updatedate;
+	private Manager manager; // 작성 매니저 이름을 불러오기 위해 추가.
+	
+	
+	
+	public Manager getManager() {
+	    if (manager == null) {
+	        manager = new Manager();
+	        // 여기에서 manager 객체의 필드들을 초기화
+	    }
+	    return manager;
+	} 
+	public void setManager(Manager manager) {
+		this.manager = manager;
+	}
 	public int getNoticeNo() {
 		return noticeNo;
 	}

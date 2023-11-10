@@ -22,11 +22,10 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="<%=request.getContextPath()%>/110011/index.jsp">Home</a></li>
                 
-                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/customer/customerLoginForm.jsp">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/goods/goodsList.jsp">상품보기</a></li>
-                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/question/insertQuestionForm.jsp">문의하기</a></li>                        
-                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/notice/insertNoticeForm.jsp">공지사항</a></li>
-                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/manager/managerLoginForm.jsp">관리자페이지</a></li> 
+                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/goods/goodsList.jsp">상품 관리</a></li>
+                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/question/questionList.jsp">문의내용 확인</a></li>                        
+                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/notice/noticeList.jsp">공지 확인</a></li>
+                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/manager/managerLoginForm.jsp">로그아웃</a></li> 
             </ul>
             <%
             	if(msg2!=null) {

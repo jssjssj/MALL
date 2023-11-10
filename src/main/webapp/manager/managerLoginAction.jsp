@@ -5,6 +5,8 @@
 <%
     String managerId = request.getParameter("managerId");
     String managerPw = request.getParameter("managerPw");
+    System.out.println(managerId);
+    System.out.println(managerPw);
 
     ManagerDao managerDao = new ManagerDao();
     Manager loginManager = managerDao.getManagerByIdAndPassword(managerId, managerPw);
@@ -15,6 +17,7 @@
         response.sendRedirect(request.getContextPath() + "/manager/dashboard.jsp");
     } else {
         // 로그인 실패
-        response.sendRedirect(request.getContextPath() + "/manager/loginForm.jsp");
+        System.out.println(loginManager);
+        response.sendRedirect(request.getContextPath() + "/manager/managerLoginForm.jsp");
     }
 %>
