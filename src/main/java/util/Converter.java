@@ -1,9 +1,7 @@
 package util;
 
 import java.sql.ResultSet;
-
-import vo.Goods;
-import vo.GoodsImg;
+import vo.*;
 
 public class Converter {
 	public Goods getGoods(ResultSet rs) {
@@ -32,5 +30,40 @@ public class Converter {
 			e.printStackTrace();
 		}
 		return goodsImg;
+	}
+	
+	public Notice getNotice(ResultSet rs) {
+		Notice notice = new Notice();
+		try {			
+			 notice.setNoticeNo(rs.getInt("notice_no"));
+             notice.setManagerNo(rs.getInt("manager_no"));
+             notice.setNoticeTitle(rs.getString("notice_title"));
+             notice.setNoticeContent(rs.getString("notice_content"));
+             notice.setCreatedate(rs.getString("createdate"));
+             notice.setUpdatedate(rs.getString("updatedate"));
+             
+             Manager manager = new Manager();
+             manager.setManagerName(rs.getString("manager_name"));
+             notice.setManager(manager);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return notice;
+	}
+	
+	public Manager getManager(ResultSet rs) {
+		Manager manager = new Manager();
+		try {			
+			manager.setManagerNo(rs.getInt("manager_no"));
+			manager.setManagerId(rs.getString("manager_id"));
+			manager.setManagerPw(rs.getString("manager_pw"));
+			manager.setManagerName(rs.getString("manager_name"));
+			manager.setCreatedate(rs.getString("createdate"));
+			manager.setUpdatedate(rs.getString("updatedate"));
+			manager.setActive(rs.getString("Active"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return manager;
 	}
 }

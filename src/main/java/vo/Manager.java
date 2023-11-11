@@ -14,6 +14,12 @@ public class Manager {
 	public void setManagerNo(int managerNo) {
 		this.managerNo = managerNo;
 	}
+	@Override
+	public String toString() {
+		return "Manager [managerNo=" + managerNo + ", managerId=" + managerId + ", managerPw=" + managerPw
+				+ ", managerName=" + managerName + ", createdate=" + createdate + ", updatedate=" + updatedate
+				+ ", active=" + active + "]";
+	}
 	public String getManagerId() {
 		return managerId;
 	}

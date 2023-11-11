@@ -15,8 +15,7 @@ public class GoodsDao extends ClassDao {
 
 	// 상품과 굿즈 이미지 등록
 	public int insertGoods(Goods insertGoods, GoodsImg insertGoodsImg) throws Exception {
-		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+		Connection conn = db.getConnection();
 
 		conn.setAutoCommit(false); // 트랜잭션 시작
 
@@ -67,8 +66,7 @@ public class GoodsDao extends ClassDao {
 
 	// 상품 정보와 굿즈 이미지 정보 업데이트
 	public int updateGoods(Goods updateGoods, GoodsImg updateGoodsImg) throws Exception {
-		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+		Connection conn = db.getConnection();
 
 		conn.setAutoCommit(false); // 트랜잭션 시작
 
@@ -114,8 +112,7 @@ public class GoodsDao extends ClassDao {
 
 	// 상품 정보와 굿즈 이미지 정보 삭제
 	public int deleteGoods(int goodsNo) throws Exception {
-		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+		Connection conn = db.getConnection();
 
 		conn.setAutoCommit(false); // 트랜잭션 시작
 

@@ -4,7 +4,7 @@ import java.util.*;
 import util.DBUtil;
 import vo.*;
 
-public class ManagerDao {
+public class ManagerDao extends ClassDao{
     /* 디버깅 색깔 지정 */ 
     // ANSI CODE    
     final String RESET = "\u001B[0m"; 
@@ -240,9 +240,8 @@ public class ManagerDao {
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-                Manager manager = new Manager();
-                manager.setManagerNo(rs.getInt("manager_no"));
-                manager.setManagerId(rs.getString("manager_id"));
+                Manager manager = converter.getManager(rs);
+                
                 return manager;
             } else {
                 return null; // 매니저가 없음
