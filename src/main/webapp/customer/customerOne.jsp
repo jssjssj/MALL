@@ -6,7 +6,7 @@
 <%
     CustomerDao customerDao = new CustomerDao();
 
-    // 기존 변수명인 customerId 사용
+    // customerId 사용
     String customerId = (String)(session.getAttribute("loginId"));
 
     // customerDao.customerOne 메서드에서 null을 반환하는 경우를 처리
@@ -69,7 +69,8 @@
 						</tr>	
 						
 					</table>
-					<button type="submit">정보수정</button>					
+					<button type="submit">정보수정</button>	
+					<button><a href="<%=request.getContextPath()%>/customer/deleteCustomerForm.jsp">회원탈퇴</a></button>				
 			</fieldset>
 		</div>
 	</form>

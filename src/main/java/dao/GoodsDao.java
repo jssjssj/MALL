@@ -11,6 +11,8 @@ import vo.GoodsImg;
 
 public class GoodsDao {
     public GoodsImg goodsimg = new GoodsImg(); // 굿즈 이미지 객체
+    
+    
 
     // 상품과 굿즈 이미지 등록
     public int insertGoods(Goods insertGoods, GoodsImg insertGoodsImg) throws Exception {
@@ -188,4 +190,6 @@ public class GoodsDao {
             conn.close(); // 연결 닫기
         }
     }
+    
+    
 }

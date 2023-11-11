@@ -121,7 +121,7 @@ String msg5= request.getParameter("msg5");
    </form>
 
 <!-- footer 시작 -->
-   <jsp:include page="/inc/footer.jsp"></jsp:include>
+   <div class="footer"><jsp:include page="/inc/footer.jsp"></jsp:include></div>
 <!-- footer 끝 -->	
 <script>
 	
@@ -182,10 +182,7 @@ String msg5= request.getParameter("msg5");
 			return;
 			 }
 		});
-	
 
-	
-	
 	</script>
 
 </body>
