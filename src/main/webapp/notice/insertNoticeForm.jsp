@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="vo.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +25,7 @@
 <!-- 메뉴 끝 -->
 	<form method="post" id="createNoticeForm"
 		action="<%=request.getContextPath()%>/notice/insertNoticeAction.jsp">
+		<input type="hidden" name="managerNo" value="<%= ((Manager)session.getAttribute("loginManager")).getManagerNo()%>">
 		<div class="outer">
 			<div class="inner">
 				<fieldset>

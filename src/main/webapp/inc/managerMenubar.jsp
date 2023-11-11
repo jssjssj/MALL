@@ -24,8 +24,8 @@
                 
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/goods/goodsList.jsp">상품 관리</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/question/questionList.jsp">문의내용 확인</a></li>                        
-                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/notice/noticeList.jsp">공지 확인</a></li>
-                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/manager/managerLoginForm.jsp">로그아웃</a></li> 
+                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/notice/insertNoticeForm.jsp">공지 작성</a></li>
+                <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/customer/logoutAction.jsp">로그아웃</a></li> 
             </ul>
             <%
             	if(msg2!=null) {

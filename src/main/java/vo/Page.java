@@ -1,8 +1,8 @@
 package vo;
 
 public class Page {
-	int page;
-	String text;
+	public int page;
+	public String text;
 	public Page(int page, String text) {
 		this.page = page;
 		this.text = text;

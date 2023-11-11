@@ -31,10 +31,10 @@ public class Paginator {
 		 * 적당히 조절시켜주어야 정상적으로 페이징 될 수 있다.
 		 */
 		int startPage = currentPage - defaultSize / 2;
+		startPage = Math.min(startPage, totalPage - defaultSize + 1);
 		startPage = Math.max(startPage, 1);
-		startPage = Math.min(startPage, totalPage - 4);
 		
-		for(int i = 0; i < defaultSize; i++) {
+		for(int i = 0; i < defaultSize && i + startPage <= totalPage; i++) {
 			int p = startPage + i;
 			pages.add(new Page(p, Integer.toString(p)));
 		}

@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="vo.*, dao.*" %>
+<%@ page import="vo.*, dao.*, util.*" %>
 <%@ page import="java.util.List" %>
-
+<%
+	NoticeDao noticeDao = new NoticeDao();
+	SampleData sample = new SampleData();
+	for(int i = 0; i < 0; i++) {
+		Notice notice = sample.getNotice();
+		noticeDao.insertNotice(notice);
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +25,7 @@
         <h1>공지사항 목록</h1>
         <%-- 공지사항 목록을 가져오기 --%>
         <%
-            NoticeDao noticeDao = new NoticeDao();
+            
             List<Notice> noticeList = noticeDao.selectNotice();
 
             if (noticeList.isEmpty()) {

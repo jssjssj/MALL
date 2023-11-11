@@ -13,22 +13,17 @@ import vo.Notice;
 
 public class NoticeDao {
 	// 공지사항 추가
-	public int insertNotice(HttpServletRequest request, Notice insertNotice) throws Exception {
+	public int insertNotice(Notice insertNotice) throws Exception {
 	    DBUtil dbUtil = new DBUtil();
 	    Connection conn = dbUtil.getConnection();
 
 	    try {
-	        // 매니저의 manager_no 가져오기
-	        HttpSession session = request.getSession();
-	        Manager loginManager = (Manager) session.getAttribute("loginManager");
-	        int managerNo = loginManager.getManagerNo();
-
 	        // 입력(insert) SQL
 	        String sql = "INSERT INTO notice"
 	                     + "(manager_no, notice_title, notice_content, createdate, updatedate) "
 	                     + "VALUES(?, ?, ?, now(), now())";
 	        PreparedStatement stmt = conn.prepareStatement(sql);
-	        stmt.setInt(1, managerNo); // 매니저의 manager_no 설정
+	        stmt.setInt(1, insertNotice.getManagerNo()); // 매니저의 manager_no 설정
 	        stmt.setString(2, insertNotice.getNoticeTitle());
 	        stmt.setString(3, insertNotice.getNoticeContent());
 

@@ -15,10 +15,7 @@ String msg5= request.getParameter("msg5");
 			height:100%;
 			font-size:25px;
 			margin:50;}
-	.inner{position: absolute;
-			transform; transate{50%,-50%};
-			left:50%;
-			top:50%;}
+	.inner{}
 	</style>
 	
 <meta charset="UTF-8">

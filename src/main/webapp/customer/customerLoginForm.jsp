@@ -21,10 +21,10 @@
 			height:100%;
 			font-size:25px;
 			margin:50;}
-	.inner{position: absolute;
-			transform; transate{50%,-50%};
-			left:50%;
-			top:50%;}
+	.inner {
+		left:50%;
+		top:50%;
+	}
 	</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
