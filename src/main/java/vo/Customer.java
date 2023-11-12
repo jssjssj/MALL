@@ -12,6 +12,7 @@ public class Customer {
 	
 	CustomerAddr customerAddr; 
     CustomerDetail customerDetail; 
+    
 	public CustomerAddr getCustomerAddr() {
 		return customerAddr;
 	}

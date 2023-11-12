@@ -89,6 +89,7 @@ public class CustomerDao {
 	public Customer customerOne(String customerId) throws Exception {
 	    Customer customer = null;
 	    DBUtil dbUtil = new DBUtil();
+	    ResultSet rs = null;
 	    Connection conn = dbUtil.getConnection();
 	    String sql = "SELECT a.customer_no, a.customer_id, a.customer_pw, a.createdate, a.updatedate, a.active, "
 	            + "b.address, c.customer_name, c.customer_phone FROM customer a "
@@ -98,7 +99,7 @@ public class CustomerDao {
 	    PreparedStatement stmt = conn.prepareStatement(sql);
 	    stmt.setString(1, customerId);
 
-	    try (ResultSet rs = stmt.executeQuery()) {
+	    rs = stmt.executeQuery() ;
 	        if (rs.next()) {
 	            customer = new Customer();
 	            CustomerAddr customerAddr = new CustomerAddr();
@@ -120,7 +121,7 @@ public class CustomerDao {
 	            customer.setCustomerDetail(customerDetail);
 	            customer.setCustomerAddr(customerAddr);
 	        }
-	    }
+	    
 	    return customer;
 	}
 	
@@ -165,15 +166,18 @@ public class CustomerDao {
 
     public List<Customer> selectCustomer() throws Exception {
         DBUtil dbUtil = new DBUtil();
-        Connection conn = dbUtil.getConnection();
-
-        try {
-            String sql = "SELECT a.customer_no , a.customer_id , a.customer_pw , a.createdate , a.updatedate , a.active ,"
-                    + "b.address , c.customer_name , c.customer_phone FROM customer a INNER JOIN customer_addr b"
-                    + "ON a.customer_no = b.customer_no INNER JOIN customer_detail c ON a.customer_no = c.customer_no";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-            List<Customer> customers = new ArrayList<>();
+        Connection conn = dbUtil.getConnection();        
+        String sql = """
+        		SELECT a.customer_no , a.customer_id , a.customer_pw , a.createdate , a.updatedate , a.active ,
+b.address , c.customer_name , c.customer_phone FROM customer a INNER JOIN customer_addr b
+ON a.customer_no = b.customer_no 
+INNER JOIN customer_detail c 
+ON a.customer_no = c.customer_no
+        		""";
+        
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        List<Customer> customers = new ArrayList<>();
 
             while (rs.next()) {
                 Customer customer = new Customer();
@@ -192,9 +196,7 @@ public class CustomerDao {
             }
 
             return customers;
-        } finally {
-            conn.close(); // 연결 닫기
-        }
+         
     }
 
     private String hashPassword(String password) {
