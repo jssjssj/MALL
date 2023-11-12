@@ -3,6 +3,7 @@ import java.sql.*;
 import java.util.*;
 import util.DBUtil;
 import vo.*;
+import java.security.*;
 
 public class ManagerDao extends ClassDao{
     /* 디버깅 색깔 지정 */ 
@@ -88,7 +89,43 @@ public class ManagerDao extends ClassDao{
     }
 
 
- // 매니저 정보 업데이트 (비밀번호 이력 저장)
+ // 패스워드를 해싱하여 저장
+    private static String hashPassword(String password, byte[] salt) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(salt);
+            byte[] hashedPassword = md.digest(password.getBytes());
+
+            byte[] combined = new byte[salt.length + hashedPassword.length];
+            System.arraycopy(salt, 0, combined, 0, salt.length);
+            System.arraycopy(hashedPassword, 0, combined, salt.length, hashedPassword.length);
+
+            return Base64.getEncoder().encodeToString(combined);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // 입력한 패스워드와 저장된 해싱된 패스워드의 일치 여부 확인
+    private static boolean checkPassword(String inputPassword, String storedPassword) {
+        try {
+            byte[] combined = Base64.getDecoder().decode(storedPassword);
+            byte[] salt = Arrays.copyOfRange(combined, 0, 16);
+            byte[] hashedInputPassword = Arrays.copyOfRange(combined, 16, combined.length);
+
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(salt);
+            byte[] hashedPassword = md.digest(inputPassword.getBytes());
+
+            return Arrays.equals(hashedInputPassword, hashedPassword);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // 매니저 정보 업데이트 (비밀번호 이력 저장)
     public boolean updateManagerPassword(int managerNo, String currentPassword, String newPassword) throws Exception {
         Connection conn = db.getConnection();
         PreparedStatement stmt = null;
@@ -97,14 +134,16 @@ public class ManagerDao extends ClassDao{
             conn.setAutoCommit(false);
 
             // 현재 비밀번호 확인
-            String selectPasswordSql = "SELECT manager_pw FROM manager WHERE manager_no = ?";
+            String selectPasswordSql = "SELECT manager_pw, salt FROM manager WHERE manager_no = ?";
             stmt = conn.prepareStatement(selectPasswordSql);
             stmt.setInt(1, managerNo);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
                 String storedPassword = rs.getString("manager_pw");
-                if (currentPassword.equals(storedPassword)) {
+                byte[] salt = Base64.getDecoder().decode(rs.getString("salt"));
+
+                if (checkPassword(currentPassword, storedPassword)) {
                     // 현재 비밀번호가 일치하면 이전 비밀번호를 manager_pw_history에 저장
                     String insertHistorySql = "INSERT INTO manager_pw_history (manager_no, manager_pw, createdate) VALUES (?, ?, NOW())";
                     PreparedStatement stmtHistory = conn.prepareStatement(insertHistorySql);
@@ -113,12 +152,18 @@ public class ManagerDao extends ClassDao{
                     stmtHistory.executeUpdate();
 
                     // 새로운 비밀번호로 업데이트
-                    String updatePasswordSql = "UPDATE manager SET manager_pw = ? WHERE manager_no = ?";
+                    String updatePasswordSql = "UPDATE manager SET manager_pw = ?, salt = ? WHERE manager_no = ?";
                     stmt = conn.prepareStatement(updatePasswordSql);
-                    stmt.setString(1, newPassword);
-                    stmt.setInt(2, managerNo);
-                    stmt.executeUpdate();
 
+                    // 새로운 salt 생성
+                    byte[] newSalt = new byte[16];
+                    new SecureRandom().nextBytes(newSalt);
+
+                    stmt.setString(1, hashPassword(newPassword, newSalt));
+                    stmt.setString(2, Base64.getEncoder().encodeToString(newSalt));
+                    stmt.setInt(3, managerNo);
+
+                    stmt.executeUpdate();
                     conn.commit();
                     return true; // 비밀번호 업데이트 성공
                 }
@@ -138,39 +183,6 @@ public class ManagerDao extends ClassDao{
             }
             if (conn != null) {
                 conn.setAutoCommit(true);
-                conn.close();
-            }
-        }
-    }
-
- // 매니저의 이전 비밀번호 목록 가져오기
-    public List<String> getManagerPasswordHistory(int managerNo) throws Exception {
-        DBUtil dbUtil = new DBUtil();
-        Connection conn = dbUtil.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-
-        try {
-            String sql = "SELECT manager_pw FROM manager_pw_history WHERE manager_no = ? ORDER BY createdate DESC";
-            stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, managerNo);
-
-            rs = stmt.executeQuery();
-
-            List<String> passwordHistory = new ArrayList<>();
-            while (rs.next()) {
-                passwordHistory.add(rs.getString("manager_pw"));
-            }
-
-            return passwordHistory;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conn != null) {
                 conn.close();
             }
         }
@@ -213,11 +225,10 @@ public class ManagerDao extends ClassDao{
     public Manager getManagerByIdAndPassword(String managerId, String managerPw) throws Exception {
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        DBUtil dbUtil = new DBUtil();
         Connection conn = null;
 
         try {
-            conn = dbUtil.getConnection(); // db 연결
+            conn = db.getConnection(); // db 연결
 
             String sql = "SELECT * FROM manager WHERE manager_id = ? AND manager_pw = PASSWORD(?)";
             stmt = conn.prepareStatement(sql);
@@ -233,7 +244,7 @@ public class ManagerDao extends ClassDao{
                 return null; // 매니저가 없음
             }
         } finally {
-            dbUtil.close(rs, stmt, conn); // DB 자원 닫기
+            db.close(rs, stmt, conn); // DB 자원 닫기
         }
     }
 

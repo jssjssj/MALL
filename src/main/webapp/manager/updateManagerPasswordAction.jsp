@@ -6,7 +6,7 @@
 <%
 @SuppressWarnings("unchecked") 	// List에 대한 경고 억제
 int managerNo = Integer.parseInt(request.getParameter("managerNo"));
-String currentPassword = request.getParameter("currentPassword");
+String currentPassword = request.getParameter("password(currentPassword)");
 String newPassword = request.getParameter("newPassword");
 
 System.out.print(newPassword);
@@ -24,8 +24,8 @@ try {
     } else {
         // 이전에 사용한 비밀번호인지 확인
         @SuppressWarnings("rawtypes") // List에 대한 경고 억제
-        List passwordHistory = managerDao.getManagerPasswordHistory(managerNo);
-        if (passwordHistory.contains(newPassword)) {
+        List passwordHistory = managerDao.getManagerByIdAndPassword(managerId,managerPw);
+        if (passwordHistory.contains(newPassword)) { 
             out.println("비밀번호 업데이트 실패: 이미 사용한 적 있는 비밀번호입니다.");
         } else {
             passwordUpdated = managerDao.updateManagerPassword(managerNo, currentPassword, newPassword);
