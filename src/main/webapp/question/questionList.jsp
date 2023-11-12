@@ -8,7 +8,8 @@
     // 문의사항 목록 조회
     QuestionDao questionDao = new QuestionDao();
     List<Question> questionList = questionDao.selectQuestion();
-	String quesMsg = request.getParameter("quesMsg");
+	String quesMsg1 = request.getParameter("quesMsg1");
+	String quesMsg2 = request.getParameter("quesMsg2");
 
 %>
 <!DOCTYPE html>
@@ -44,9 +45,17 @@
 	<!-- 메뉴 끝 -->
 	<h2 class="container">Question 목록</h2>
 	<%
-		if(quesMsg != null) {
+		if(quesMsg1 != null) {
 	%>
-		<div><%=quesMsg%></div>
+		<div><%=quesMsg1%></div>
+	<%		
+		}
+	%>
+	
+	<%
+		if(quesMsg2 != null) {
+	%>
+		<div><%=quesMsg2%></div>
 	<%		
 		}
 	%>

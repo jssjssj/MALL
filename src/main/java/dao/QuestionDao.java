@@ -11,7 +11,7 @@ import vo.Question;
 
 public class QuestionDao {
     // 문의사항 추가
-    public int insertQuestion(Question Question) throws Exception {
+    public int insertQuestion(Question question) throws Exception {
         Connection conn = null;
         PreparedStatement stmt = null;
 
@@ -24,18 +24,12 @@ public class QuestionDao {
                 + "(goods_no, customer_no, question_title, question_content, createdate, updatedate) "
                 + "VALUES(?, ?, ?, ?, now(), now())";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, Question.getGoodsNo());
-            stmt.setInt(2, Question.getCustomerNo());
-            stmt.setString(3, Question.getQuestionTitle());
-            stmt.setString(4, Question.getQuestionContent());
+            stmt.setInt(1, question.getGoodsNo());
+            stmt.setInt(2, question.getCustomerNo());
+            stmt.setString(3, question.getQuestionTitle());
+            stmt.setString(4, question.getQuestionContent());
 
             int row = stmt.executeUpdate();
-
-            if (row == 1) {
-                System.out.println("문의사항 생성 성공");
-            } else {
-                System.out.println("문의사항 생성 실패");
-            }
 
             return row;
         } finally {

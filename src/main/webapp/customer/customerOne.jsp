@@ -4,6 +4,8 @@
 <%@ page import="java.sql.*" %>
    
 <%
+	String updateMsg1 = request.getParameter("updateMsg1");	
+	String updateMsg2 = request.getParameter("updateMsg2");
     CustomerDao customerDao = new CustomerDao();
 
     // customerId 사용
@@ -46,7 +48,24 @@
     <form method="post" action="updateCustomerForm.jsp">
 		<div class="container">
 			<fieldset>
-				<legend>내정보</legend>
+				<legend class="container">내정보</legend>
+			<%
+            	if(updateMsg2!=null) {
+           	%>
+           		<div><%=updateMsg2%></div>
+           	<%
+            	}
+            
+            %>
+            
+             <%
+            	if(updateMsg1!=null) {
+           	%>
+           		<div><%=updateMsg1%></div>
+           	<%
+            	}
+            
+            %>
 					<table border="1" width="300" height="200">
 						<tr>
 							<th>ID</th>

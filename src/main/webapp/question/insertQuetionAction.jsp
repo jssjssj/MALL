@@ -22,10 +22,11 @@
 
         if (result > 0) {
         	System.out.println(result);
-            String quesMsg = URLEncoder.encode("게시글 등록완료! 답변까지 기다려주세요");
-            response.sendRedirect(request.getContextPath()+"/question/questionList.jsp?quesMsg="+quesMsg);
+            String quesMsg1 = URLEncoder.encode("게시글 등록완료! 답변까지 기다려주세요");
+            response.sendRedirect(request.getContextPath()+"/question/questionList.jsp?quesMsg1="+quesMsg1);
         } else {
-            response.sendRedirect(request.getContextPath()+"/question/questionList.jsp");
+        	String quesMsg2 = URLEncoder.encode("서버 점검 중으로 게시글이 등록되지 않았습니다. 다음에 이용해주세요");
+            response.sendRedirect(request.getContextPath()+"/question/questionList.jsp?quesMsg2="+quesMsg2);
             System.out.println();
         }
 

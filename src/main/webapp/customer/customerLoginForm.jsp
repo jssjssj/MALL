@@ -20,32 +20,11 @@ if (session.getAttribute("loginId") != null) {
 	color: #FF0000;
 }
 
-.outer {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	font-size: 25px;
-	margin: 50;
-}
-
-.inner {
-	position: absolute;
-	transform;
-	transate
-	{50%,-50%
-}
-;
-left
-:
-50
-%;
-
-			
-top
-:
-50
-%;
-}
+.container{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -60,9 +39,7 @@ top
 
 
 	<form method="post" id="logAction" action="customerLoginAction.jsp">
-		<div class="outer">
-			<div class="inner">
-
+		<div class="container">
 				<fieldset>
 <%
 					if (msg3 != null) {
@@ -113,10 +90,12 @@ top
 
 				</fieldset>
 
-			</div>
+			
 		</div>
 	</form>
-
+<!-- footer 시작 -->
+   <div class="footer"><jsp:include page="/inc/footer.jsp"></jsp:include></div>
+<!-- footer 끝 -->	
 	<script>
 		$('#id').click(function() {
 			$('#id').val('');

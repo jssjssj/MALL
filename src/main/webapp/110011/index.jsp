@@ -7,13 +7,7 @@
 	String msg4 = request.getParameter("msg4");
 	
 %>
-<%
-if (msg4 != null) {
-%>
-<div><%=msg4%></div>
-<%
-} 
-%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,6 +24,13 @@ if (msg4 != null) {
         <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body>
+<%
+			if (msg4 != null) {
+%>
+			<div><%=msg4%></div>
+<%
+			} 
+%>
    <!-- 메뉴 시작 -->
    <jsp:include page="/inc/menubar.jsp"></jsp:include>
    <!-- 메뉴 끝 -->
