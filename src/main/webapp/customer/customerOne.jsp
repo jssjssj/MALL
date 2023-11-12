@@ -4,9 +4,11 @@
 <%@ page import="java.sql.*" %>
    
 <%
+	String updateMsg1 = request.getParameter("updateMsg1");	
+	String updateMsg2 = request.getParameter("updateMsg2");
     CustomerDao customerDao = new CustomerDao();
 
-    // 기존 변수명인 customerId 사용
+    // customerId 사용
     String customerId = (String)(session.getAttribute("loginId"));
 
     // customerDao.customerOne 메서드에서 null을 반환하는 경우를 처리
@@ -46,7 +48,24 @@
     <form method="post" action="updateCustomerForm.jsp">
 		<div class="container">
 			<fieldset>
-				<legend>내정보</legend>
+				<legend class="container">내정보</legend>
+			<%
+            	if(updateMsg2!=null) {
+           	%>
+           		<div><%=updateMsg2%></div>
+           	<%
+            	}
+            
+            %>
+            
+             <%
+            	if(updateMsg1!=null) {
+           	%>
+           		<div><%=updateMsg1%></div>
+           	<%
+            	}
+            
+            %>
 					<table border="1" width="300" height="200">
 						<tr>
 							<th>ID</th>
@@ -69,7 +88,8 @@
 						</tr>	
 						
 					</table>
-					<button type="submit">정보수정</button>					
+					<button type="submit">정보수정</button>	
+					<button><a href="<%=request.getContextPath()%>/customer/deleteCustomerForm.jsp">회원탈퇴</a></button>				
 			</fieldset>
 		</div>
 	</form>

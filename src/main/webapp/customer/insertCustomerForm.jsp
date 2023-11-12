@@ -1,23 +1,19 @@
-<%@page import="org.eclipse.jdt.internal.compiler.parser.RecoveredRequiresStatement"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%String msg4= request.getParameter("msg4");
-String msg5= request.getParameter("msg5");
+<%
+		String msg4= request.getParameter("msg4");
+		String msg5= request.getParameter("msg5");
 %>
 <!DOCTYPE html>
 <html>
-
 <head>
-	<style>
-	
-	.outer{position:relative;
-			width:100%;
-			height:100%;
-			font-size:25px;
-			margin:50;}
-	.inner{}
-	</style>
-	
+		<style>
+	.container{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	}
+		</style>
 <meta charset="UTF-8">
 <title>MALL : 회원가입</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -37,21 +33,19 @@ String msg5= request.getParameter("msg5");
     <!-- 메뉴 시작 -->
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
 	<!-- 메뉴 끝 -->
-
 	
-   <form method="post" id="signinForm" action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp">
-   <div class="outer">
-  <div class="inner">
+<form method="post" id="signinForm" action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp">
+	<div class="container">
   <fieldset>
   <legend>회원가입</legend>
-  	<% if(msg5 != null){
+  	<% 
+  					if(msg5 != null){
   	%> 
-  		<div><%=msg5%></div>
-  		<%  
-  		}
-  	    %>
-      <table border="1">
-            
+  					<div><%=msg5%></div>
+  	<%  
+  					}
+  	%>
+      <table border="1">            
          <!-- 아이디 -->
          <tr>
             <th>ID</th>
@@ -105,83 +99,75 @@ String msg5= request.getParameter("msg5");
          	<td>
                <button type="button" id="signinBtn" >가입하기</button>
             </td>
-         </tr>
-         
-         
-         
-      </table>
-    
-      
+         </tr>         
+      </table>      
       </fieldset>    
-        </div>
-</div>
-   </form>
+		</div>
+	
+</form>
 
 <!-- footer 시작 -->
-   <jsp:include page="/inc/footer.jsp"></jsp:include>
+   <div class="footer"><jsp:include page="/inc/footer.jsp"></jsp:include></div>
 <!-- footer 끝 -->	
-<script>
-	
-	$('#id').keyup(function() {
-		if($('#id').val().length<4) {
-		$('#idMsg').text('ID는 4자 이상입니다.');
-	}	else{
-		$('#idMsg').text('');
-		}
-	});
-	
-	$('#pw').keyup(function() {
-		if($('#pw').val().length<4) {
-		$('#pwMsg').text('PW는 4자 이상입니다.');
-		} else {
-			$('#pwMsg').text('');	
-		}
-	});
-	
-	$('#pwck').keyup(function() {
-		if($('#pw').val()!=$('#pwck').val()){
-			$('#pwckMsg').text('PW와 일치하지 않습니다.');
-		} else {
-			$('#pwckMsg').text('PW와 일치합니다!');
-		}
-	});
-	
-	$('#name').keyup(function() {
-		if($('#name').val().length < 2){
-			$('#nameMsg').text('2글자 이상 입력해주세요.');
-		} else {
-			$('#nameMsg').text('');
-		}
-	});
-	
-	$('#address').keyup(function() {
-		if($('#address').val().length < 2){
-			$('#addressMsg').text('2글자 이상 입력해주세요.');
-		} else {
-			$('#addressMsg').text('');
-		}
-	});
-	
-	$('#tel').keyup(function() {
-		if($('#tel').val().length < 10){
-			$('#telMsg').text('10글자 이상 입력해주세요.');
-		} else {
-			$('#telMsg').text('');
-		}
-	});
-	
-	$('#signinBtn').click(function() {
-		 if( ($('#id').val().length>=4) && ($('#pw').val().length>=4) && ($('#pw').val()==$('#pwck').val()) 
-				 && ($('#name').val().length>=2) && ($('#tel').val().length>=10) && ($('#address').val().length>=2) ) {
-				$('#signinForm').submit();
-			 } else{
-				 alert('ID , PW 조건을 확인해주세요');
-			return;
-			 }
+	<script>
+		
+		$('#id').keyup(function() {
+			if($('#id').val().length<4) {
+			$('#idMsg').text('ID는 4자 이상입니다.');
+		}	else{
+			$('#idMsg').text('');
+			}
 		});
-	
-
-	
+		
+		$('#pw').keyup(function() {
+			if($('#pw').val().length<4) {
+			$('#pwMsg').text('PW는 4자 이상입니다.');
+			} else {
+				$('#pwMsg').text('');	
+			}
+		});
+		
+		$('#pwck').keyup(function() {
+			if($('#pw').val()!=$('#pwck').val()){
+				$('#pwckMsg').text('PW와 일치하지 않습니다.');
+			} else {
+				$('#pwckMsg').text('PW와 일치합니다!');
+			}
+		});
+		
+		$('#name').keyup(function() {
+			if($('#name').val().length < 2){
+				$('#nameMsg').text('2글자 이상 입력해주세요.');
+			} else {
+				$('#nameMsg').text('');
+			}
+		});
+		
+		$('#address').keyup(function() {
+			if($('#address').val().length < 2){
+				$('#addressMsg').text('2글자 이상 입력해주세요.');
+			} else {
+				$('#addressMsg').text('');
+			}
+		});
+		
+		$('#tel').keyup(function() {
+			if($('#tel').val().length < 10){
+				$('#telMsg').text('10글자 이상 입력해주세요.');
+			} else {
+				$('#telMsg').text('');
+			}
+		});
+		
+		$('#signinBtn').click(function() {
+			 if( ($('#id').val().length>=4) && ($('#pw').val().length>=4) && ($('#pw').val()==$('#pwck').val()) 
+					 && ($('#name').val().length>=2) && ($('#tel').val().length>=10) && ($('#address').val().length>=2) ) {
+					$('#signinForm').submit();
+				 } else{
+					 alert('ID , PW 조건을 확인해주세요');
+				return;
+				 }
+			});
 	
 	</script>
 

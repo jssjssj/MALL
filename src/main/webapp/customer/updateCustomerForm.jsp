@@ -3,6 +3,9 @@
 <%
     // 세션에서 고객 ID 가져오기
     String customerId = (String)(session.getAttribute("loginId"));
+	
+	String updateMsg3 = request.getParameter("updateMsg3");
+
 
     // CustomerDao 인스턴스 생성
     CustomerDao customerDao = new CustomerDao();
@@ -41,10 +44,20 @@
     <div class="container">
         <fieldset>
             <legend>정보수정</legend>
+           
+            
+            <%
+            	if(updateMsg3!=null) {
+           	%>
+           		<div><%=updateMsg3%></div>
+           	<%
+            	}
+            
+            %>
             <table border="1" width="300" height="200">
                 <tr>
                     <th>ID</th>
-                    <td><input type="text" readonly="readonly" value="<%= (customer != null) ? customer.getCustomerId() : "" %>"></td>
+                    <td><input type="text" readonly="readonly" value="<%=customer.getCustomerId()%>"></td>
                 </tr>
 
                 <tr>
