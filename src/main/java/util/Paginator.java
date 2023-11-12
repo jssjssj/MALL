@@ -36,7 +36,7 @@ public class Paginator {
 		
 		for(int i = 0; i < defaultSize && i + startPage <= totalPage; i++) {
 			int p = startPage + i;
-			pages.add(new Page(p, Integer.toString(p)));
+			pages.add(new Page(p, Integer.toString(p), p == currentPage));
 		}
 		
 		// 다음, 마지막 페이지

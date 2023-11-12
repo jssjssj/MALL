@@ -87,7 +87,11 @@
 					<%
 						for (Page p : pages) {
 					%>
-				    	<li class="page-item"><a class="page-link" href="?page=<%= p.page%>"><%= p.text %></a></li>
+				    	<li class="page-item <%= p.isActive ? "active" : "" %>">
+				    		<a class="page-link" href="?page=<%= p.page%>">
+				    			<%= p.text %>
+			    			</a>
+			    		</li>
 					<% } %> 
 				  </ul>
 				</nav>

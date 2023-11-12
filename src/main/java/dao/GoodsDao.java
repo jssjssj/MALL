@@ -148,36 +148,6 @@ public class GoodsDao extends ClassDao {
 	}
 
 	// 상품 정보와 굿즈 이미지 정보 조회
-	public List<Goods> selectGoods() throws Exception {
-		Connection conn = db.getConnection();
-		List<Goods> result = new ArrayList<>();
-		String sql = """
-				  		SELECT g.*, gi.filename, gi.origin_name, gi.content_type
-				  		FROM goods g
-				  		LEFT JOIN goods_img gi ON g.goods_no = gi.goods_no
-				""";
-
-		try {
-			// 조회 SQL
-			ResultSet rs = db.executeQuery(sql);
-
-			List<Goods> goodsList = new ArrayList<>();
-			while (rs.next()) {
-				Goods goods = converter.getGoods(rs);
-				GoodsImg goodsImg = converter.getGoodsImg(rs);
-				goods.setGoodsImg(goodsImg);
-				goodsList.add(goods);
-			}
-
-			result = goodsList;
-		} finally {
-			conn.close(); // 연결 닫기
-		}
-
-		return result;
-	}
-
-	// 상품 정보와 굿즈 이미지 정보 조회
 	public List<Goods> selectGoods(int page, int perPage) throws Exception {
 		List<Goods> result = new ArrayList<>();
 		String sql = """
