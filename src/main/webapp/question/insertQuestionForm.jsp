@@ -19,23 +19,10 @@
 %>
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-	
-	.container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }    
-	</style>
-<meta charset="UTF-8">
-<title>InsertQuetion</title> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
-<body>
-<!-- 메뉴 시작 -->
-	<jsp:include page="/inc/menubar.jsp"></jsp:include>
-<!-- 메뉴 끝 -->
+<jsp:include page="/inc/meta.jsp"></jsp:include>
+<body>	
+<jsp:include page="/inc/menubar.jsp"></jsp:include>
+<jsp:include page="/inc/header.jsp"></jsp:include>
 	<form method="post" id="createNoticeForm"
 		action="<%=request.getContextPath()%>/question/insertQuetionAction.jsp">
 		<div class="container">
@@ -58,24 +45,19 @@
 						<br><span id="contentMsg" class="msg"></span>
 						</td>
 					</tr>
-					
 					<tr>
 						<td>
 							<button type="submit">등록하기</button>
 						</td>
 					</tr>
-					
 				</table>
 			</fieldset>
 		</div>
 	</form>
-	
 <!-- footer 시작 -->
    <jsp:include page="/inc/footer.jsp"></jsp:include>
 <!-- footer 끝 -->	
 <script>
-
-
 	$('#title').keyup(function(){
 		if($('#title').val().length>0){
 			$('#titleMsg').text('제목은 15자 이내로 입력가능합니다.')
@@ -86,13 +68,11 @@
 	
 	$('#content').keyup(function(){
 		if($('#content').val().length>0){
-			$('#contentMsg').text('문의글은자 100자 이내로 입력가능합니다.')
+			$('#contentMsg').text('내용은 100자 이내로 입력가능합니다.')
 		} else {
 			$('#contentMsg').text('')
 		}
 	});
-
-	
 </script>
 </body> 
 </html>

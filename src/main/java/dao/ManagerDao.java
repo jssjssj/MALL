@@ -14,8 +14,7 @@ public class ManagerDao extends ClassDao{
  // 매니저 추가
 
     public int insertManager(Manager manager) throws Exception {
-        DBUtil dbUtil = new DBUtil();
-        Connection conn = dbUtil.getConnection();
+        Connection conn = db.getConnection();
         PreparedStatement stmtManager = null;
         PreparedStatement stmtHistory = null;
         int managerNo = 0;
@@ -36,10 +35,11 @@ public class ManagerDao extends ClassDao{
             
 
             // 매니저 정보 추가
-            String insertManagerSql = "INSERT INTO manager"
-                + "(manager_id, manager_pw, manager_name, createdate, updatedate) "
-                + "VALUES(?, PASSWORD(?), ?, NOW(), NOW())";
-
+            String insertManagerSql = """
+            							INSERT INTO manager
+            							(manager_id, manager_pw, manager_name, createdate, updatedate)
+            							VALUES(?, PASSWORD(?), ?, NOW(), NOW())
+            					""";  
             stmtManager = conn.prepareStatement(insertManagerSql, Statement.RETURN_GENERATED_KEYS);
             stmtManager.setString(1, manager.getManagerId());
             stmtManager.setString(2, manager.getManagerPw());
@@ -63,7 +63,6 @@ public class ManagerDao extends ClassDao{
             stmtHistory.setInt(1, managerNo);
             stmtHistory.setString(2, manager.getManagerPw());
             stmtHistory.executeUpdate();
-
             conn.commit();
 
         } catch (Exception e) {
@@ -89,11 +88,9 @@ public class ManagerDao extends ClassDao{
     }
 
 
-
  // 매니저 정보 업데이트 (비밀번호 이력 저장)
     public boolean updateManagerPassword(int managerNo, String currentPassword, String newPassword) throws Exception {
-        DBUtil dbUtil = new DBUtil();
-        Connection conn = dbUtil.getConnection();
+        Connection conn = db.getConnection();
         PreparedStatement stmt = null;
 
         try {
@@ -193,16 +190,7 @@ public class ManagerDao extends ClassDao{
             List<Manager> managers = new ArrayList<>();
 
             while (rs.next()) {
-                Map<String, Object> managerData = new HashMap<>();
-                managerData.put("managerNo", rs.getInt("manager_no"));
-                managerData.put("managerId", rs.getString("manager_id"));
-                managerData.put("managerPw", rs.getString("manager_pw"));
-                managerData.put("managerName", rs.getString("manager_name"));
-                managerData.put("createdate", rs.getString("createdate"));
-                managerData.put("updatedate", rs.getString("updatedate"));
-                managerData.put("active", rs.getString("active"));
-
-                Manager manager = createManagerFromMap(managerData);
+                Manager manager = converter.getManager(rs);
                 managers.add(manager);
             }
 
@@ -211,18 +199,16 @@ public class ManagerDao extends ClassDao{
             conn.close(); // 연결 닫기
         }
     }
-
-    private Manager createManagerFromMap(Map<String, Object> managerData) {
-        Manager manager = new Manager();
-        manager.setManagerNo((Integer) managerData.get("managerNo"));
-        manager.setManagerId((String) managerData.get("managerId"));
-        manager.setManagerPw((String) managerData.get("managerPw"));
-        manager.setManagerName((String) managerData.get("managerName"));
-        manager.setCreatedate((String) managerData.get("createdate"));
-        manager.setUpdatedate((String) managerData.get("updatedate"));
-        manager.setActive((String) managerData.get("active"));
-        return manager;
+    
+    public Manager getManagerOne(int manager_no) throws Exception {
+    	ResultSet rs = db.executeQuery("SELECT * FROM manager WHERE manager_no = ?", manager_no);
+    	Manager manager = null;
+    	if (rs.next()) {
+    		manager = converter.getManager(rs);
+    	}
+    	return manager;
     }
+    
  // 매니저 아이디와 패스워드로 매니저 조회
     public Manager getManagerByIdAndPassword(String managerId, String managerPw) throws Exception {
         PreparedStatement stmt = null;
@@ -250,31 +236,5 @@ public class ManagerDao extends ClassDao{
             dbUtil.close(rs, stmt, conn); // DB 자원 닫기
         }
     }
-    
- // 대시보드 정보 가져오기
-    public DashboardInfo getDashboardInfo() throws Exception {
-        DashboardInfo dashboardInfo = new DashboardInfo();
-        DBUtil dbUtil = new DBUtil();
-
-        try (Connection conn = dbUtil.getConnection();
-             PreparedStatement stmtOrder = conn.prepareStatement("SELECT COUNT(*) AS order_count FROM orders");
-             PreparedStatement stmtNewCustomers = conn.prepareStatement("SELECT COUNT(*) AS new_customers FROM customer WHERE createdate >= CURDATE()")) {
-
-            try (ResultSet rsOrder = stmtOrder.executeQuery();
-                 ResultSet rsNewCustomers = stmtNewCustomers.executeQuery()) {
-
-                if (rsOrder.next()) {
-                    dashboardInfo.setOrderCount(rsOrder.getInt("order_count"));
-                }
-
-                if (rsNewCustomers.next()) {
-                    dashboardInfo.setNewCustomers(rsNewCustomers.getInt("new_customers"));
-                }
-            }
-        }
-
-        return dashboardInfo;
-    }
-
 
 }    

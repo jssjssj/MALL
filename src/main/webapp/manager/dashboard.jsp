@@ -18,8 +18,8 @@
     
     
     // 대시보드 정보 가져오기
-    ManagerDao managerDao = new ManagerDao();
-    DashboardInfo dashboardInfo = managerDao.getDashboardInfo();
+    DashboardInfoDao dashboardInfoDao = new DashboardInfoDao();
+    DashboardInfo dashboardInfo = dashboardInfoDao.getDashboardInfo();
 %>
 <!DOCTYPE html>
 <html>

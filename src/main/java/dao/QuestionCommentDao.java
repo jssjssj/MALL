@@ -10,7 +10,7 @@ import util.DBUtil;
 import vo.QuestionComment;
 
 public class QuestionCommentDao {
-    // 문의사항 댓글 추가
+    // 문의사항 답변 추가
     public int insertQuestionComment(QuestionComment insertQuestionComment) throws Exception {
         Connection conn = null;
         PreparedStatement stmt = null;

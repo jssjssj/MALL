@@ -1,9 +1,10 @@
 package dao;
 
-import util.Converter;
-import util.DBUtil;
+import java.sql.Connection;
 
-public class ClassDao {
+import util.*;
+
+public abstract class ClassDao {
 	protected Converter converter = new Converter();
 	protected DBUtil db = new DBUtil();
 }

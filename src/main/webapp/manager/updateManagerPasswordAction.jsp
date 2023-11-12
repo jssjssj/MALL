@@ -1,19 +1,17 @@
-<%@ page import="java.util.List" %>
-
-<%@ page import="java.io.Console" %>
-<%@ page import="vo.*" %>
-<%@ page import="dao.*" %>
+<%@ page import="java.io.*,vo.*,dao.*,java.util.*" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
-
-<%@ page import="java.util.ArrayList" %>
 <%
-@SuppressWarnings("unchecked") // List에 대한 경고 억제
+@SuppressWarnings("unchecked") 	// List에 대한 경고 억제
 int managerNo = Integer.parseInt(request.getParameter("managerNo"));
 String currentPassword = request.getParameter("currentPassword");
 String newPassword = request.getParameter("newPassword");
+
+System.out.print(newPassword);
+System.out.print(currentPassword);
+
 
 ManagerDao managerDao = new ManagerDao();
 boolean passwordUpdated = false;
@@ -22,6 +20,7 @@ try {
     // 새로운 비밀번호와 확인 비밀번호가 일치하는지 확인
     if (!newPassword.equals(request.getParameter("confirmPassword"))) {
         out.println("비밀번호 업데이트 실패: 새로운 비밀번호와 확인 비밀번호가 일치하지 않습니다.");
+        
     } else {
         // 이전에 사용한 비밀번호인지 확인
         @SuppressWarnings("rawtypes") // List에 대한 경고 억제

@@ -1,6 +1,8 @@
 package util;
 
 import java.sql.ResultSet;
+import java.util.Map;
+
 import vo.*;
 
 public class Converter {
@@ -67,7 +69,7 @@ public class Converter {
 		return manager;
 	}
 	
-	public Question getQuetion(ResultSet rs) {
+	public Question getQuestion(ResultSet rs) {
 		Question question = new Question();
 		try {
 			question.setQuestionNo(rs.getInt("question_no"));
@@ -82,4 +84,18 @@ public class Converter {
 		}
 		return question;
 	}
+	
+
+
+    public Manager createManagerFromMap(Map<String, Object> managerData) {
+        Manager manager = new Manager();
+        manager.setManagerNo((Integer) managerData.get("managerNo"));
+        manager.setManagerId((String) managerData.get("managerId"));
+        manager.setManagerPw((String) managerData.get("managerPw"));
+        manager.setManagerName((String) managerData.get("managerName"));
+        manager.setCreatedate((String) managerData.get("createdate"));
+        manager.setUpdatedate((String) managerData.get("updatedate"));
+        manager.setActive((String) managerData.get("active"));
+        return manager;
+    }
 }
