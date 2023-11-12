@@ -2,14 +2,10 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<!-- 메뉴 시작 -->
+<jsp:include page="/inc/meta.jsp"></jsp:include>
+<body>	
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
-<!-- 메뉴 끝 -->
+    <jsp:include page="/inc/header.jsp"></jsp:include>
 
 <!-- footer 시작 -->
    <jsp:include page="/inc/footer.jsp"></jsp:include>

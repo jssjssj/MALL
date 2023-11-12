@@ -23,20 +23,18 @@
 %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<!-- 메뉴 시작 -->
-	<jsp:include page="/inc/menubar.jsp"></jsp:include>
-<!-- 메뉴 끝 -->
+<jsp:include page="/inc/meta.jsp"></jsp:include>
+<body>	
+<jsp:include page="/inc/menubar.jsp"></jsp:include>
+<jsp:include page="/inc/header.jsp"></jsp:include>
     <p>안녕하세요, <%= loginManager.getManagerName() %>님!</p>
     <p>현재 주문량: <%= dashboardInfo.getOrderCount() %>건</p>
 	<p>신규 가입 고객 수: <%= dashboardInfo.getNewCustomers() %>명</p>
     
     <!-- 필요한 정보에 따라 추가 -->
     <!-- 대시보드 페이지의 내용 추가 --> 
-
+<!-- footer 시작 -->
+<jsp:include page="/inc/footer.jsp"></jsp:include>
+<!-- footer 끝 -->
 </body>
 </html>

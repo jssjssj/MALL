@@ -25,21 +25,10 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-	.container{
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	}
-</style>
-<meta charset="UTF-8">
-<title>마이페이지</title>
-</head>
-<body>
-<!-- 메뉴 시작 -->
+<jsp:include page="/inc/meta.jsp"></jsp:include>
+<body>	
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
-<!-- 메뉴 끝 -->
+    <jsp:include page="/inc/header.jsp"></jsp:include>
 
 	<!-- customer가 null이 아닌 경우에만 속성에 접근 -->
     <% 

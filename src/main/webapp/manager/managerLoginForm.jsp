@@ -20,27 +20,10 @@
 %>  
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-	.msg{color:#FF0000;}
-	.outer{position:relative;
-			width:100%;
-			height:100%;
-			font-size:25px;
-			margin:50;}
-	.inner{position: absolute;
-			transform; transate{50%,-50%};
-			left:50%;
-			top:50%;}
-	</style>
-    <meta charset="UTF-8">
-    <title>Manager Login</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>    
-</head>
-<body>
-<!-- 메뉴 시작 -->
+<jsp:include page="/inc/meta.jsp"></jsp:include>
+<body>	
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
-<!-- 메뉴 끝 -->	
+    <jsp:include page="/inc/header.jsp"></jsp:include>
     <form method="post" action="managerLoginAction.jsp" id="logAction">
      <div class="outer">
   	  <div class="inner">

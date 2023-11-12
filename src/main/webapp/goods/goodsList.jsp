@@ -30,7 +30,6 @@
 <body>	
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
     <jsp:include page="/inc/header.jsp"></jsp:include>
-      
 	<section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
 			<h1>상품</h1>

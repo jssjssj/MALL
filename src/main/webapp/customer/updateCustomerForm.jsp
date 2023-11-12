@@ -24,22 +24,10 @@
    
 %>
 <html>
-<head>
-    <style>
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    </style>
-    <meta charset="UTF-8">
-    <title>회원정보 수정</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
-<body>
-<!-- 메뉴 시작 -->
-<jsp:include page="/inc/menubar.jsp"></jsp:include>
-<!-- 메뉴 끝 -->
+<jsp:include page="/inc/meta.jsp"></jsp:include>
+<body>	
+	<jsp:include page="/inc/menubar.jsp"></jsp:include>
+    <jsp:include page="/inc/header.jsp"></jsp:include>
 <form method="post" action="updateCustomerAction.jsp">
     <div class="container">
         <fieldset>

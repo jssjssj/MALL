@@ -33,15 +33,11 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>공지사항 목록</title>
-</head>
-<body>
-    <!-- 메뉴 시작 -->
-    <jsp:include page="/inc/menubar.jsp"></jsp:include>
-    <!-- 메뉴 끝 -->
-	
+
+<jsp:include page="/inc/meta.jsp"></jsp:include>
+<body>	
+	<jsp:include page="/inc/menubar.jsp"></jsp:include>
+    <jsp:include page="/inc/header.jsp"></jsp:include>
     <!-- 내용 시작 -->
     <div>
         <h1>공지사항 목록</h1>
