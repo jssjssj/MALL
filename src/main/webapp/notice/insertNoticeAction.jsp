@@ -16,7 +16,7 @@ if (loginManager == null) {
     // 매니저가 로그인되어 있으면 공지사항 등록 처리
     String noticeTitle = request.getParameter("noticeTitle");
     String noticeContent = request.getParameter("noticeContent");
-
+    int managerNo = Integer.parseInt(request.getParameter("managerNo"));
     // 객체 생성
     Notice notice = new Notice();
     NoticeDao noticeDao = new NoticeDao();
@@ -24,10 +24,11 @@ if (loginManager == null) {
 
     // 값 설정
     notice.setNoticeTitle(noticeTitle);
+    notice.setManagerNo(managerNo);
     notice.setNoticeContent(noticeContent);
  
     // 공지사항 등록
-    int row = noticeDao.insertNotice(request, notice);
+    int row = noticeDao.insertNotice(notice);
 
     if (row == 1) {
         System.out.println("공지사항 등록 완료.");

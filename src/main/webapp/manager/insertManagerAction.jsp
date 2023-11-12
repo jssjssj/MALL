@@ -30,8 +30,9 @@
 	int row = managerDao.insertManager(manager);
 	System.out.println(row);
 	
-	if(row == 1 ) {
+	if(row == 1) {
 		System.out.println("manager계정 생성 성공" );
+		// TODO: 매니저 비번 히스토리에 추가한다.
 		response.sendRedirect(request.getContextPath()+"/110011/index.jsp");
 	} else {
 		response.sendRedirect(request.getContextPath()+"/manager/insertManagerForm.jsp");

@@ -8,8 +8,15 @@ public class Goods {
 	private	String goodsMemo;
 	private	String createdate;
 	private	String updatedate;
+	private GoodsImg goodsImg;
 	public int getGoodsNo() {
 		return goodsNo;
+	}
+	public GoodsImg getGoodsImg() {
+		return goodsImg;
+	}
+	public void setGoodsImg(GoodsImg goodsImg) {
+		this.goodsImg = goodsImg;
 	}
 	public void setGoodsNo(int goodsNo) {
 		this.goodsNo = goodsNo;
