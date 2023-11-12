@@ -10,32 +10,12 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Shop Homepage</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-<%
-			if (msg4 != null) {
-%>
-			<div><%=msg4%></div>
-<%
-			} 
-%>
-   <!-- 메뉴 시작 -->
-   <jsp:include page="/inc/menubar.jsp"></jsp:include>
-   <!-- 메뉴 끝 -->
+    <jsp:include page="/inc/meta.jsp"></jsp:include>
+    <body>	
+        <jsp:include page="/inc/menubar.jsp"></jsp:include>
+        <jsp:include page="/inc/header.jsp"></jsp:include>
         <!-- Section-->
-      <section class="py-5">
+        <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     <div class="col mb-5">
@@ -66,7 +46,7 @@
                             </div>
                         </div>
                     </div>
-      <div class="col mb-5">
+                    <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Sale badge-->
                             <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
@@ -127,7 +107,7 @@
                             </div>
                         </div>
                     </div>
-      <div class="col mb-5">
+                    <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
                             <img class="card-img-top" src="<%=request.getContextPath()%>/assets/image4.png" alt="..." />

@@ -20,13 +20,10 @@
 	height:100px;
 	}
 </style>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<!-- 메뉴 시작 -->
+<jsp:include page="/inc/meta.jsp"></jsp:include>
+<body>	
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
-<!-- 메뉴 끝 -->
+    <jsp:include page="/inc/header.jsp"></jsp:include>
 <form method="post" action="<%=request.getContextPath()%>/customer/deleteCustomerAction.jsp">
 	<div class="container2"> 탈퇴하려면 PW를 입력하세요 </div>	
 	<div class="container"> 

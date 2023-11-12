@@ -14,29 +14,10 @@ if (session.getAttribute("loginId") != null) {
 
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-.msg {
-	color: #FF0000;
-}
-
-.container{
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	}
-</style>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
-<body>
-
-	<!-- 메뉴 시작 -->
+<jsp:include page="/inc/meta.jsp"></jsp:include>
+<body>	
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
-	<!-- 메뉴 끝 -->
-
+    <jsp:include page="/inc/header.jsp"></jsp:include>
 
 	<form method="post" id="logAction" action="customerLoginAction.jsp">
 		<div class="container">
