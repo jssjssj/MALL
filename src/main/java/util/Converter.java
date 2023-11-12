@@ -66,4 +66,20 @@ public class Converter {
 		}
 		return manager;
 	}
+	
+	public Question getQuetion(ResultSet rs) {
+		Question question = new Question();
+		try {
+			question.setQuestionNo(rs.getInt("question_no"));
+			question.setGoodsNo(rs.getInt("goods_no"));
+			question.setCustomerNo(rs.getInt("customer_no"));
+			question.setQuestionTitle(rs.getString("question_title"));
+			question.setQuestionContent(rs.getString("question_content"));
+			question.setCreatedate(rs.getString("createdate"));
+			question.setUpdatedate(rs.getString("updatedate"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return question;
+	}
 }

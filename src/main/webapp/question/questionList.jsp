@@ -72,7 +72,7 @@
 		
 		    <% for (Question question : questionList) { %>
 		        <tr>
-		            <td><%=question.getQuestionNO() %></td>
+		            <td><%=question.getQuestionNo() %></td>
 		            <td><%=question.getGoodsNo() %></td>
 		            <td><%=question.getCustomerNo() %></td>
 		            <td><%=question.getQuestionTitle() %></td>

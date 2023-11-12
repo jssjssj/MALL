@@ -1,18 +1,18 @@
 package vo;
 
 public class Question {
-	private	int questionNO;
+	private	int questionNo;
 	private	int goodsNo;
 	private	int customerNo;
 	private	String questionTitle;
 	private	String questionContent;
 	private	String createdate;
 	private	String updatedate;
-	public int getQuestionNO() {
-		return questionNO;
+	public int getQuestionNo() {
+		return questionNo;
 	}
-	public void setQuestionNO(int questionNO) {
-		this.questionNO = questionNO;
+	public void setQuestionNo(int questionNo) {
+		this.questionNo = questionNo;
 	}
 	public int getGoodsNo() {
 		return goodsNo;

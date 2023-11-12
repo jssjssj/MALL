@@ -58,7 +58,7 @@ public class QuestionDao {
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, updateQuestion.getQuestionTitle());
             stmt.setString(2, updateQuestion.getQuestionContent());
-            stmt.setInt(3, updateQuestion.getQuestionNO());
+            stmt.setInt(3, updateQuestion.getQuestionNo());
 
             int row = stmt.executeUpdate();
 
@@ -137,7 +137,7 @@ public class QuestionDao {
 
             while (rs.next()) {
                 Question question = new Question();
-                question.setQuestionNO(rs.getInt("questionNO"));
+                question.setQuestionNo(rs.getInt("questionNo"));
                 question.setGoodsNo(rs.getInt("goods_no"));
                 question.setCustomerNo(rs.getInt("customer_no"));
                 question.setQuestionTitle(rs.getString("question_title"));

@@ -6,6 +6,7 @@
     <meta name="author" content="" />
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="<%=request.getContextPath()%>/110011/assets/favicon.ico" />
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->

@@ -12,7 +12,6 @@ msg5= request.getParameter("msg5"); %>
   </style>
   <meta charset="UTF-8" />
   <title>MALL : 회원가입</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <jsp:include page="/inc/meta.jsp"></jsp:include>
   <body>
     <jsp:include page="/inc/menubar.jsp"></jsp:include>

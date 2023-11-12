@@ -29,7 +29,7 @@
 </head>
 <body>
 <!-- 메뉴 시작 -->
-	<jsp:include page="/inc/managerMenubar.jsp"></jsp:include>
+	<jsp:include page="/inc/menubar.jsp"></jsp:include>
 <!-- 메뉴 끝 -->
     <p>안녕하세요, <%= loginManager.getManagerName() %>님!</p>
     <p>현재 주문량: <%= dashboardInfo.getOrderCount() %>건</p>
