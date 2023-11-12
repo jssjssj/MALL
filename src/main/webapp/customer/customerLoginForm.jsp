@@ -21,55 +21,55 @@ if (session.getAttribute("loginId") != null) {
 
 	<form method="post" id="logAction" action="customerLoginAction.jsp">
 		<div class="container">
-				<fieldset>
+			<fieldset>
 <%
-					if (msg3 != null) {
+				if (msg3 != null) {
 %>
-					<div class="msg"><%=msg3%></div>
-
-<%
-					}
-%>
-					<div>로그인</div>
+				<div class="msg"><%=msg3%></div>
 
 <%
-					if (msg != null) {
+				}
 %>
-					<div class="msg"><%=msg%></div>
+				<div>로그인</div>
 
 <%
-					}
+				if (msg != null) {
+%>
+				<div class="msg"><%=msg%></div>
+
+<%
+				}
 %>
 <%
-					if (noMsg != null) {
+				if (noMsg != null) {
 %>
-					<div><%=noMsg%></div>
+				<div><%=noMsg%></div>
 <%
-					}
+				}
 %>
+				<!-- Email input -->
+				<div class="form-outline mb-4">
+					<input type="text" name="customerId" id="id" class="form-control" />
+					<label class="form-label" for="id">아이디</label>
+					<span id="idMsg"></span>
+				</div>
 
-					<table border="1">
-						<tr>
-							<th>ID</th>
-							<th><input type="text" name="customerId" id="id"></th>
-							<td><span id="idMsg"></span></td>
-						</tr>
+				<!-- Password input -->
+				<div class="form-outline mb-4">
+					<input type="password" name="customerPw" id="pw" class="form-control" />
+					<label class="form-label" for="pw">비밀번호</label>
+					<span id="pwMsg"></span>
+				</div>
 
-						<tr>
-							<th>PW</th>
-							<th><input type="password" name="customerPw" id="pw"></th>
-							<td><span id="pwMsg"></span></td>
-						</tr>
+				<!-- Submit button -->
+				<button type="button" class="btn btn-primary btn-block mb-4" id="loginBtn">로그인</button>
 
-						<tr>
-							<th colspan="2"><button id="loginBtn" type="button">로그인</button>
-								<button>
-									<a href="<%=request.getContextPath()%>/customer/insertCustomerForm.jsp">회원가입</a>
-								</button></th>
-						</tr>
-					</table>
+				<!-- Register buttons -->
+				<div class="text-center">
+					<p>회원이 아니신가요? <a href="<%=request.getContextPath()%>/customer/insertCustomerForm.jsp">가입하기</a></p>
+				</div>
 
-				</fieldset>
+			</fieldset>
 
 			
 		</div>
