@@ -49,11 +49,6 @@
                 </tr>
 
                 <tr>
-                    <th>현재PW</th>
-                    <td><input type="password" name="customerPw"></td>
-                </tr>
-
-                <tr>
                     <th>변경PW</th>
                     <td><input type="password" name="newPw"></td>
                 </tr>

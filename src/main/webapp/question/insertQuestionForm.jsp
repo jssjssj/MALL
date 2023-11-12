@@ -27,7 +27,8 @@
 		action="<%=request.getContextPath()%>/question/insertQuetionAction.jsp">
 		<div class="container">
 			<fieldset>
-				<legend>문의글 등록</legend>
+				<h2>문의글 등록</h2> <br>
+				<h6>문의글은 수정 및 삭제할 수 없으니 신중히 등록해주세요</h6>
 				<table border="1">
 					<!-- 제목 -->
 					<tr>

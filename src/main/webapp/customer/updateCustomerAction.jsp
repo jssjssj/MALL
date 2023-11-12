@@ -17,9 +17,8 @@
     Customer customer = customerDao.customerOne(customerId);
     
     
-    // 만약 현재 비밀번호가 맞다면 업데이트 수행
-   if (customer != null && customer.getCustomerPw().equals(customerPw)) {
-        // 변경된 부분: Customer 객체의 비밀번호를 해시에서 평문으로 변경
+    //  현재 비밀번호가 맞다면 업데이트 수행
+  
         customer.setCustomerPw(newPw);
 
         CustomerDetail customerDetail = new CustomerDetail();
@@ -41,10 +40,5 @@
         	System.out.println(result);
         	response.sendRedirect(request.getContextPath()+"/customer/customerOne.jsp?updateMsg2="+updateMsg2);
         }
-    } else {
-    	
-    	String updateMsg3=URLEncoder.encode("현재 비밀번호가 일치하지 않습니다!"+ customer.getCustomerPw() + "  " + newPw);
-        response.sendRedirect(request.getContextPath()+"/customer/updateCustomerForm.jsp?updateMsg3="+updateMsg3);
-    }
-
+     
 %>

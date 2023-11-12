@@ -9,7 +9,7 @@ import vo.*;
 public class CustomerDao {
 
 	public int insertCustomer(Customer customer, CustomerDetail customerDetail, CustomerAddr customerAddr) {
-	    int customerNo = 0; // 초기화된 값
+	    int customerNo = 0; // 초기화 값
 
 	    try {
 	        DBUtil dbUtil = new DBUtil();
@@ -29,10 +29,10 @@ public class CustomerDao {
 	            }
 	        }
 
-	        // 변경된 부분: 평문 비밀번호 직접 저장
+	      
 	        String sql1 = "INSERT INTO customer"
 	                + "(customer_id, customer_pw, createdate, updatedate, active) "
-	                + "VALUES(?, ?, NOW(), NOW(), 'Y')";
+	                + "VALUES(?, PASSWORD(?), NOW(), NOW(), 'Y')";
 	        try (PreparedStatement stmt1 = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS)) {
 	            stmt1.setString(1, customer.getCustomerId());
 	            stmt1.setString(2, customer.getCustomerPw()); // 평문으로 저장
@@ -130,9 +130,10 @@ public class CustomerDao {
 	        DBUtil dbUtil = new DBUtil();
 	        Connection conn = dbUtil.getConnection();
 	        // 고객 정보 업데이트
-	        String sql1 = "UPDATE customer SET customer_pw = ? , updatedate = NOW() WHERE customer_no = ?";
+	        String sql1 = "UPDATE customer SET customer_pw = PASSWORD(?) , updatedate = NOW() "
+	        		+ "WHERE customer_no = ?";
 	        PreparedStatement stmt = conn.prepareStatement(sql1);
-	        stmt.setString(1, customer.getCustomerPw()); // 평문으로 저장
+	        stmt.setString(1, customer.getCustomerPw());
 	        stmt.setInt(2, customer.getCustomerNo());
 	        int row1 = stmt.executeUpdate();
 
@@ -158,7 +159,7 @@ public class CustomerDao {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return -1;
+            return -2;
         }
     }
 

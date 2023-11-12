@@ -19,7 +19,7 @@ public class QuestionDao {
             DBUtil dbUtil = new DBUtil();
             conn = dbUtil.getConnection();
 
-            // 입력(insert) SQL
+            // 입력(insert)
             String sql = "INSERT INTO question"
                 + "(goods_no, customer_no, question_title, question_content, createdate, updatedate) "
                 + "VALUES(?, ?, ?, ?, now(), now())";
