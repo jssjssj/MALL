@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> <% String msg4= request.getParameter("msg4"); String
-msg5= request.getParameter("msg5"); %>
+pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
 <html>
   <style>
@@ -24,9 +23,7 @@ msg5= request.getParameter("msg5"); %>
       <div class="container">
         <fieldset>
           <legend>회원가입</legend>
-          <% if(msg5 != null){ %>
-          <div><%=msg5%></div>
-          <% } %>
+         
           <table border="1">
             <!-- 아이디 -->
             <tr>

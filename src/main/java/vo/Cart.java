@@ -7,6 +7,10 @@ public class Cart {
 	private	int quantity;
 	private	String createdate;
 	private	String updatedate;
+	private int endPrice;
+	private int midPrice;
+	
+	
 	public int getCartNo() {
 		return cartNo;
 	}
@@ -37,13 +41,47 @@ public class Cart {
 	public void setCreatedate(String createdate) {
 		this.createdate = createdate;
 	}
-
 	public String getUpdatedate() {
 		return updatedate;
 	}
-
-	public void setUpdatadate(String updatedate) {
+	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
 	}
+	public int getEndPrice() {
+		return endPrice;
+	}
+	public void setEndPrice(int endPrice) {
+		this.endPrice = endPrice;
+	}
+	public int getMidPrice() {
+		return midPrice;
+	}
+	public void setMidPrice(int midPrice) {
+		this.midPrice = midPrice;
+	}
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	public Goods getGoods() {
+		return goods;
+	}
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+	public GoodsImg getGoodsImg() {
+		return goodsImg;
+	}
+	public void setGoodsImg(GoodsImg goodsImg) {
+		this.goodsImg = goodsImg;
+	}
+	Customer customer;
+	Goods goods;
+	GoodsImg goodsImg;
+	
+	
+	
 	
 }

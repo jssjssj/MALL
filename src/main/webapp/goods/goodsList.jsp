@@ -6,6 +6,17 @@
 <%@ page import="util.*" %>
 
 <%
+	// 샘플 데이터 입력.
+	GoodsDao goodsDao = new GoodsDao();
+	SampleData sample = new SampleData();
+	for(int i = 0; i < 0; i++) {
+		Goods goods = sample.getGoods();
+		GoodsImg goodsImg = sample.getGoodsImg(); 
+		goodsDao.insertGoods(goods,goodsImg);
+	}
+%>
+
+<%
 	/*
 		TODO:
 			1. 굿즈 리스트를 가져온다.
@@ -61,7 +72,9 @@
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">장바구니 담기 	</a></div>
+                            <div class="text-center">
+                            <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp">장바구니 담기
+                            </a></div>
                         </div>
                     </div>
                 </div>

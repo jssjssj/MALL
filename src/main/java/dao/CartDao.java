@@ -14,19 +14,34 @@ public class CartDao {
 	 */
     
   // select
-  	public int selectCart(int customerNo) throws Exception {
-  		int row = 0;
+  	public Cart selectCart(int customerNo) throws Exception {
+  		Cart cart = new Cart();
   		// DB연결
   		DBUtil dbUtil = new DBUtil();
   		Connection conn = dbUtil.getConnection();		
-  		String sql = "SELECT a.goods_title , a.goods_price , b.quantity , a.goods_price*b.quantity FROM goods a INNER JOIN cart b"
-  				+ "ON a.goods_no = b.goods_no WHERE b.customer_no = ?" ;
+  		String sql = """
+  				SELECT   b.goods_title , b.goods_price ,a.quantity , b.soldout ,
+				 c.filename , a.quantity* b.goods_price AS 소계  FROM cart a INNER JOIN goods b ON a.goods_no = b.goods_no 
+				 INNER JOIN goods_img c ON b.goods_no = c.goods_no
+				 WHERE a.customer_no = ?
+  				""";
   		PreparedStatement stmt = conn.prepareStatement(sql);
   		stmt.setInt(1, customerNo);
-  		System.out.println(stmt + " <-- stmt deleteCustomer()");
   		ResultSet rs = stmt.executeQuery();
-  		return row;	
+  		List <Cart> carts = new ArrayList<>();
+  		while(rs.next()) {
+  			
+  			cart.setCartNo(rs.getInt("cart_no"));
+  			cart.getGoods().setGoodsTitle(rs.getString("goods_title"));
+  			cart.getGoods().setGoodsPrice(rs.getInt("goods_price"));
+  			cart.setQuantity(rs.getInt("quentity"));
+  			cart.setMidPrice(rs.getInt("소계"));
+  			carts.add(cart);
+  			
+  		}
+  		return cart;
   	}
+  	
 
   	// insert
   	public int insertCart(int customerNo , int goodsNo , int quantity) throws Exception {

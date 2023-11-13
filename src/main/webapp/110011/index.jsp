@@ -42,7 +42,7 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="#">바로구매</a>
-                                <a class="btn btn-outline-dark mt-auto" href="#">장바구니+</a></div>
+                                <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp">장바구니+</a></div>
                             </div>
                         </div>
                     </div>
