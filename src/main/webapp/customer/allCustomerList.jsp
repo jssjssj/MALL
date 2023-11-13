@@ -40,11 +40,11 @@
 		            
 		                <td><%= customer.getCustomerId() %></td>
 		                
-		                <td><%= customer.getCustomerDetail().getCustomerName() %></td>
+		                <td><%= customer.getCustomerDetail() != null ? customer.getCustomerDetail().getCustomerName() : " " %></td>
 		                
-		                <td><%= customer.getCustomerDetail().getCustomerPhone() %></td>
+		                <td><%= customer.getCustomerDetail() != null ? customer.getCustomerDetail().getCustomerPhone() : " " %></td>
 		                
-		                <td><%= customer.getCustomerAddr().getAddress() %></td>
+		                <td><%= customer.getCustomerAddr() != null ?  customer.getCustomerAddr().getAddress() : " "%></td>
 		                
 		                <td><%= customer.getCreatedate() %></td>
 		                

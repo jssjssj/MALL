@@ -52,7 +52,7 @@ public class NoticeDao extends ClassDao {
             // 업데이트 SQL
             String sql = "UPDATE notice SET "
 	            		+ "notice_title=?, notice_content=?, updatedate=now() "
-	            		+ "WHERE noticeNo=?";
+	            		+ "WHERE notice_no=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, updateNotice.getNoticeTitle());
             stmt.setString(2, updateNotice.getNoticeContent());
@@ -78,7 +78,7 @@ public class NoticeDao extends ClassDao {
 
         try {
             // 삭제 SQL
-            String sql = "DELETE FROM notice WHERE noticeNo=?";
+            String sql = "DELETE FROM notice WHERE notice_no=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, noticeNo);
 
@@ -164,4 +164,13 @@ public class NoticeDao extends ClassDao {
 			if (rs.next()) cnt = rs.getInt(1);
 			return cnt;
 		}
+		
+		 public Notice getNoticeOne(int notice_no) throws Exception {
+		    	ResultSet rs = db.executeQuery("SELECT * FROM notice WHERE notice_no = ?", notice_no);
+		    	Notice notice = null;
+		    	if (rs.next()) {
+		    		notice = converter.getNotice(rs);
+		    	}
+		    	return notice;
+		    }
 }
