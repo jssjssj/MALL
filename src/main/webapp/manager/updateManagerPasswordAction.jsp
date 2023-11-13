@@ -23,7 +23,7 @@
 	        
 	    } else {
 	        // 이전에 사용한 비밀번호인지 확인
-	        List passwordHistory = managerDao.getManagerByIdAndPassword(managerId,managerPw);
+	        List passwordHistory = managerDao.getManagerByIdAndPassword();
 	        if (passwordHistory.contains(newPassword)) { 
 	            out.println("비밀번호 업데이트 실패: 이미 사용한 적 있는 비밀번호입니다.");
 	        } else {

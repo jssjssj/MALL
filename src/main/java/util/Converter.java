@@ -85,8 +85,6 @@ public class Converter {
 		return question;
 	}
 	
-
-
     public Manager createManagerFromMap(Map<String, Object> managerData) {
         Manager manager = new Manager();
         manager.setManagerNo((Integer) managerData.get("managerNo"));

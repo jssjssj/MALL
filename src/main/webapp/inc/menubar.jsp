@@ -92,8 +92,7 @@
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/notice/noticeList.jsp">공지 확인</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/customer/allCustomerList.jsp">고객 관리</a></li>
             </ul>
-            
-                   
+
             <div class="nav-link"><%=loginManager.getManagerName()%>님 반갑습니다.</div>
             <a href="<%=request.getContextPath()%>/customer/logoutAction.jsp">
             <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">
