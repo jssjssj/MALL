@@ -3,14 +3,9 @@
 
 <%
     // noticeNo 파라미터 확인
-    String noticeNoParam = request.getParameter("noticeNo");
-	// System.out.print(noticeNoParam);
-    if (noticeNoParam == null || noticeNoParam.equals("")) {
-        // noticeNo가 없으면 예외 처리 또는 리다이렉트 등을 수행
-        response.sendRedirect("noticeList.jsp");
-    }
+    int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+	
     
-    int noticeNo = Integer.parseInt(noticeNoParam);
     System.out.print(noticeNo);
     // NoticeDao 한테서 noticeNo에 해당하는 공지사항 삭제하기
     NoticeDao dao = new NoticeDao();

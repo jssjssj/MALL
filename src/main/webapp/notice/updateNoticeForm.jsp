@@ -24,8 +24,8 @@
     <jsp:include page="/inc/header.jsp"></jsp:include>
 <!-- 내용 시작 -->
     <div>
-        <h1>공지사항 수정</h1>
-        <form action="updateNoticeACtion.jsp" method="post">
+        <h1>공지사항 수정</h1> 
+        <form action="updateNoticeAction.jsp" method="post">
             <input type="hidden" name="noticeNo" value="<%= notice.getNoticeNo() %>">
             <label for="title">제목:</label>
             <input type="text" id="title" name="title" value="<%= notice.getNoticeTitle() %>"><br>
