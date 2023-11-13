@@ -6,14 +6,14 @@ import java.util.*;
 import util.*;
 import vo.*;
 
-public class CustomerDao {
+public class CustomerDao extends ClassDao {
 
 	public int insertCustomer(Customer customer, CustomerDetail customerDetail, CustomerAddr customerAddr) {
 	    int customerNo = 0; // 초기화 값
 
 	    try {
-	        DBUtil dbUtil = new DBUtil();
-	        Connection conn = dbUtil.getConnection();
+	       
+	        Connection conn = db.getConnection();
 	        conn.setAutoCommit(false);
 
 	        // 중복 아이디 확인
@@ -107,8 +107,6 @@ public class CustomerDao {
 
 	            customer.setCustomerNo(rs.getInt("customer_no"));
 	            customer.setCustomerId(rs.getString("customer_id"));
-
-	            // 변경된 부분: 비밀번호를 해시에서 평문으로 변경
 	            customer.setCustomerPw(rs.getString("customer_pw"));
 
 	            customer.setCreatedate(rs.getString("createdate"));
@@ -125,55 +123,57 @@ public class CustomerDao {
 	    return customer;
 	}
 	
-
-	public int updateCustomer(Customer customer, CustomerDetail customerDetail, CustomerAddr customerAddr) {
-	    try {
-	        DBUtil dbUtil = new DBUtil();
-	        Connection conn = dbUtil.getConnection();
-	        // 고객 정보 업데이트
-	        String sql1 = "UPDATE customer SET customer_pw = PASSWORD(?) , updatedate = NOW() "
-	        		+ "WHERE customer_no = ?";
-	        PreparedStatement stmt = conn.prepareStatement(sql1);
-	        stmt.setString(1, customer.getCustomerPw());
-	        stmt.setInt(2, customer.getCustomerNo());
-	        int row1 = stmt.executeUpdate();
-
-            // 고객 상세 정보 업데이트
-            String sql2 = "UPDATE customer_detail SET customer_name = ?, customer_phone = ? WHERE customer_no = ?";
-            PreparedStatement stmt2 = conn.prepareStatement(sql2);
-            stmt2.setString(1, customerDetail.getCustomerName());
-            stmt2.setString(2, customerDetail.getCustomerPhone());
-            stmt2.setInt(3, customer.getCustomerNo());
-            int row2 = stmt2.executeUpdate();
-
-            // 고객 주소 정보 업데이트
-            String sql3 = "UPDATE customer_addr SET address = ? WHERE customer_no = ?";
-            PreparedStatement stmt3 = conn.prepareStatement(sql3);
-            stmt3.setString(1, customerAddr.getAddress());
-            stmt3.setInt(2, customer.getCustomerNo());
-            int row3 = stmt3.executeUpdate();
-
-            if (row1 > 0 && row2 > 0 && row3 > 0) {
-                return 1; // 성공적으로 업데이트됨
-            } else {
-                return -1; // 업데이트 실패
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -2;
-        }
-    }
+	
+	public int updateCustomer(Customer customer , CustomerDetail customerDetail, CustomerAddr customerAddr) throws Exception {
+		Connection conn = db.getConnection();		
+        Customer c = new Customer();        
+        int row = 0;
+        
+        
+        String sql0 = "SELECT customer_pw FROM customer"
+        		+ "WHERE customer_id = ? AND customer_pw = PASSWORD(?)";
+        PreparedStatement stmt0 = conn.prepareStatement(sql0);
+        stmt0.setString(1, c.getCustomerId());
+        stmt0.setString(2, c.getCustomerPw());
+        ResultSet rs = stmt0.executeQuery();
+        if(rs.next()) {        	
+        	String sql1 = "UPDATE customer SET customer_pw = PASSWORD(?), updatedate = NOW()";
+        	PreparedStatement stmt1 = conn.prepareStatement(sql1);
+        	stmt1.setString(1 , customer.getCustomerPw());
+        	int row1 = stmt1.executeUpdate();
+        	
+        	String sql2 = "UPDATE customerDetail SET customer_name = ?, customer_phone = ?";
+        	PreparedStatement stmt2 = conn.prepareStatement(sql2);
+        	stmt2.setString(1 , customerDetail.getCustomerName());
+        	stmt2.setString(2 , customerDetail.getCustomerPhone());
+        	int row2 = stmt2.executeUpdate();
+        	
+        	String sql3 = "UPDATE customerAddr SET address = ?";
+        	PreparedStatement stmt3 = conn.prepareStatement(sql3);
+        	stmt3.setString(1 , customerAddr.getAddress());
+        	int row3 = stmt3.executeUpdate();
+        	
+        	if(row1>0 && row2>0 && row3>0) {
+        		row = 1; // 수정성공
+        	} else {
+        		row = 2; // 수정실패- 알 수 없는 오류
+        	}
+        	    	
+        } row = -1; //현재 비밀번호 불일치
+        
+        return row;
+	}
 
     public List<Customer> selectCustomer() throws Exception {
         DBUtil dbUtil = new DBUtil();
         Connection conn = dbUtil.getConnection();        
         String sql = """
         		SELECT a.customer_no , a.customer_id , a.customer_pw , a.createdate , a.updatedate , a.active ,
-b.address , c.customer_name , c.customer_phone FROM customer a INNER JOIN customer_addr b
-ON a.customer_no = b.customer_no 
-INNER JOIN customer_detail c 
-ON a.customer_no = c.customer_no
-        		""";
+				b.address , c.customer_name , c.customer_phone FROM customer a INNER JOIN customer_addr b
+				ON a.customer_no = b.customer_no 
+				INNER JOIN customer_detail c 
+				ON a.customer_no = c.customer_no
+		        		""";
         
         PreparedStatement stmt = conn.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();

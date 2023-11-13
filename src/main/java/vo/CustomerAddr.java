@@ -36,5 +36,5 @@ public class CustomerAddr {
 	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
 	}
-	
+		
 }

@@ -4,8 +4,8 @@
 <%@ page import="java.net.URLEncoder" %> 
 <%
     // 사용자로부터 입력받은 데이터 가져오기
-    String customerPw = request.getParameter("customerPw"); // 평문으로 전송
-    String newPw = request.getParameter("newPw");
+    String customerPw = request.getParameter("customerPw"); 
+	String newPw = request.getParameter("newPw");
     String newPwck = request.getParameter("newPwck");
     String customerName = request.getParameter("customerName");
     String address = request.getParameter("address");
@@ -14,28 +14,26 @@
     // 세션에서 고객 ID 가져오기 + 고객정보조회
     String customerId = (String)(session.getAttribute("loginId"));
     CustomerDao customerDao = new CustomerDao();
-    Customer customer = customerDao.customerOne(customerId);
     
-    
-    //  현재 비밀번호가 맞다면 업데이트 수행
+    Customer customerOne = customerDao.customerOne(customerId);
+    Customer customer = new Customer();
   
-        customer.setCustomerPw(newPw);
-
-        CustomerDetail customerDetail = new CustomerDetail();
-        customerDetail.setCustomerName(customerName);
-        customerDetail.setCustomerPhone(customerPhone);
-
-        CustomerAddr customerAddr = new CustomerAddr();
-        customerAddr.setAddress(address);
 
         // 업데이트 메소드 호출
-        int result = customerDao.updateCustomer(customer, customerDetail, customerAddr);
+        int result = customerDao.updateCustomer(customer, customer.getCustomerDetail(), customer.getCustomerAddr());
 
-
+	if(newPw==newPwck){
         if (result == 1) {
-          	String updateMsg1=URLEncoder.encode("정보수정완료!");
-          	response.sendRedirect(request.getContextPath()+"/customer/customerOne.jsp?updateMsg1="+updateMsg1);
+        	System.out.println("<script>정보가 수정되었습니다!</script>");
+          	response.sendRedirect(request.getContextPath()+"/customer/customerOne.jsp");
+        } else if(result == -1){
+        	System.out.println("<script>현재 비밀번호가 일치하지 않습니다!</script>");
+        	response.sendRedirect(request.getContextPath()+"/customer/updateCustomerForm.jsp");
         } else {
+        	String updateMsg2=URLEncoder.encode("오류:서버 점검중으로 잠시 후 시도해주세요");
+        	System.out.println(result);
+        	response.sendRedirect(request.getContextPath()+"/customer/customerOne.jsp?updateMsg2="+updateMsg2);
+        }} else {
         	String updateMsg2=URLEncoder.encode("오류:서버 점검중으로 잠시 후 시도해주세요");
         	System.out.println(result);
         	response.sendRedirect(request.getContextPath()+"/customer/customerOne.jsp?updateMsg2="+updateMsg2);
