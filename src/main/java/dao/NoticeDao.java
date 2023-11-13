@@ -164,4 +164,13 @@ public class NoticeDao extends ClassDao {
 			if (rs.next()) cnt = rs.getInt(1);
 			return cnt;
 		}
+		
+		 public Notice getNoticeOne(int notice_no) throws Exception {
+		    	ResultSet rs = db.executeQuery("SELECT * FROM notice WHERE notice_no = ?", notice_no);
+		    	Notice notice = null;
+		    	if (rs.next()) {
+		    		notice = converter.getNotice(rs);
+		    	}
+		    	return notice;
+		    }
 }

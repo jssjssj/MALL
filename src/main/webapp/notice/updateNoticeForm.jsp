@@ -1,104 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.net.URLEncoder.*" %>
+<%@ page import="java.net.URLEncoder.*,vo.*,dao.*" %>
 <%request.setCharacterEncoding("UTF-8"); %>
+<%
+    // noticeNo 파라미터 확인
+    String noticeNoParam = request.getParameter("noticeNo");
+    if (noticeNoParam == null || noticeNoParam.equals("")) {
+        // noticeNo가 없으면 예외 처리 또는 리다이렉트 등을 수행
+        response.sendRedirect("noticeList.jsp");
+    }
+
+    int noticeNo = Integer.parseInt(noticeNoParam);
+
+    // NoticeDao 한테서 noticeNo에 해당하는 공지사항 가져오기
+    NoticeDao dao = new NoticeDao();
+    Notice notice = dao.getNoticeOne(noticeNo);
+%>
 <!DOCTYPE html>
 <html>
 <jsp:include page="/inc/meta.jsp"></jsp:include>
 <body>	
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
     <jsp:include page="/inc/header.jsp"></jsp:include>
-
-<form method="post" id="signinForm" action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp">
-   <div class="outer">
-  <div class="inner">
-  <fieldset>
-  <legend>회원가입</legend>
-      <table border="1">
+<!-- 내용 시작 -->
+    <div>
+        <h1>공지사항 수정</h1>
+        <form action="updateNoticeACtion.jsp" method="post">
+            <input type="hidden" name="noticeNo" value="<%= notice.getNoticeNo() %>">
+            <label for="title">제목:</label>
+            <input type="text" id="title" name="title" value="<%= notice.getNoticeTitle() %>"><br>
+            <label for="content">내용:</label>
+            <textarea id="content" name="content"><%= notice.getNoticeContent() %></textarea><br>
+            <input type="submit" value="수정">
+        </form> 
+    </div>
+    <!-- 내용 끝 -->
             
-         <!-- 아이디 -->
-         <tr>
-            <th>제목</th>
-            <td>
-               <input type="text" name="customerId" id="id" class="id"> 
-               <span id="idMsg" class="msg"></span>
-            </td>
-         </tr>
-         <!-- 비밀번호 -->
-         <tr>
-            <th>PW</th>
-            <td>
-               <input type="password" name="customerPw" id="pw" class="pw"> 
-               <span id="pwMsg" class="msg"></span>
-            </td>
-         </tr>
-         
-          <tr>
-            <th>PW확인</th>
-            <td>
-               <input type="password" name="customerPwck" id="pwck" class="pwck"> 
-               <span id="pwckMsg" class="msg"></span>
-            </td>
-         </tr>
-         
-         <tr>
-         	<td>
-               <button type="submit" id="signinBtn" >가입하기</button>
-            </td>
-         </tr>
-         
-         
-         
-      </table>
-    
-      
-      </fieldset>    
-        </div>
-</div>
-   </form>
-
-
-<script>
-	
-	$('#id').keyup(function() {
-		if($('#id').val().length<4) {
-		$('#idMsg').text('ID는 4자 이상입니다.');
-	}	else{
-		$('#idMsg').text('');
-		}
-	});
-	
-	$('#pw').keyup(function() {
-		if($('#pw').val().length<4) {
-		$('#pwMsg').text('PW는 4자 이상입니다.');
-		} else {
-			$('#pwMsg').text('');	
-		}
-	});
-	
-	$('#pwck').keyup(function() {
-		if($('#pw').val()!=$('#pwck').val()){
-			$('#pwckMsg').text('PW와 일치하지 않습니다.');
-		} else {
-			$('#pwckMsg').text('PW와 일치합니다!');
-		}
-	})
-	
-	$('#signinBtn').click(function() {
-	 if ($('#id').val().length<4 || $('#pw').val().length<4 || $('#pw').val()!=$('#pwck').val()) {
-		 alert('ID , PW 필수조건을 확인하세요.')
-		 return;
-		 } else{
-			 alert('회원가입 성공 , 로그인 후 이용해주세요~');
-		$('#signinForm').submit();
-		 }
-	});
-	
-
-	
-	
-	</script>
-	
 <!-- footer 시작 -->
    <jsp:include page="/inc/footer.jsp"></jsp:include>
 <!-- footer 끝 -->	

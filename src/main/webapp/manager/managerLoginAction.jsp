@@ -1,7 +1,8 @@
 <%@ page import="vo.*, dao.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-
+<%@ page import="java.net.URLEncoder.*" %>
+<%request.setCharacterEncoding("UTF-8");%>ㄴ
 <%
     String managerId = request.getParameter("managerId");
     String managerPw = request.getParameter("managerPw");
