@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="vo.*, dao.*, util.*" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.net.URLEncoder.*" %>
+<%request.setCharacterEncoding("UTF-8");%>
 <%
 	// 샘플 데이터 입력.
 	NoticeDao noticeDao = new NoticeDao();

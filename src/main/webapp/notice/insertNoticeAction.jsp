@@ -1,12 +1,12 @@
 <%@ page import="vo.*" %>
 <%@ page import="dao.*" %>
 <%@ page import="java.net.URLEncoder" %>
-<%@ page import="java.net.URLEncoder" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 
 <%
+request.setCharacterEncoding("UTF-8");
 // 매니저 세션 확인
 Manager loginManager = (Manager)session.getAttribute("loginManager");
 if (loginManager == null) {
