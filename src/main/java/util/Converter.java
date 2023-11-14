@@ -20,7 +20,7 @@ public class Converter {
 			e.printStackTrace();
 		}
 		return goods;
-	}
+	}	
 
 	public GoodsImg getGoodsImg(ResultSet rs) {
 		GoodsImg goodsImg = new GoodsImg();
@@ -34,24 +34,7 @@ public class Converter {
 		return goodsImg;
 	}
 	
-	public Notice getNotice(ResultSet rs) {
-		Notice notice = new Notice();
-		try {			
-			 notice.setNoticeNo(rs.getInt("notice_no"));
-             notice.setManagerNo(rs.getInt("manager_no"));
-             notice.setNoticeTitle(rs.getString("notice_title"));
-             notice.setNoticeContent(rs.getString("notice_content"));
-             notice.setCreatedate(rs.getString("createdate"));
-             notice.setUpdatedate(rs.getString("updatedate"));
-             
-             Manager manager = new Manager();
-             manager.setManagerName(rs.getString("manager_name"));
-             notice.setManager(manager);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return notice;
-	}
+	
 	
 	public Manager getManager(ResultSet rs) {
 		Manager manager = new Manager();
@@ -96,4 +79,51 @@ public class Converter {
         manager.setActive((String) managerData.get("active"));
         return manager;
     }
+    
+    public Cart getCart(ResultSet rs) {
+    	Cart cart = new Cart();
+    	try {
+    		cart.setCartNo(rs.getInt("cart_no"));
+    		cart.setGoodsNo(rs.getInt("goods_no"));
+    		cart.setCustomerNo(rs.getInt("customer_no"));
+    		cart.setQuantity(rs.getInt("quantity"));
+    		cart.setCreatedate(rs.getString("createdate"));
+    		cart.setUpdatedate(rs.getString("updatedate"));
+            Customer customer = new Customer();
+            customer.setCustomerNo(rs.getInt("customer_no"));
+            Goods goods = new Goods();  
+            goods.setGoodsNo(rs.getInt("goods_no"));
+            goods.setGoodsTitle(rs.getString("goods_title"));
+            goods.setSoldout(rs.getString("soldout"));
+            goods.setGoodsPrice(rs.getInt("goods_price"));
+            GoodsImg goodsImg = new GoodsImg();
+            goodsImg.setFileName(rs.getString("filename"));
+            cart.setGoodsImg(goodsImg);
+            cart.setGoods(goods); 
+            cart.setCustomer(customer);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+     	return cart;
+    }
+    
+    public Notice getNotice(ResultSet rs) {
+		Notice notice = new Notice();
+		try {			
+			 notice.setNoticeNo(rs.getInt("notice_no"));
+             notice.setManagerNo(rs.getInt("manager_no"));
+             notice.setNoticeTitle(rs.getString("notice_title"));
+             notice.setNoticeContent(rs.getString("notice_content"));
+             notice.setCreatedate(rs.getString("createdate"));
+             notice.setUpdatedate(rs.getString("updatedate"));
+             
+             
+             Manager manager = new Manager();
+             manager.setManagerName(rs.getString("manager_name"));
+             notice.setManager(manager);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return notice;
+	}
 }
