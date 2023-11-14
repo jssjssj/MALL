@@ -19,7 +19,7 @@ public class OrdersDao extends ClassDao {
 	    Connection conn = dbUtil.getConnection();
 	    PreparedStatement stmt = null;
 		String sql = """
-        			SELECT g.goods_title 상품명, o.quantity 주문수량  , o.total_price 상품소계 , 
+        			SELECT o.orders_no 주문번호 , g.goods_title 상품명, o.quantity 주문수량  , o.total_price 상품소계 , 
 					o.orders_state 배송여부 , cd.customer_name 주문자명 , ca.address 배송주소
 					FROM orders o
 					INNER JOIN customer c
@@ -43,6 +43,7 @@ public class OrdersDao extends ClassDao {
 				customerAddr = new CustomerAddr();
 				goods = new Goods();				
 				
+				orders.setOrdersNo(rs.getInt("주문번호"));
 				orders.setOrdersState(rs.getString("배송여부"));
 				orders.setTotalPrice(rs.getInt("상품소계"));
 				orders.setQuantity(rs.getInt("주문수량"));
@@ -61,41 +62,30 @@ public class OrdersDao extends ClassDao {
 	}
 	
 	
-	public int delete(String customerId) throws Exception {
+	public int delete(int ordersNo) throws Exception {
 		 DBUtil dbUtil = new DBUtil();
 		 Customer customer = null;
 		 int row = 0;
 		 Connection conn = dbUtil.getConnection();
-		 String sql1 = """
-		 		SELECT customer_no 고객번호
-		 		FROM customer
-		 		WHERE customer_id = ?
-		 		""";
-		 PreparedStatement stmt1 = conn.prepareStatement(sql1);
-		 stmt1.setString(1, customerId);
-		 ResultSet rs1 = stmt1.executeQuery();
-		 if(rs1.next()) {
+		 
 			 customer = new Customer();
-			 String sql2 = """
+			 String sql = """
 			 		DELETE FROM orders
-			 		WHERE customer_no=?
+			 		WHERE orders_no=?
 			 		""";
-		PreparedStatement stmt2 = conn.prepareStatement(sql2);
-		stmt2.setInt(1,rs1.getInt("customer_no"));
-		row = stmt2.executeUpdate();
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1,ordersNo);
+		row = stmt.executeUpdate();
 		if(row>0) { //주문 취소 + 주문 정보 삭제
-			return 1;
-		} else { // 주문 취소 실패ㅠ
-			return 0;
+			return row;
+		} else { // 주문 취소실패ㅠ 
+			return row;
 		}
 		
-		 } else {
-			 // 주문정보 없음
-			 return -1;
 		 }
-		 
+		
 	}
-}
+
 	
 
 

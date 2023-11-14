@@ -8,45 +8,78 @@
 	if(customerId==null) {
 		response.sendRedirect(request.getContextPath()+"/customer/customerLoginForm.jsp");
 	}
+	Orders oreders = new Orders();
 	List<Orders> ordersList = new ArrayList<>();
 	
 	OrdersDao ordersDao = new OrdersDao();
 	
 	ordersList = ordersDao.select(customerId);
 	
-	System.out.println(orderses);
-	System.out.println(customerId);
 	
-	Orders oreders = new Oreders();
 %>
 <!DOCTYPE html>
 <html>
+<style>
+table, td, th {
+  border : 1px solid black;
+  border-collapse : collapse;
+}
+table {
+  width : 1000px;
+  height : 50px;
+}
+th, td {
+vertical-align : middle;
+  text-align: center;
+}
+
+
+</style>
+<jsp:include page="/inc/meta.jsp"></jsp:include>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>orderView</title>
 </head>
 <body>
-	<h3>주문화면</h3>
-<form method="post" action = "<%=request.getContextPath()%>/order.endOrder.jsp">
-	<table border="1">
+				<jsp:include page="/inc/menubar.jsp"></jsp:include>
+			    <jsp:include page="/inc/header.jsp"></jsp:include>
+		
+	<h2>주문화면</h2>
+			<table border="1">
+					<tr>
+						<td>	</td>
+						
+						<td>주문번호</td>
+						<td>상품명</td>
+						<td>주문수량</td>
+						<td>상품소계</td>
+						<td>배송진행여부</td>
+						<td>배송주소</td>
+					</tr>
+			</table>
 	<%
-		for(ordersList : orders) { 
+		for(Orders o : ordersList) {
 	%>
-		<tr> 
-			<td>주문총액</td>
-			<td><%=orderses.getQuantity()%></td>
-		</tr>
+			<table border="1">
+					<tr>
+						<td><a href="<%=request.getContextPath()%>/order/deleteOrdersAction.jsp">
+						<button value="<%=o.getOrdersNo()%>" name="ordersNo" >X</button></a></td>
+						
+						<td>		<%=o.getOrdersNo()%>			 </td>
+						<td>		<%=o.getGoods().getGoodsTitle()%></td>
+						<td>		<%=o.getQuantity()%>			 </td>
+						<td>		<%=o.getTotalPrice()%>			 </td>
+						<td>		<%=o.getOrdersState()%>			 </td>
+						<td>	<%=o.getCustomerAddr().getAddress()%></td>
+					</tr>
+			</table>
+	<%		
+		 }
+	%>	
 		
-		<tr>
-			<td>배송주소</td>
-			<td></td>
-		</tr>
-		
-		<tr>
-			<td><button type="submit">결제하기</button></td>
-		</tr>
-		
-	</table>	
-</form>
+
+<!-- footer 시작 -->
+   <jsp:include page="/inc/footer.jsp"></jsp:include>
+<!-- footer 끝 -->
 </body>
 </html>

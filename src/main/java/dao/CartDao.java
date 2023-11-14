@@ -19,7 +19,7 @@ public class CartDao extends ClassDao{
 	    List<Cart> result = new ArrayList<>();
 	    String sql = """
 	            SELECT a.cart_no, b.goods_title, b.goods_price, a.quantity, b.soldout,
-	            c.filename, a.quantity * b.goods_price AS 소계 FROM cart a
+	            c.filename, a.quantity * b.goods_price AS 상품소계 FROM cart a
 	            INNER JOIN goods b ON a.goods_no = b.goods_no
 	            INNER JOIN goods_img c ON b.goods_no = c.goods_no
 	            INNER JOIN customer d ON a.customer_no = d.customer_no
@@ -50,30 +50,57 @@ public class CartDao extends ClassDao{
 
 
   	// insert
-  	public int insertCart(int customerNo , int goodsNo , int quantity) throws Exception {
+  	public int insertCart(String customerId, int goodsNo , int quantity) throws Exception {
   		DBUtil dbUtil = new DBUtil();
   		Connection conn = dbUtil.getConnection();
+  		int row = 0;
+  		String sql0 = """
+  				SELECT customer_no FROM customer
+  				WHERE customer_id = ?
+  				""";
+  		PreparedStatement stmt0 = conn.prepareStatement(sql0);
+  		stmt0.setString(1, customerId);
+  		ResultSet rs = stmt0.executeQuery();
+  		if(rs.next()) {
+  			Customer customer = new Customer();
+  			customer.setCustomerNo(rs.getInt("customer_no"));
+  			
   		String sql = "INSERT INTO cart(goods_no , customer_no , quantity , createdate , updatedate)"
   				+ "VALUES (? , ? , ? , NOW() , NOW())";
   		PreparedStatement stmt = conn.prepareStatement(sql);
   		stmt.setInt(1, goodsNo);
-  		stmt.setInt(2, customerNo);
+  		stmt.setInt(2, customer.getCustomerNo());
   		stmt.setInt(3 , quantity);
-  		int row = stmt.executeUpdate();
+  		row = stmt.executeUpdate();
+  		}
   		return row;
   	}
   	
   	// delete
-  	public int deleteCart(int cartNo) throws Exception {
+  	public int deleteCart(String customerId) throws Exception {
   		DBUtil dbUtil = new DBUtil();
   		Connection conn = dbUtil.getConnection();
-  		String sql = "DELETE FROM cart WHERE cartNo = ?";
+  		int row = 0;
+  		String sql0 = """
+  				SELECT customer_no FROM customer
+  				WHERE customer_id
+  				""";
+  		PreparedStatement stmt0 = conn.prepareStatement(sql0);
+  		stmt0.setString(1, customerId);
+  		ResultSet rs = stmt0.executeQuery();
+  		if(rs.next()) {  		
+  		String sql = """
+  				DELETE FROM cart WHERE customer_no = ?
+  				AND goods_no = ?
+  				""";
   		PreparedStatement stmt = conn.prepareStatement(sql);
-  		stmt.setInt(1, cartNo);
-  		int row = stmt.executeUpdate();
+  		stmt.setInt(1, rs.getInt("customer_id"));
+  		row = stmt.executeUpdate();
+  		}
   		return row;
   	}
   	
+
  // update
    	public int updateCart(int quantity , int cartNo) throws Exception {
    		DBUtil dbUtil = new DBUtil();

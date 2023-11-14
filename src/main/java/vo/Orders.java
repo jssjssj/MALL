@@ -3,7 +3,7 @@ package vo;
 
 
 public class Orders {
-	private int orderNo;
+	private int ordersNo;
 	private int goodsNo;
 	private int customerNo;
 	private int customerAddrNo;
@@ -34,11 +34,11 @@ public class Orders {
 	public void setCustomerDetail(CustomerDetail customerDetail) {
 		this.customerDetail = customerDetail;
 	}
-	public int getOrderNo() {
-		return orderNo;
+	public int getOrdersNo() {
+		return ordersNo;
 	}
-	public void setOrderNo(int orderNo) {
-		this.orderNo = orderNo;
+	public void setOrdersNo(int ordersNo) {
+		this.ordersNo = ordersNo;
 	}
 	public int getGoodsNo() {
 		return goodsNo;

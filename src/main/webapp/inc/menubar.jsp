@@ -41,8 +41,11 @@
             if(customerId!=null) {
 	        %>
            	   
-	             
-            <div class="nav-link"><%=customerDetail.getCustomerName()%>님 반갑습니다  </div>
+	          <a href="<%=request.getContextPath()%>/order/orderView.jsp">
+            <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">
+            주문기록
+            </button>
+            </a>
             <a href="<%=request.getContextPath()%>/customer/logoutAction.jsp">
             <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">
             로그아웃
@@ -61,7 +64,7 @@
 		             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span> 
 		         </button>
 		         </form>
-            <%
+<%
 	            }
 %>       
         </div> 
