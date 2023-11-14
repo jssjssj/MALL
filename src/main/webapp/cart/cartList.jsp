@@ -19,7 +19,7 @@
 	GoodsImg goodsImg = null;
 	Customer customer = null;
 	carts = cartDao.selectCart(customerId);
-	Cart cart  =new Cart();
+	Cart cart  = new Cart();
 	
 	if(cart!=null){
 		goods = cart.getGoods();
@@ -36,6 +36,7 @@
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
     <jsp:include page="/inc/header.jsp"></jsp:include>
 	<h2>장바구니</h2>
+	
 	<table border = "1">
 		<tr>
 			<th>상품이름</th> 
