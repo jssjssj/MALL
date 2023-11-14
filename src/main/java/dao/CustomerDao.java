@@ -91,12 +91,13 @@ public class CustomerDao extends ClassDao {
 	    DBUtil dbUtil = new DBUtil();
 	    ResultSet rs = null;
 	    Connection conn = dbUtil.getConnection();
+	    PreparedStatement stmt = null;
 	    String sql = "SELECT a.customer_no, a.customer_id, a.customer_pw, a.createdate, a.updatedate, a.active, "
 	            + "b.address, c.customer_name, c.customer_phone FROM customer a "
 	            + "INNER JOIN customer_addr b ON a.customer_no = b.customer_no "
 	            + "INNER JOIN customer_detail c ON a.customer_no = c.customer_no "
 	            + "WHERE a.customer_id = ?";
-	    PreparedStatement stmt = conn.prepareStatement(sql);
+	    stmt = conn.prepareStatement(sql);
 	    stmt.setString(1, customerId);
 
 	    rs = stmt.executeQuery() ;
@@ -180,6 +181,7 @@ public class CustomerDao extends ClassDao {
         List<Customer> customers = new ArrayList<>();
 
             while (rs.next()) {
+            	
                 Customer customer = new Customer();
                 CustomerAddr customerAddr = new CustomerAddr();
                 CustomerDetail customerDetail = new CustomerDetail();
