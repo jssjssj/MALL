@@ -7,9 +7,6 @@ public class Customer {
 	private	String createdate;
 	private	String updatedate;
 	private	String active;
-	
-
-	
 	CustomerAddr customerAddr; 
     CustomerDetail customerDetail; 
     

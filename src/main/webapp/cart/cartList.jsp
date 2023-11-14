@@ -7,18 +7,30 @@
 <html>
 <jsp:include page="/inc/meta.jsp"></jsp:include>
 <%
-
-	String CustomerId = (String)(session.getAttribute("loginId"));
-	Customer customer = new Customer();
-	if(CustomerId==null){
-		response.sendRedirect(request.getContextPath()+"/customer/customerLoginForm.jsp");
-	}
-
-	Cart cart = new Cart();
-	Goods goods = new Goods();
+	
+	String customerId = (String)(session.getAttribute("loginId"));
 	CartDao cartDao = new CartDao();
 	List<Cart> carts = new ArrayList<>();
+	if(customerId==null){
+		response.sendRedirect(request.getContextPath()+"/customer/customerLoginForm.jsp");
+	}
 	
+	Goods goods = null;
+	GoodsImg goodsImg = null;
+	Customer customer = null;
+	carts = cartDao.selectCart(customerId);
+	Cart cart  =new Cart();
+	
+	if(cart!=null){
+		goods = cart.getGoods();
+		goodsImg = cart.getGoodsImg();
+		customer = cart.getCustomer();
+
+	}
+	
+	
+	
+	 
  %>
 <body>	
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
@@ -40,9 +52,7 @@
 			<td><%=cart.getQuantity()%></td>
 			<td><%=cart.getGoods().getSoldout()%></td>
 			<td><%=cart.getGoodsImg().getFileName()%></td>
-			<td><%=cart.getMidPrice()%></td>
-			<td><%=cart.getEndPrice()%></td>
-			
+			<td><%=cart.getMidPrice()%></td>			
 		</tr>
 		
 		<tr>

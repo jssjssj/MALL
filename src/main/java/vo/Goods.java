@@ -57,6 +57,5 @@ public class Goods {
 	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
 	}
-	
-	
+		
 }
