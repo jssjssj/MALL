@@ -14,43 +14,37 @@ public class CartDao extends ClassDao{
 	 */
     
   // select
-	public List<Cart> selectCart(int customerId) throws Exception {
-		Connection conn = db.getConnection();
-		List<Cart> result = new ArrayList<>();
-		// sql
-		String sql = """
-					SELECT a.cart_no ,  b.goods_title , b.goods_price ,a.quantity , b.soldout ,
-				 c.filename , a.quantity* b.goods_price AS 소계  FROM cart a 
-				 INNER JOIN goods b ON a.goods_no = b.goods_no 
-				 INNER JOIN goods_img c ON b.goods_no = c.goods_no
-				 INNER JOIN customer d ON a.customer_no = d.customer_no
-				 WHERE d.customer_id = ?
-					""";
-		try {
-			ResultSet rs =  db.executeQuery(sql);
-			List<Cart> cartList = new ArrayList<>();
-            while (rs.next()) {
-            	Cart cart = new Cart();
-      			Goods goods = new Goods();
-      			GoodsImg goodsImg = new GoodsImg();
-      			Customer customer = new Customer();
-      			cart.setCustomer(customer);
-      			cart.setGoods(goods);
-      			cart.setGoodsImg(goodsImg);
-      			cart.setCartNo(rs.getInt("cart_no"));
-      			cart.getGoods().setGoodsTitle(rs.getString("goods_title"));
-      			cart.getGoods().setGoodsPrice(rs.getInt("goods_price"));
-      			cart.setQuantity(rs.getInt("quentity"));
-      			cart.setMidPrice(rs.getInt("소계"));
-      			cartList.add(cart);
-            }
-            	result = cartList;
-		}	finally {
-			conn.close();
-		}	
-           return result;     
-            
-     }
+	public List<Cart> selectCart(String customerId) throws Exception {
+	    Connection conn = db.getConnection();
+	    List<Cart> result = new ArrayList<>();
+	    String sql = """
+	            SELECT a.cart_no, b.goods_title, b.goods_price, a.quantity, b.soldout,
+	            c.filename, a.quantity * b.goods_price AS 소계 FROM cart a
+	            INNER JOIN goods b ON a.goods_no = b.goods_no
+	            INNER JOIN goods_img c ON b.goods_no = c.goods_no
+	            INNER JOIN customer d ON a.customer_no = d.customer_no
+	            WHERE d.customer_id = ?
+	            """;
+
+	    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        stmt.setString(1, customerId);
+	        ResultSet rs = stmt.executeQuery();
+
+	        List<Cart> cartList = new ArrayList<>();
+	        while (rs.next()) {
+	            Cart cart = converter.getCart(rs);
+	            cartList.add(cart);
+	        }
+
+	        result = cartList;
+	    } finally {
+	        conn.close();
+	    }
+	    return result;
+	}
+
+	    
+
 
 	
 
