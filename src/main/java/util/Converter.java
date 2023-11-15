@@ -62,6 +62,30 @@ public class Converter {
 			question.setQuestionContent(rs.getString("question_content"));
 			question.setCreatedate(rs.getString("createdate"));
 			question.setUpdatedate(rs.getString("updatedate"));
+			Customer customer = new Customer();
+			customer.setCustomerNo(rs.getInt("customer_no"));;
+			customer.setCustomerId(rs.getString("customer_id"));
+			customer.setCustomerPw(rs.getString("customer_pw"));
+			customer.setCreatedate(rs.getString("createdate"));
+			customer.setUpdatedate(rs.getString("updatedate"));
+			customer.setActive(rs.getString("active"));
+			CustomerDetail customerDetail = new CustomerDetail();
+			customerDetail.setCustomerNo(rs.getInt("customer_no"));
+			customerDetail.setCustomerName(rs.getString("customer_name"));
+			customerDetail.setCustomerPhone(rs.getString("customer_phone"));
+			customerDetail.setCreatedate(rs.getString("createdate"));
+			customerDetail.setUpdatedate("updatedate");
+			Goods goods = new Goods();
+			goods.setGoodsNo(rs.getInt("goods_no"));
+			goods.setGoodsTitle(rs.getString("goods_title"));
+			goods.setGoodsPrice(rs.getInt("goods_price"));
+			goods.setSoldout(rs.getString("soldout"));
+			goods.setGoodsMemo(rs.getString("goods_memo"));
+			goods.setCreatedate(rs.getString("createdate"));
+			goods.setUpdatedate(rs.getString("updatedate"));
+			question.setCustomerDetail(customerDetail);
+			question.setGoods(goods); 
+			question.setCustomer(customer);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

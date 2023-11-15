@@ -174,6 +174,24 @@ public class GoodsDao extends ClassDao {
 
 		return result;
 	}
+	public Goods selectGoodsNo(String goodsTitle) throws Exception {
+		Goods  goods=null;
+		Connection conn = db.getConnection();
+		String sql0 = """
+				SELECT goods_no FROM goods
+				WHERE goods_title=?
+				""";
+		PreparedStatement stmt0 = conn.prepareStatement(sql0);
+		stmt0.setString(1, goodsTitle);
+		
+		ResultSet rs0 = stmt0.executeQuery();
+		if(rs0.next()) {
+		goods = new Goods();
+		goods.setGoodsNo(rs0.getInt("goods_no"));
+			}
+		
+		return goods;
+	}
 
 	/**
 	 * 페이징을 위한 게시글 총 개수를 카운팅하는 함수

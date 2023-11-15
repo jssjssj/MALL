@@ -1,21 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="vo.*"%>
 <%@ page import="dao.*"%>
+<%@ page import="java.util.*"%>
 <%
 	CustomerDao customerDao = new CustomerDao();
 	
 	// customerId 사용
 	String customerId = (String)(session.getAttribute("loginId"));
-	
+	Goods goods = new Goods();
 	// customerDao.customerOne 메서드에서 null을 반환하는 경우를 처리
 	Customer customer = customerDao.customerOne(customerId);
 	CustomerDetail customerDetail = null;
 	CustomerAddr customerAddr = null;
 	
+	// 문의상품 select위한 상품정보 불러옴
 	if (customer != null) {
 	    customerDetail = customer.getCustomerDetail();
 	    customerAddr = customer.getCustomerAddr();
 	}
+	
+	String p_page = request.getParameter("page");
+	if (p_page == null || p_page.equals("")) p_page = "1";
+	int _page = Integer.parseInt(p_page);
+	int perPage = 8;
+	
+	// GoodsDao 한테서 select해온다.
+	GoodsDao goodsDao = new GoodsDao();
+	List<Goods> goodsList = goodsDao.selectGoods(_page, perPage);
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -23,7 +35,7 @@
 <body>	
 <jsp:include page="/inc/menubar.jsp"></jsp:include>
 <jsp:include page="/inc/header.jsp"></jsp:include>
-	<form method="post" id="createNoticeForm"
+	<form method="POST" id="createNoticeForm"
 		action="<%=request.getContextPath()%>/question/insertQuetionAction.jsp">
 		<div class="container">
 			<fieldset>
@@ -38,6 +50,13 @@
 							<br><span id="titleMsg" class="msg"></span></td>
 					</tr>
 					<!-- 내용 -->
+					
+					<tr>
+						<th>문의상품</th>
+						<td><select name="goodsTitle"><% for (Goods g : goodsList) { %>
+							<option><%= g.getGoodsTitle()%></option> <%} %>
+						</select></td>
+					</tr>
 					<tr>
 						<th>내용</th>
 						<td><textarea cols="100" rows="10" name="questionContent" id="content"  class="content"

@@ -18,8 +18,8 @@ public class CartDao extends ClassDao{
 	    Connection conn = db.getConnection();
 	    List<Cart> result = new ArrayList<>();
 	    String sql = """
-	            SELECT a.cart_no, b.goods_title, b.goods_price, a.quantity, b.soldout,
-	            c.filename, a.quantity * b.goods_price AS 상품소계 FROM cart a
+	            SELECT a.*, b.*,  c.*, a.quantity * b.goods_price AS 상품소계 
+	            FROM cart a
 	            INNER JOIN goods b ON a.goods_no = b.goods_no
 	            INNER JOIN goods_img c ON b.goods_no = c.goods_no
 	            INNER JOIN customer d ON a.customer_no = d.customer_no
@@ -77,16 +77,28 @@ public class CartDao extends ClassDao{
   	}
   	
   	// delete
-  	public int deleteCart(int cartNo) throws Exception {
+  	public int deleteCart(int customerId , int goodsNo ) throws Exception {
   		DBUtil dbUtil = new DBUtil();
   		Connection conn = dbUtil.getConnection();
   		int row = 0;		
-  		String sql = """
-  				DELETE FROM cart WHERE cart_no=?
+  		String sql0 = """
+  				SELECT * FROM customer
+  				WHERE customer_id = ?
   				""";
+  		PreparedStatement stmt0 = conn.prepareStatement(sql0);
+  		stmt0.setInt(1, customerId);
+  		ResultSet rs = stmt0.executeQuery();
+  		if(rs.next()) {
+  		String sql = """
+  				DELETE FROM cart WHERE goods_no=?
+  				AND customer_no=?
+  				""";
+  		
   		PreparedStatement stmt = conn.prepareStatement(sql);
-  		stmt.setInt(1, cartNo);
-  		row = stmt.executeUpdate();  		
+  		stmt.setInt(1, goodsNo);
+  		stmt.setInt(2, rs.getInt("customer_no"));
+  		row = stmt.executeUpdate();  
+  		}
   		return row;
   	}
   	

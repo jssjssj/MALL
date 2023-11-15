@@ -8,6 +8,30 @@ public class Question {
 	private	String questionContent;
 	private	String createdate;
 	private	String updatedate;
+	Customer customer;
+	CustomerDetail customerDetail;
+	Goods goods;
+	
+	
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	public CustomerDetail getCustomerDetail() {
+		return customerDetail;
+	}
+	public void setCustomerDetail(CustomerDetail customerDetail) {
+		this.customerDetail = customerDetail;
+	}
+	public Goods getGoods() {
+		return goods;
+	}
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
 	public int getQuestionNo() {
 		return questionNo;
 	}

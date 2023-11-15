@@ -29,7 +29,6 @@ table {
   height : 50px;
 }
 th, td {
-vertical-align : middle;
   text-align: center;
 }
 

@@ -1,84 +1,44 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
-import util.DBUtil;
-import vo.Question;
+
+import util.*;
+import vo.*;
 
 public class QuestionDao extends ClassDao{
     // 문의사항 추가
-    public int insertQuestion(Question question) throws Exception {
-        Connection conn = null;
+    public int insertQuestion(String customerId , int goodsNo , String questionTitle , String questionContent) throws Exception {
+        Connection conn = null;        
         PreparedStatement stmt = null;
-
-        try {
-            conn = db.getConnection();
-
+        conn = db.getConnection();
+        int row = 0;
+        String sql0 = """
+        		SELECT * FROM customer
+        		WHERE customer_id = ?
+        		""";
+        PreparedStatement stmt0 = conn.prepareStatement(sql0);
+        stmt0.setString(1, customerId);
+        ResultSet rs0 = stmt0.executeQuery();
+        if(rs0.next()) {
             // 입력(insert)
             String sql = "INSERT INTO question"
                 + "(goods_no, customer_no, question_title, question_content, createdate, updatedate) "
                 + "VALUES(?, ?, ?, ?, now(), now())";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, question.getGoodsNo());
-            stmt.setInt(2, question.getCustomerNo());
-            stmt.setString(3, question.getQuestionTitle());
-            stmt.setString(4, question.getQuestionContent());
-
-            int row = stmt.executeUpdate();
-
-            return row;
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
+            stmt.setInt(1, goodsNo);
+            stmt.setInt(2, rs0.getInt("customer_no"));
+            stmt.setString(3, questionTitle);
+            stmt.setString(4, questionContent);
+            
+            row = stmt.executeUpdate();
         }
+            return row;
+                 
     }
 
-    // 문의사항 정보 업데이트
-    public int updateQuestion(Question updateQuestion) throws Exception {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-
-        try {
-            conn = db.getConnection();
-
-            // 업데이트 SQL
-            String sql = "UPDATE question SET question_title=?,"
-                + " question_content=?, updatedate=now() "
-                + "WHERE questionNO=?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, updateQuestion.getQuestionTitle());
-            stmt.setString(2, updateQuestion.getQuestionContent());
-            stmt.setInt(3, updateQuestion.getQuestionNo());
-
-            int row = stmt.executeUpdate();
-
-            if (row == 1) {
-                System.out.println("문의사항 업데이트 성공");
-            } else {
-                System.out.println("문의사항 업데이트 실패");
-            }
-
-            return row;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-    }
+   
 
     // 문의사항 정보 삭제
     public int deleteQuestion(int questionNO) throws Exception {
@@ -115,48 +75,49 @@ public class QuestionDao extends ClassDao{
         }
     }
 
-    // 문의사항 정보 조회
+    // 문의사항 정보 조회  //cd = customerDetail // c =customer // q = question //g = goods
     public List<Question> selectQuestion() throws Exception {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+	    Connection conn = db.getConnection();
+	    List<Question> result = new ArrayList<>();
+	    String sql = """
+	           SELECT q.* , cd.* , c.* , g.* FROM question q
+        			INNER JOIN customer_detail cd
+        		ON q.customer_no = cd.customer_no
+        			INNER JOIN customer c
+        		ON cd.customer_no = c.customer_no
+        			INNER JOIN goods g
+        		ON g.goods_no = q.goods_no
+	            """;
 
-        try {
-            conn = db.getConnection();
+	    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        ResultSet rs = stmt.executeQuery();
 
-            // 조회 SQL
-            String sql = "SELECT * FROM question";
-            stmt = conn.prepareStatement(sql);
-            rs = stmt.executeQuery();
+	        List<Question> questionList = new ArrayList<>();
+	        while (rs.next()) {
+	        	Question question = converter.getQuestion(rs);
+	            questionList.add(question);
+	        }
 
-            List<Question> questionList = new ArrayList<>();
-
-            while (rs.next()) {
-                Question question = new Question();
-                question.setQuestionNo(rs.getInt("questionNo"));
-                question.setGoodsNo(rs.getInt("goods_no"));
-                question.setCustomerNo(rs.getInt("customer_no"));
-                question.setQuestionTitle(rs.getString("question_title"));
-                question.setQuestionContent(rs.getString("question_content"));
-                question.setCreatedate(rs.getString("createdate"));
-                question.setUpdatedate(rs.getString("updatedate"));
-                questionList.add(question);
-            }
-
-            return questionList;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-    }
+	        result = questionList;
+	    } finally {
+	        conn.close();
+	    }
+	    return result;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
