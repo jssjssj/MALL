@@ -247,5 +247,40 @@ public class ManagerDao extends ClassDao{
             db.close(rs, stmt, conn); // DB 자원 닫기
         }
     }
+    
+ // 계정 비활성화 메서드
+    public int deleteManager(String managerId) throws Exception {
+        int row = 0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = db.getConnection();
+            
+            // 쿼리를 실행하기 전에 rs를 초기화하지 않도록 수정
+            String sql = """
+                    UPDATE manager SET
+                    active = 'N'
+                    WHERE manager_id = ?
+                    """;
+            
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, managerId);
+            
+            // executeUpdate를 호출하여 쿼리를 실행하고 업데이트된 행의 수를 얻음
+            row = stmt.executeUpdate();
+        } finally {
+            // 사용한 자원을 닫음
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+
+        return row;
+    }
+
 
 }    
