@@ -38,7 +38,7 @@ public class SampleData {
         goods.setGoodsMemo("");
         for (int i = 0; i < loremipsum.size(); i++) {
         	if (rand(2) >= 1) {
-        		goods.setGoodsMemo(goods.getGoodsMemo() + " ");
+        		goods.setGoodsMemo(goods.getGoodsMemo() + " " + loremipsum.get(i));
         	}
         }
 		return goods;
