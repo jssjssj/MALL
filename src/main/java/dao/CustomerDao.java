@@ -125,7 +125,9 @@ public class CustomerDao extends ClassDao {
 	}
 	
 	
-	public int updateCustomer(Customer customer , CustomerDetail customerDetail, CustomerAddr customerAddr) throws Exception {
+	public int updateCustomer(String customerId , String customerPw, 
+			String newPw , 
+			String customerName , String address ,String customerPhone) throws Exception {
 		Connection conn = db.getConnection();		
         Customer c = new Customer();        
         int row = 0;
@@ -134,30 +136,30 @@ public class CustomerDao extends ClassDao {
         String sql0 = "SELECT customer_pw FROM customer"
         		+ "WHERE customer_id = ? AND customer_pw = PASSWORD(?)";
         PreparedStatement stmt0 = conn.prepareStatement(sql0);
-        stmt0.setString(1, c.getCustomerId());
-        stmt0.setString(2, c.getCustomerPw());
+        stmt0.setString(1, customerId);
+        stmt0.setString(2, customerPw);
         ResultSet rs = stmt0.executeQuery();
         if(rs.next()) {        	
         	String sql1 = "UPDATE customer SET customer_pw = PASSWORD(?), updatedate = NOW()";
         	PreparedStatement stmt1 = conn.prepareStatement(sql1);
-        	stmt1.setString(1 , customer.getCustomerPw());
+        	stmt1.setString(1 , newPw);
         	int row1 = stmt1.executeUpdate();
         	
         	String sql2 = "UPDATE customerDetail SET customer_name = ?, customer_phone = ?";
         	PreparedStatement stmt2 = conn.prepareStatement(sql2);
-        	stmt2.setString(1 , customerDetail.getCustomerName());
-        	stmt2.setString(2 , customerDetail.getCustomerPhone());
+        	stmt2.setString(1 , customerName);
+        	stmt2.setString(2 , customerPhone);
         	int row2 = stmt2.executeUpdate();
         	
         	String sql3 = "UPDATE customerAddr SET address = ?";
         	PreparedStatement stmt3 = conn.prepareStatement(sql3);
-        	stmt3.setString(1 , customerAddr.getAddress());
+        	stmt3.setString(1 , address);
         	int row3 = stmt3.executeUpdate();
         	
         	if(row1>0 && row2>0 && row3>0) {
         		row = 1; // 수정성공
         	} else {
-        		row = 2; // 수정실패- 알 수 없는 오류
+        		row = 2; // 수정실패- 도무지 왜인지
         	}
         	    	
         } row = -1; //현재 비밀번호 불일치
@@ -201,56 +203,34 @@ public class CustomerDao extends ClassDao {
          
     }
 
-    private String hashPassword(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes = md.digest(password.getBytes());
-
-            // Convert to hexadecimal representation
-            StringBuilder hexString = new StringBuilder();
-            for (byte hashByte : hashBytes) {
-                String hex = Integer.toHexString(0xff & hashByte);
-                if (hex.length() == 1) {
-                    hexString.append('0');
-                }
-                hexString.append(hex);
-            }
-
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    
     // 회원 탈퇴 메서드
-    public int deleteCustomer(String customerId) throws Exception {
+    public int deleteCustomer(String customerId , String customerPw) throws Exception {
     	 int row = 0;
     	 DBUtil dbUtil = new DBUtil();
-    	 Customer customer = new Customer();
          Connection conn = dbUtil.getConnection();
-         PreparedStatement stmt = null;
-         try {String sql = """
-         		UPDATE customer SET active='N' WHERE customer_id = ?
+         String sql0 = """
+         		SELECT customer_id , customer_pw 
+         		FROM customer
+         		WHERE customer_id = ? AND customer_pw = PASSWORD(?)
          		""";
-         stmt = conn.prepareStatement(sql);
-         stmt.setString(1, customerId);
-         row = stmt.executeUpdate();
+         PreparedStatement stmt0 = conn.prepareStatement(sql0);
+         stmt0.setString(1 , customerId);
+         stmt0.setString(2 , customerPw);
+         ResultSet rs = stmt0.executeQuery();
+         if(rs.next()) {
+        	 String sql="""
+        	 		UPDATE customer SET
+        	 		active = 'N'
+        	 		WHERE customer_id = ?
+        	 		""";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1 , customerId);
+        row = stmt.executeUpdate();
          }
          
-         finally {
-        	 
-        	 if (stmt != null) {
-                 stmt.close();
-             }
-             if (conn != null) {
-                 conn.close();
-             } 
-         }
-         
-        return row;
-        
+    	 return row;
     }
-
 }
 
         

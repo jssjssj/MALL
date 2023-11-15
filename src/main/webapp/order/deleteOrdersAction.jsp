@@ -10,7 +10,8 @@
 		OrdersDao ordersDao = new OrdersDao();
 		
 		ordersList = ordersDao.select(customerId);
-		int ordersNo = Integer.parseInt(request.getParameter("ordersNo")); 숫자형식 오류
+		ㅇㄴㄹ숫자형식 오류
+		int ordersNo = Integer.parseInt(request.getParameter("ordersNo")); 
 		int row = ordersDao.delete(ordersNo); 
 		if(row >0 ){
 		System.out.println(ordersNo);

@@ -5,19 +5,21 @@
 
 <%
     String customerId = (String) session.getAttribute("loginId");
+	String customerPw = request.getParameter("customerPw");
     CustomerDao customerDao = new CustomerDao();
+    
 
     // 회원 삭제
-    int row = customerDao.deleteCustomer(customerId);
+    int row = customerDao.deleteCustomer(customerId , customerPw);
         
-        if (row == 1) {
-        	String delMsg=URLEncoder.encode("탈퇴가 완료되었습니다!");
-        	System.out.println(delMsg);
-            // 성공적으로 삭제되었을 경우
-            session.invalidate(); // 세션 무효화
-            response.sendRedirect(request.getContextPath() + "/110011/index.jsp?delMsg="+delMsg);
+        if (row > 0) {
+        	// 성공적으로 삭제되었을 경우
+        	String t =URLEncoder.encode("탈퇴가 완료되었습니다!");
+        	session.invalidate(); // 세션 무효화
+            response.sendRedirect(request.getContextPath() + "/110011/index.jsp?t="+t);
         } else {
-        	System.out.println("실패,,");
+        	String t =URLEncoder.encode("비밀번호 불일치");
+        	response.sendRedirect(request.getContextPath() + "/customer/deleteCustomerForm.jsp?t="+t);
         }
      
     

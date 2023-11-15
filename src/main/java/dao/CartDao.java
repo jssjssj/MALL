@@ -77,39 +77,33 @@ public class CartDao extends ClassDao{
   	}
   	
   	// delete
-  	public int deleteCart(String customerId) throws Exception {
+  	public int deleteCart(int cartNo) throws Exception {
   		DBUtil dbUtil = new DBUtil();
   		Connection conn = dbUtil.getConnection();
-  		int row = 0;
-  		String sql0 = """
-  				SELECT customer_no FROM customer
-  				WHERE customer_id
-  				""";
-  		PreparedStatement stmt0 = conn.prepareStatement(sql0);
-  		stmt0.setString(1, customerId);
-  		ResultSet rs = stmt0.executeQuery();
-  		if(rs.next()) {  		
+  		int row = 0;		
   		String sql = """
-  				DELETE FROM cart WHERE customer_no = ?
-  				AND goods_no = ?
+  				DELETE FROM cart WHERE cart_no=?
   				""";
   		PreparedStatement stmt = conn.prepareStatement(sql);
-  		stmt.setInt(1, rs.getInt("customer_id"));
-  		row = stmt.executeUpdate();
-  		}
+  		stmt.setInt(1, cartNo);
+  		row = stmt.executeUpdate();  		
   		return row;
   	}
   	
 
  // update
    	public int updateCart(int quantity , int cartNo) throws Exception {
+   		int row = 0;
    		DBUtil dbUtil = new DBUtil();
    		Connection conn = dbUtil.getConnection();
-   		String sql = "UPDATE cart SET quantity = ? WHERE cartNo = ?";
+   		String sql = """
+   				UPDATE cart SET quantity = ? , 
+   				updatedate = NOW() WHERE cartNo = ?
+   				""";
    		PreparedStatement stmt = conn.prepareStatement(sql);
    		stmt.setInt(1, quantity);
    		stmt.setInt(2, cartNo);  		
-   		int row = stmt.executeUpdate();
+   		row = stmt.executeUpdate();
    		return row;
    	}
   	
