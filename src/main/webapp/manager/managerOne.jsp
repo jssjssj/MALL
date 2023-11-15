@@ -44,7 +44,7 @@
 						</tr>
 					</table>
 					<button type="submit">비밀번호 변경</button>	
-					<button><a href="<%=request.getContextPath()%>/manager/deleteManagerForm.jsp">회원탈퇴</a></button>				
+					<button><a href="<%=request.getContextPath()%>/manager/deleteManagerAction.jsp">관리자 비활성화</a></button>				
 			</fieldset>
 		</div>
 	</form>
