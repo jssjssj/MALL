@@ -9,15 +9,14 @@ import java.util.List;
 import util.DBUtil;
 import vo.Question;
 
-public class QuestionDao {
+public class QuestionDao extends ClassDao{
     // 문의사항 추가
     public int insertQuestion(Question question) throws Exception {
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
-            DBUtil dbUtil = new DBUtil();
-            conn = dbUtil.getConnection();
+            conn = db.getConnection();
 
             // 입력(insert)
             String sql = "INSERT INTO question"
@@ -48,8 +47,7 @@ public class QuestionDao {
         PreparedStatement stmt = null;
 
         try {
-            DBUtil dbUtil = new DBUtil();
-            conn = dbUtil.getConnection();
+            conn = db.getConnection();
 
             // 업데이트 SQL
             String sql = "UPDATE question SET question_title=?,"
@@ -88,8 +86,7 @@ public class QuestionDao {
         PreparedStatement stmt = null;
 
         try {
-            DBUtil dbUtil = new DBUtil();
-            conn = dbUtil.getConnection();
+            conn = db.getConnection();
 
             // 삭제 SQL
             String sql = "DELETE FROM question WHERE questionNO=?";
@@ -125,8 +122,7 @@ public class QuestionDao {
         ResultSet rs = null;
 
         try {
-            DBUtil dbUtil = new DBUtil();
-            conn = dbUtil.getConnection();
+            conn = db.getConnection();
 
             // 조회 SQL
             String sql = "SELECT * FROM question";

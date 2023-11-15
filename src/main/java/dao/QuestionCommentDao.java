@@ -9,15 +9,15 @@ import java.util.List;
 import util.DBUtil;
 import vo.QuestionComment;
 
-public class QuestionCommentDao {
+public class QuestionCommentDao extends ClassDao {
     // 문의사항 답변 추가
     public int insertQuestionComment(QuestionComment insertQuestionComment) throws Exception {
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
-            DBUtil dbUtil = new DBUtil();
-            conn = dbUtil.getConnection();
+            
+            conn = db.getConnection();
 
             // 입력(insert) SQL
             String sql = "INSERT INTO questionComment"
@@ -56,8 +56,7 @@ public class QuestionCommentDao {
         PreparedStatement stmt = null;
 
         try {
-            DBUtil dbUtil = new DBUtil();
-            conn = dbUtil.getConnection();
+            conn = db.getConnection();
 
             // 업데이트 SQL
             String sql = "UPDATE questionComment SET comment=?, updatedate=now() WHERE questionCommentNo=?";
@@ -93,8 +92,7 @@ public class QuestionCommentDao {
         PreparedStatement stmt = null;
 
         try {
-            DBUtil dbUtil = new DBUtil();
-            conn = dbUtil.getConnection();
+            conn = db.getConnection();
 
             // 삭제 SQL - managerNo를 확인하여 삭제 권한을 부여
             String sql = "DELETE FROM questionComment WHERE questionCommentNo=? AND manager_no=?";
@@ -131,8 +129,7 @@ public class QuestionCommentDao {
         ResultSet rs = null;
 
         try {
-            DBUtil dbUtil = new DBUtil();
-            conn = dbUtil.getConnection();
+            conn = db.getConnection();
 
             // 조회 SQL
             String sql = "SELECT * FROM questionComment WHERE question_no=?";
