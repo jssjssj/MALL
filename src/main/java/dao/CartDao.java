@@ -43,11 +43,6 @@ public class CartDao extends ClassDao{
 	    return result;
 	}
 
-	    
-
-
-	
-
 
   	// insert
   	public int insertCart(String customerId, int goodsNo , int quantity) throws Exception {
@@ -77,7 +72,7 @@ public class CartDao extends ClassDao{
   	}
   	
   	// delete
-  	public int deleteCart(int customerId , int goodsNo ) throws Exception {
+  	public int deleteCart(String customerId , int goodsNo ) throws Exception {
   		DBUtil dbUtil = new DBUtil();
   		Connection conn = dbUtil.getConnection();
   		int row = 0;		
@@ -86,7 +81,7 @@ public class CartDao extends ClassDao{
   				WHERE customer_id = ?
   				""";
   		PreparedStatement stmt0 = conn.prepareStatement(sql0);
-  		stmt0.setInt(1, customerId);
+  		stmt0.setString(1, customerId);
   		ResultSet rs = stmt0.executeQuery();
   		if(rs.next()) {
   		String sql = """
@@ -101,7 +96,6 @@ public class CartDao extends ClassDao{
   		}
   		return row;
   	}
-  	
 
  // update
    	public int updateCart(int quantity , int cartNo) throws Exception {

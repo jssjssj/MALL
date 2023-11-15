@@ -2,7 +2,7 @@
 <%@ page import="vo.*"%>
 <%@ page import="dao.*"%>
 <%@ page import="java.sql.*" %>
-   
+<%@ page import="java.net.URLEncoder" %> 
 <%
 	
     CustomerDao customerDao = new CustomerDao();
@@ -19,6 +19,10 @@
         customerDetail = customer.getCustomerDetail();
         customerAddr = customer.getCustomerAddr();
     }
+    
+    
+    String n4 = request.getParameter("n4");
+	String n1 = request.getParameter("n1");
 %>
 
 
@@ -36,6 +40,9 @@
     <form method="post" action="updateCustomerForm.jsp">
 		<div class="container">
 			<fieldset>
+			
+      <% if(n4!=null) {%><div><%=n4%></div> <%} %>
+      <% if(n1!=null) {%><div><%=n1%></div> <%} %>
 				<legend class="container">내정보</legend>
              
 					<table border="1" width="300" height="200">

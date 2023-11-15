@@ -128,42 +128,73 @@ public class CustomerDao extends ClassDao {
 	public int updateCustomer(String customerId , String customerPw, 
 			String newPw , 
 			String customerName , String address ,String customerPhone) throws Exception {
-		Connection conn = db.getConnection();		
-        Customer c = new Customer();        
+		Connection conn = db.getConnection();
+		CustomerPwHistory cph = new CustomerPwHistory();
+        Customer c = new Customer();  
+        ResultSet rs = null;
         int row = 0;
-        
-        
-        String sql0 = "SELECT customer_pw FROM customer"
-        		+ "WHERE customer_id = ? AND customer_pw = PASSWORD(?)";
+        int pwRow = 0;
+        int customerPwHistoryNo=0;
+        String sql0 = """
+        		SELECT customer_no FROM customer
+        		WHERE customer_id = ? AND customer_pw = PASSWORD(?)
+        		""";
         PreparedStatement stmt0 = conn.prepareStatement(sql0);
         stmt0.setString(1, customerId);
         stmt0.setString(2, customerPw);
-        ResultSet rs = stmt0.executeQuery();
+        rs = stmt0.executeQuery();
         if(rs.next()) {        	
-        	String sql1 = "UPDATE customer SET customer_pw = PASSWORD(?), updatedate = NOW()";
+        	String sql1 = """
+        			UPDATE customer SET customer_pw = PASSWORD(?), updatedate = NOW()
+        			WHERE customer_no=?
+        			""";
         	PreparedStatement stmt1 = conn.prepareStatement(sql1);
         	stmt1.setString(1 , newPw);
+        	stmt1.setInt(2 , rs.getInt("customer_no"));
+        	
         	int row1 = stmt1.executeUpdate();
         	
-        	String sql2 = "UPDATE customerDetail SET customer_name = ?, customer_phone = ?";
+        	String sql2 = """
+        			UPDATE customer_detail SET customer_name = ?, customer_phone = ?
+        			WHERE customer_no = ?
+        			""";
         	PreparedStatement stmt2 = conn.prepareStatement(sql2);
         	stmt2.setString(1 , customerName);
         	stmt2.setString(2 , customerPhone);
+        	stmt2.setInt(3 , rs.getInt("customer_no"));
         	int row2 = stmt2.executeUpdate();
         	
-        	String sql3 = "UPDATE customerAddr SET address = ?";
+        	String sql3 = """
+        			UPDATE customer_addr SET address = ?
+        			WHERE customer_no = ?
+        			""";
         	PreparedStatement stmt3 = conn.prepareStatement(sql3);
         	stmt3.setString(1 , address);
+        	stmt3.setInt(2 , rs.getInt("customer_no"));
         	int row3 = stmt3.executeUpdate();
         	
         	if(row1>0 && row2>0 && row3>0) {
         		row = 1; // 수정성공
+        		
+        		CustomerPwHistory customerPwHistory = new CustomerPwHistory();
+        		String sql4 = """
+        				INSERT INTO customer_pw_history(customer_no , customer_pw , createdate) 
+        				VALUES (? , ? , NOW())
+        				""";
+        		
+        		PreparedStatement stmt4 = conn.prepareStatement(sql4, Statement.RETURN_GENERATED_KEYS);
+        		stmt4.setInt(1, rs.getInt("customer_no"));
+        		stmt4.setString(2 , customerPw);
+        		pwRow = stmt4.executeUpdate();
+        		
+        		
         	} else {
         		row = 2; // 수정실패- 도무지 왜인지
         	}
         	    	
-        } row = -1; //현재 비밀번호 불일치
-        
+        } else { 
+        	row = -100; //현재 비밀번호 불일치 또는 고객정보 없음/ 조회실패
+        }
         return row;
 	}
 

@@ -31,8 +31,6 @@ table {
 th, td {
   text-align: center;
 }
-
-
 </style>
 <jsp:include page="/inc/meta.jsp"></jsp:include>
 <head>

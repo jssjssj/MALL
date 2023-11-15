@@ -1,38 +1,43 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 
-import util.*;
+import java.sql.*;
+import java.util.*;
 import vo.*;
 
+
 public class CustomerPwHistoryDao extends ClassDao {
-	
-	// insert -> 비번 변경 시 CustomerDao update항목과 동시발생
-	public int insertCustomerPwHistory(CustomerPwHistory customerPwHistory) throws Exception {
-		int row = 0;
-		// DB연결
+	public List<CustomerPwHistory> select(String customerId) throws Exception {
+		int customerNo = 0;
+		String customerPw = null;
+		CustomerPwHistory customerPwHistory = null;
+		List<CustomerPwHistory> cph = null;		
 		Connection conn = db.getConnection();		
-		String sql = "INSERT INTO customer_pw_history(customer_no , customer_pw , createdate) VALUES (? , ? , NOW())";
+		String sql0 = """
+				SELECT customer_no AS customerNo FROM customer
+				WHERE customer_id = ?
+				""";
+		PreparedStatement stmt0 = conn.prepareStatement(sql0);
+		stmt0.setString(1, customerId);
+		ResultSet rs0 = stmt0.executeQuery();
+		if(rs0.next()) {
+			cph = new ArrayList<>();
+			customerPwHistory = new CustomerPwHistory();
+			customerNo = rs0.getInt("customer_no");
+		String sql = """				
+				SELECT customer_pw FROM customer_pw_history
+				WHERE customer_no = ?
+				""";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, customerPwHistory.getCustomerNo());
-		stmt.setString(2, customerPwHistory.getCustomerPw());
-		stmt.setString(3, customerPwHistory.getCreatedate());
-		System.out.println(stmt + " <-- stmt insertCustomerPwHistory()");
-		row = stmt.executeUpdate();
-		return row;
+		stmt.setInt(1, customerNo);		
+		ResultSet rs = stmt.executeQuery();
+		customerPw = rs.getString("customer_pw");
+		while(rs.next()) {
+			customerPwHistory.setCustomerPw(customerPw);	
+			cph.add(customerPwHistory);
+			}			
+		}
+		return cph;
 	}
 	
-	// delete
-	public int deleteTest(int customerPwHistoryNo) throws Exception{
-		int row = 0;
-		// DB연결
-		Connection conn = db.getConnection();				
-		String sql = "DELETE FROM customer_pw_history WHERE customer_pw_history_no = ?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, customerPwHistoryNo);
-		System.out.println(stmt + " <-- stmt deleteTest()");
-		row = stmt.executeUpdate();
-		return row;  
-	}
 }

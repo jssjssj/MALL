@@ -18,11 +18,17 @@
 <!DOCTYPE html>
 <html>
 <style>
-    .container{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    }
+table, td, th {
+  border : 1px solid black;
+  border-collapse : collapse;
+}
+table {
+  width : 1000px;
+  height : 50px;
+}
+th, td {
+  text-align: center;
+}
 </style>
 <jsp:include page="/inc/meta.jsp"></jsp:include>
 <body>
@@ -31,19 +37,24 @@
 	<!-- 메뉴 끝 -->
     <h2>장바구니</h2>
 <form action = "<%=request.getContextPath()%>/cart/deleteCartAction.jsp">
-    <table border="1" class="container"> 
-        <tr>        	       		        	
+    <table border="1"> 
+        <tr>      
+        	<th>	</th> 
+        	<th>  삭제  </th>  	       		        	
             <th>상품이름</th>
             <th>상품단가</th>
             <th>선택수량</th>
             <th>품절여부</th>
             <th>사진</th> 
             <th>수량변경</th> 
-            <th>  삭제  </th>
+            
         </tr>
-
+</table>
         <% for (Cart cart : cartList) { %>
-            <tr>                	                
+         <table border="1"> 
+            <tr>         
+            	<td><input type="hidden" readonly="readonly" value="<%= cart.getGoods().getGoodsTitle() %>" name="goodsTitle"></td>       	                
+                <td><a href="<%=request.getContextPath()%>/cart/deleteCartAction.jsp">X</a></td>
                 <td><%= (cart.getGoods() != null) ? cart.getGoods().getGoodsTitle() : "" %></td>
                 <td><%= (cart.getGoods() != null) ? cart.getGoods().getGoodsPrice() : "" %></td>
                 <td><%= cart.getQuantity() %></td>
@@ -53,10 +64,10 @@
                 		<%for(int i=1; i<=10; i++) { %><option><%=i%></option>
                 		 <% } %>
                 </select></td>
-                <td><a href="<%=request.getContextPath()%>/cart/deleteCartAction.jsp">X</a></td>
+                
             </tr>
+        </table>
         <% } %> 
-    </table>
 </form>
     <!-- footer 시작 -->
     <jsp:include page="/inc/footer.jsp"></jsp:include>

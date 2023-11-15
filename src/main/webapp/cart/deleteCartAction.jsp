@@ -4,8 +4,10 @@
 <% 
 	CartDao cartDao = new CartDao();
 	String cartNo = request.getParameter("cartNo");
-	int row = cartDao.deleteCart(goodsNo , customerNo);
+	String goodsTitle = request.getParameter("goodsTitle");
+	String customerId = (String)(session.getAttribute("loginId"));
 	
+	System.out.println(goodsTitle +"<- goodsTitle");
 %>
 <!DOCTYPE html>
 <html>
