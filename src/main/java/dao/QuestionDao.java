@@ -89,6 +89,7 @@ public class QuestionDao extends ClassDao{
         		ON q.question_no = qc.question_no
         		INNER JOIN goods g
         		ON q.goods_no = g.goods_no
+        		ORDER BY 1
 	            """;
 
 	    stmt = conn.prepareStatement(sql); 
@@ -118,12 +119,57 @@ public class QuestionDao extends ClassDao{
 	        return questionList;
 	    } 
     
-    
+    public Question QuestionOne(int questionNo) throws Exception{    	
+    	Connection conn = db.getConnection();
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+    	Question question = null;
+    	QuestionComment questionComment = null;
+    	Customer customer = null;
+    	
+    	
+ 	    String sql = """
+ 	    		SELECT q.question_no , q.goods_no , q.question_title , q.question_content , q.createdate AS 작성일 , 
+	    		  	 IFNULL(qc.createdate,"답변대기중") AS 답변일,   IFNULL(qc.updatedate,"-") AS 수정일 	,
+						 g.goods_title , c.customer_id , qc.comment 
+				 FROM question q			
+        		LEFT outer JOIN question_comment qc
+        		ON q.question_no = qc.question_no
+        		INNER JOIN goods g
+        		ON q.goods_no = g.goods_no
+        		INNER JOIN customer c
+        		ON c.customer_no = q.customer_no
+        		WHERE q.question_no = ?
+ 	    		""";
+ 	    stmt = conn.prepareStatement(sql);
+ 	    stmt.setInt(1, questionNo);
+ 	    rs = stmt.executeQuery();
+ 	   if(rs.next()) {
+ 	 		 question = new Question();
+ 		    	question.setQuestionNo(rs.getInt("question_no"));
+ 				question.setGoodsNo(rs.getInt("goods_no"));		
+ 				question.setQuestionTitle(rs.getString("question_title"));
+ 				question.setCreatedate(rs.getString("작성일"));
+ 				question.setQuestionContent(rs.getString("question_content"));
+ 		    questionComment = new QuestionComment();
+ 		    	questionComment.setCreatedate(rs.getString("답변일"));
+ 				questionComment.setUpdatedate(rs.getString("수정일"));
+ 				questionComment.setComment(rs.getString("qc.comment"));
+ 				
+ 			customer = new Customer();	
+ 				customer.setCustomerId(rs.getString("customer_id"));
+ 				
+ 				question.setQuestionComment(questionComment);
+ 				question.setCustomer(customer);
+ 	    }
+ 	  return question;
+    }
+}
     
 	    
 	    
 	
-}
+
 
 
 

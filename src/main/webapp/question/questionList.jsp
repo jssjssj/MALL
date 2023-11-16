@@ -12,9 +12,9 @@
     List<Question> qul = new ArrayList<>();
     qul = questionDao.selectQuestion();
 	String q = request.getParameter("q"); // 문의글 등록 후 등록완료+답변대기 안내멘트
-	if(customerId==null){
+	/* if(customerId==null){ 비회원도 접근가능토록 변경-> 주석처리함
 		response.sendRedirect(request.getContextPath()+"/customer/customerLoginForm.jsp");
-	}
+	} */
 %>
 <!DOCTYPE html>
 <html>
@@ -39,7 +39,7 @@ th, td {
   <h2 class="container">Question 목록</h2>
 <%if(q != null){%><div><%=q%></div><%}%>	<!-- 문의글 등록 후 등록완료+답변대기 안내멘트 -->
 
-<form method="get" action="<%=request.getContextPath()%>/question/insertQuestionForm.jsp">
+<form method="get" action="<%=request.getContextPath()%>/question/questionOne.jsp">
 	<div class="container">	
 		<table border="1">
 		    <tr>
@@ -54,17 +54,17 @@ th, td {
 		<table border="1">
 		    <% for (Question qu : qul) { %>
 		        <tr>
-		            <td><a href="<%=request.getContextPath()%>/question/questionOne.jsp">내용/답변보기</a></td>
+		            <td><button type="submit" name="questionNo" value="<%=qu.getQuestionNo()%>">내용/답변보기</button></td>
 		            <td><%=qu.getGoods().getGoodsTitle()%></td>
 		            <td><%= (qu.getQuestionTitle() != null)  	    ? qu.getQuestionTitle() 	:	  ""%></td>
 		            <td><%= (qu.getCreatedate() != null)      		? qu.getCreatedate()  	  : 	 "" %></td>  
-		            <td><%= (qu.getQuestionComment().getCreatedate() == null)? "한글깨짐?" : qu.getQuestionComment().getCreatedate()%></td> 
-		            <td><%= (qu.getQuestionComment().getUpdatedate() ==null) ? "여긴보이나" :qu.getQuestionComment().getUpdatedate()%></td>               
+		            <td><%= (qu.getQuestionComment().getCreatedate() == null)? "-" : qu.getQuestionComment().getCreatedate()%></td> 
+		            <td><%= (qu.getQuestionComment().getUpdatedate() ==null) ? "-" :qu.getQuestionComment().getUpdatedate()%></td>               
 		        </tr>
 		    <% } %>
 		</table>		
 	</div>
-		<br><div class="container"><button type="submit">문의글 쓰기</button></div>
+		<br><div class="container"><a href="<%=request.getContextPath()%>/question/insertQuestionForm.jsp">문의글 쓰기</a></div>
 </form>
     
 <!-- footer 시작 -->

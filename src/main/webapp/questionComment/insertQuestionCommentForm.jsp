@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.net.URLEncoder.*" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="vo.*, dao.*" %>
+<%@ page import="java.util.*" %>
+<%
+	Manager loginManager = (Manager) session.getAttribute("loginManager");
+	if(loginManager==null) {
+		// 애초에 접속 시도도 안되는 경로 -> 버그있을까봐 넣어둠
+		response.sendRedirect(request.getContextPath()+"/manager/managerLoginForm.jsp");
+	}
+%>
 <%request.setCharacterEncoding("UTF-8");%>
 <!DOCTYPE html>
 <html>
