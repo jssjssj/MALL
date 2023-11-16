@@ -6,12 +6,6 @@
 <%-- 매니저 세션 가져오기 --%>
     <% Manager loginManager = (Manager)session.getAttribute("loginManager"); %>
 <!DOCTYPE html>
-<html>
-<jsp:include page="/inc/meta.jsp"></jsp:include>
-<body>
-    <jsp:include page="/inc/menubar.jsp"></jsp:include>
-    <jsp:include page="/inc/header.jsp"></jsp:include>
-    	
     <%
     String managerId = null;
     if (loginManager != null) {
@@ -24,12 +18,12 @@
         // 회원 삭제
         int row = managerDao.deleteManager(managerId);
 
-        if (row > 0) {
-            // 성공적으로 삭제되었을 경우
-            session.invalidate(); // 세션 무효화
+        if (row == 1) {
+            // 성공적으로 변경되었을 경우
 
             // response.sendRedirect는 여기서 호출되어야 합니다.
             response.sendRedirect(request.getContextPath() + "/110011/index.jsp");
+            session.invalidate(); // 세션 무효화
         } else {
             response.sendRedirect(request.getContextPath() + "/manager/managerLoginForm.jsp");
         }
@@ -38,9 +32,3 @@
         response.sendRedirect(request.getContextPath() + "/manager/managerLoginForm.jsp");
     }
 %>
-
-    <!-- footer 시작 -->
-    <jsp:include page="/inc/footer.jsp"></jsp:include>
-    <!-- footer 끝 -->
-</body>
-</html>

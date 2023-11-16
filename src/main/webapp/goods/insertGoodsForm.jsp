@@ -31,9 +31,8 @@
 						<th>재고</th> 
 					<td>	
 						<select name="soldout">
-							<option>판매중</option>
-							<option>품절</option>
-							<option>준비중 (출시예정)</option>
+							<option  value ="Y">판매중</option>
+							<option  value ="N">품절</option>
 						</select>	
 					</td>
 					</tr>
@@ -67,7 +66,6 @@
 						<td><button type="submit">등록하기</button></td>
 					</tr>				
 				</table>
-			
 	</fieldset>
 </form>
 <!-- footer 시작 -->
