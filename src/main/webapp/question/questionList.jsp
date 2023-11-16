@@ -3,17 +3,34 @@
 <%@ page import="vo.Question" %>
 <%@ page import="dao.QuestionDao" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.ArrayList" %>
 
 <%
     // 문의사항 목록 조회
     QuestionDao questionDao = new QuestionDao();
-	
-    List<Question> questionList = questionDao.selectQuestion();
+	String customerId = (String)(session.getAttribute("loginId"));
+    List<Question> qul = new ArrayList<>();
+    qul = questionDao.selectQuestion();
 	String q = request.getParameter("q"); // 문의글 등록 후 등록완료+답변대기 안내멘트
-
+	if(customerId==null){
+		response.sendRedirect(request.getContextPath()+"/customer/customerLoginForm.jsp");
+	}
 %>
 <!DOCTYPE html>
 <html>
+<style>
+table, td, th {
+  border : 1px solid black;
+  border-collapse : collapse;
+}
+table {
+  width : 1000px;
+  height : 50px;
+}
+th, td {
+  text-align: center;
+}
+</style>
 <jsp:include page="/inc/meta.jsp"></jsp:include>
 <body style="min-height: 100vh">	
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
@@ -26,22 +43,23 @@
 	<div class="container">	
 		<table border="1">
 		    <tr>
-		        <th>내용/답변보기 |</th>
-		        <th> 문의상품 |</th>
-		        <th> 제목 |</th>
-		        <th> 작성일</th>
-		        <th> 답변일</th>
-		        <th> 답변(수정 시)수정일</th>
+		        <th>내용/답변보기</th>
+		        <th>문의상품 </th>
+		        <th>제목 </th>
+		        <th>작성일 </th>
+		        <th>답변일 </th>
+		        <th>답변수정일</th>
 		    </tr>
-		
-		    <% for (Question qu : questionList) { %>
+		</table>
+		<table border="1">
+		    <% for (Question qu : qul) { %>
 		        <tr>
 		            <td><a href="<%=request.getContextPath()%>/question/questionOne.jsp">내용/답변보기</a></td>
-		            <td><%= (qu.getGoods().getGoodsTitle() != null) ? qu.getGoods().getGoodsTitle() : ""%></td>
-		            <td><%= (qu.getQuestionTitle() != null)   ? qu.getQuestionTitle() : ""%></td>
-		            <td><%= (qu.getCreatedate() != null)      ? qu.getCreatedate() : "" %></td>  
-		            <td><%= (qu.getQuestionComment() != null) ? qu.getQuestionComment() : "" %></td> 
-		            <td><%= (qu.getQuestionComment().getUpdatedate() !=null) ? qu.getQuestionComment().getUpdatedate() : ""%></td>               
+		            <td><%=qu.getGoods().getGoodsTitle()%></td>
+		            <td><%= (qu.getQuestionTitle() != null)  	    ? qu.getQuestionTitle() 	:	  ""%></td>
+		            <td><%= (qu.getCreatedate() != null)      		? qu.getCreatedate()  	  : 	 "" %></td>  
+		            <td><%= (qu.getQuestionComment().getCreatedate() == null)? "한글깨짐?" : qu.getQuestionComment().getCreatedate()%></td> 
+		            <td><%= (qu.getQuestionComment().getUpdatedate() ==null) ? "여긴보이나" :qu.getQuestionComment().getUpdatedate()%></td>               
 		        </tr>
 		    <% } %>
 		</table>		

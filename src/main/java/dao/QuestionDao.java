@@ -26,7 +26,7 @@ public class QuestionDao extends ClassDao{
             String sql = "INSERT INTO question"
                 + "(goods_no, customer_no, question_title, question_content, createdate, updatedate) "
                 + "VALUES(?, ?, ?, ?, now(), now())";
-            stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql ,  Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, goodsNo);
             stmt.setInt(2, rs0.getInt("customer_no"));
             stmt.setString(3, questionTitle);
@@ -78,35 +78,51 @@ public class QuestionDao extends ClassDao{
     // 문의사항 정보 조회  //cd = customerDetail // c =customer // q = question //g = goods
     public List<Question> selectQuestion() throws Exception {
 	    Connection conn = db.getConnection();
-	    List<Question> result = new ArrayList<>();
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    List<Question> questionList = null;
 	    String sql = """
-	           SELECT q.* , cd.* , c.* , g.* , qc.* FROM question q
-        			INNER JOIN customer_detail cd
-        		ON q.customer_no = cd.customer_no
-        			INNER JOIN customer c
-        		ON cd.customer_no = c.customer_no
-        			INNER JOIN goods g
-        		ON g.goods_no = q.goods_no
-        			INNER JOIN question_comment qc
+	           SELECT q.question_no , q.goods_no , q.question_title , q.createdate AS 작성일 , 
+	    		  	 IFNULL(qc.createdate,"답변대기중") AS 답변일,  
+						 IFNULL(qc.updatedate,"-") AS 수정일 	, g.goods_title FROM question q			
+        		LEFT outer JOIN question_comment qc
         		ON q.question_no = qc.question_no
+        		INNER JOIN goods g
+        		ON q.goods_no = g.goods_no
 	            """;
 
-	    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-	        ResultSet rs = stmt.executeQuery();
-
-	        List<Question> questionList = new ArrayList<>();
+	    stmt = conn.prepareStatement(sql); 
+	    rs = stmt.executeQuery();
+        questionList = new ArrayList<>();
 	        while (rs.next()) {
-	        	Question question = converter.getQuestion(rs);
-	            questionList.add(question);
-	            
-	        }
+	        	Question question = new Question();  
+	            question.setQuestionNo(rs.getInt("question_no"));
+				question.setGoodsNo(rs.getInt("goods_no"));		
+				question.setQuestionTitle(rs.getString("question_title"));
+				question.setCreatedate(rs.getString("작성일"));
+				
+				QuestionComment questionComment = new QuestionComment();
+				questionComment.setCreatedate(rs.getString("답변일"));
+				questionComment.setUpdatedate(rs.getString("수정일"));
 
-	        result = questionList;
-	    } finally {
+				Goods goods = new Goods();
+				goods.setGoodsTitle(rs.getString("goods_title"));
+				
+				question.setGoods(goods);
+				question.setQuestionComment(questionComment);
+				questionList.add(question);
+	        }	
+	        stmt.close();	        
+	        rs.close();
 	        conn.close();
-	    }
-	    return result;
-	}
+	        return questionList;
+	    } 
+    
+    
+    
+	    
+	    
+	
 }
 
 

@@ -26,7 +26,6 @@
 	
     // 데이터베이스와의 연결을 위해 QuestionDao 객체를 생성
     QuestionDao questionDao = new QuestionDao();
-
     
     // 데이터베이스에 데이터를 삽입 / 결과 확인.
     
