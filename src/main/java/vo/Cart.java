@@ -7,11 +7,9 @@ public class Cart {
 	private	int quantity;
 	private	String createdate;
 	private	String updatedate;
-	private int midPrice;
 	Customer customer;
 	Goods goods;
 	GoodsImg goodsImg;
-	
 	
 	public Customer getCustomer() {
 		return customer;
@@ -67,12 +65,7 @@ public class Cart {
 	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
 	}		
-	public int getMidPrice() {
-		return midPrice;
-	}
-	public void setMidPrice(int midPrice) {
-		this.midPrice = midPrice;
-	}
+	
 	
 	
 	

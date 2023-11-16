@@ -25,7 +25,7 @@ public class CartDao extends ClassDao{
 	            INNER JOIN customer d ON a.customer_no = d.customer_no
 	            WHERE d.customer_id = ?
 	            """;
-
+	  
 	    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 	        stmt.setString(1, customerId);
 	        ResultSet rs = stmt.executeQuery();
@@ -68,33 +68,28 @@ public class CartDao extends ClassDao{
   		stmt.setInt(3 , quantity);
   		row = stmt.executeUpdate();
   		}
+  		
   		return row;
   	}
   	
   	// delete
-  	public int deleteCart(String customerId , int goodsNo ) throws Exception {
+  	public int deleteCart(int cartNo) throws Exception {
   		DBUtil dbUtil = new DBUtil();
   		Connection conn = dbUtil.getConnection();
   		int row = 0;		
-  		String sql0 = """
-  				SELECT * FROM customer
-  				WHERE customer_id = ?
-  				""";
-  		PreparedStatement stmt0 = conn.prepareStatement(sql0);
-  		stmt0.setString(1, customerId);
-  		ResultSet rs = stmt0.executeQuery();
-  		if(rs.next()) {
+  		
+  		
   		String sql = """
-  				DELETE FROM cart WHERE goods_no=?
-  				AND customer_no=?
+  				DELETE FROM cart WHERE customer_no=?
+  				AND goods_no=?
   				""";
   		
   		PreparedStatement stmt = conn.prepareStatement(sql);
-  		stmt.setInt(1, goodsNo);
-  		stmt.setInt(2, rs.getInt("customer_no"));
+  		stmt.setInt(1, cartNo);
+  		stmt.setInt(1, cartNo);
   		row = stmt.executeUpdate();  
-  		}
   		return row;
+  		  		
   	}
 
  // update

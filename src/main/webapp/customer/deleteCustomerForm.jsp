@@ -27,7 +27,7 @@
 <form method="post" action="<%=request.getContextPath()%>/customer/deleteCustomerAction.jsp">
 	<div class="container2"> 탈퇴하려면 PW를 입력하세요 </div>	
 	<div class="container"> 
-		<input type="password">
+		<input type="password" name="customerPw">
 		<button type="submit">탈퇴하기</button>
 	</div>
 		<br>

@@ -34,7 +34,7 @@
 
         if (result > 0) {
             String q = URLEncoder.encode("게시글 등록완료! 답변까지 기다려주세요");
-            response.sendRedirect(request.getContextPath()+"/110011/index.jsp");
+            response.sendRedirect(request.getContextPath()+"/question/questionList.jsp?q="+q);
         } else {
         	String q = URLEncoder.encode("서버 점검 중으로 게시글이 등록되지 않았습니다. 다음에 이용해주세요");
             response.sendRedirect(request.getContextPath()+"/question/questionList.jsp?q="+q);

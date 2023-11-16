@@ -83,9 +83,19 @@ public class Converter {
 			goods.setGoodsMemo(rs.getString("goods_memo"));
 			goods.setCreatedate(rs.getString("createdate"));
 			goods.setUpdatedate(rs.getString("updatedate"));
+			QuestionComment questionComment = new QuestionComment();
+			questionComment.setQuestionCommentNo(rs.getInt("question_comment_no"));
+			questionComment.setQuestionNo(rs.getInt("question_no"));
+			questionComment.setManagerNo(rs.getInt("manager_no"));
+			questionComment.setComment(rs.getString("comment"));
+			questionComment.setCreatedate(rs.getString("createdate"));
+			questionComment.setUpdatedate(rs.getString("updatedate"));
+			
+			
 			question.setCustomerDetail(customerDetail);
 			question.setGoods(goods); 
 			question.setCustomer(customer);
+			question.setQuestionComment(questionComment);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

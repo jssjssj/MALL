@@ -46,25 +46,26 @@ th, td {
             <th>선택수량</th>
             <th>품절여부</th>
             <th>사진</th> 
+            <th>소계</th> 
             <th>수량변경</th> 
             
         </tr>
 </table>
         <% for (Cart cart : cartList) { %>
          <table border="1"> 
-            <tr>         
-            	<td><input type="hidden" readonly="readonly" value="<%= cart.getGoods().getGoodsTitle() %>" name="goodsTitle"></td>       	                
+            <tr>        
+            	<td><input type="hidden" readonly="readonly" value="<%= cart.getCartNo() %>" name="cartNo"></td>       	                
                 <td><a href="<%=request.getContextPath()%>/cart/deleteCartAction.jsp">X</a></td>
                 <td><%= (cart.getGoods() != null) ? cart.getGoods().getGoodsTitle() : "" %></td>
                 <td><%= (cart.getGoods() != null) ? cart.getGoods().getGoodsPrice() : "" %></td>
                 <td><%= cart.getQuantity() %></td>
                 <td><%= (cart.getGoods() != null) ? cart.getGoods().getSoldout() : "" %></td>
                 <td><%= (cart.getGoodsImg() != null) ? cart.getGoodsImg().getFileName() : "" %></td>
+                <td><%= cart.getGoods().getGoodsPrice() * cart.getQuantity() %></td>
                 <td><select class = "quantity" name = "quantity">              
                 		<%for(int i=1; i<=10; i++) { %><option><%=i%></option>
                 		 <% } %>
-                </select></td>
-                
+                </select></td>                
             </tr>
         </table>
         <% } %> 

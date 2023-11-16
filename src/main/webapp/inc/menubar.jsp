@@ -20,6 +20,9 @@
         customerDetail = customer.getCustomerDetail();
         customerAddr = customer.getCustomerAddr();
     }
+    
+    
+    String t = request.getParameter("t"); // 회원탈퇴 시 탈퇴완료 메시지
 %>
 
 <% if (loginManager == null) { 
@@ -37,9 +40,10 @@
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/notice/noticeList.jsp">공지사항</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/manager/managerLoginForm.jsp">관리자페이지</a></li> 
             </ul>
+           <%if(t!=null){%><div><%=t%><%}%> <!-- 회원탈퇴 시 탈퇴완료 메시지  -->
            <%
             if(customerId!=null) {
-	        %>
+	       %>
            	   
 	          <a href="<%=request.getContextPath()%>/order/orderView.jsp">
             <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">

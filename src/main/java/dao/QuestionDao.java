@@ -80,13 +80,15 @@ public class QuestionDao extends ClassDao{
 	    Connection conn = db.getConnection();
 	    List<Question> result = new ArrayList<>();
 	    String sql = """
-	           SELECT q.* , cd.* , c.* , g.* FROM question q
+	           SELECT q.* , cd.* , c.* , g.* , qc.* FROM question q
         			INNER JOIN customer_detail cd
         		ON q.customer_no = cd.customer_no
         			INNER JOIN customer c
         		ON cd.customer_no = c.customer_no
         			INNER JOIN goods g
         		ON g.goods_no = q.goods_no
+        			INNER JOIN question_comment qc
+        		ON q.question_no = qc.question_no
 	            """;
 
 	    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -96,6 +98,7 @@ public class QuestionDao extends ClassDao{
 	        while (rs.next()) {
 	        	Question question = converter.getQuestion(rs);
 	            questionList.add(question);
+	            
 	        }
 
 	        result = questionList;

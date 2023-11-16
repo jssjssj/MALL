@@ -2,11 +2,24 @@
 
 <!DOCTYPE html>
 <html>
+<style>
+table, td, th {
+  border : 1px solid black;
+  border-collapse : collapse;
+}
+
+th, td {
+  text-align: center;
+}
+</style>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<jsp:include page="/inc/meta.jsp"></jsp:include>
 <body>
+	<jsp:include page="/inc/menubar.jsp"></jsp:include>
+    <jsp:include page="/inc/header.jsp"></jsp:include>
 	<table border="1">
 		<tr>
 			<td>제목</td>

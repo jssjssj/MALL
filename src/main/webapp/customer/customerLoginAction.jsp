@@ -36,8 +36,8 @@
         } else {
             // 로그인 실패
             System.out.println("로그인 실패" + "\n" + "입력ID : " + customerId + "\n" + "입력PW : " + customerPw);
-            String msg = URLEncoder.encode("아이디와 비밀번호를 확인하세요");
-            response.sendRedirect(request.getContextPath() + "/customer/customerLoginForm.jsp?msg=" + msg);
+            String noUser = URLEncoder.encode("아이디와 비밀번호를 확인하세요");
+            response.sendRedirect(request.getContextPath() + "/customer/customerLoginForm.jsp?noUser=" + noUser);
         }
     } catch (SQLException e) {
         e.printStackTrace();

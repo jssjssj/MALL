@@ -4,10 +4,9 @@
 <% 
 	CartDao cartDao = new CartDao();
 	String cartNo = request.getParameter("cartNo");
-	String goodsTitle = request.getParameter("goodsTitle");
 	String customerId = (String)(session.getAttribute("loginId"));
 	
-	System.out.println(goodsTitle +"<- goodsTitle");
+	System.out.println(cartNo +"<- cartNo");
 %>
 <!DOCTYPE html>
 <html>

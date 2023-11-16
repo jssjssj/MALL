@@ -11,27 +11,7 @@ public class Question {
 	Customer customer;
 	CustomerDetail customerDetail;
 	Goods goods;
-	
-	
-	
-	public Customer getCustomer() {
-		return customer;
-	}
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-	public CustomerDetail getCustomerDetail() {
-		return customerDetail;
-	}
-	public void setCustomerDetail(CustomerDetail customerDetail) {
-		this.customerDetail = customerDetail;
-	}
-	public Goods getGoods() {
-		return goods;
-	}
-	public void setGoods(Goods goods) {
-		this.goods = goods;
-	}
+	QuestionComment questionComment;
 	public int getQuestionNo() {
 		return questionNo;
 	}
@@ -74,5 +54,30 @@ public class Question {
 	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
 	}
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	public CustomerDetail getCustomerDetail() {
+		return customerDetail;
+	}
+	public void setCustomerDetail(CustomerDetail customerDetail) {
+		this.customerDetail = customerDetail;
+	}
+	public Goods getGoods() {
+		return goods;
+	}
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+	public QuestionComment getQuestionComment() {
+		return questionComment;
+	}
+	public void setQuestionComment(QuestionComment questionComment) {
+		this.questionComment = questionComment;
+	}
+	
 	
 }

@@ -82,7 +82,7 @@ public class CustomerDao extends ClassDao {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return -1;
-	    }
+	    } 
 	}
 	
 	
@@ -120,7 +120,9 @@ public class CustomerDao extends ClassDao {
 	            customer.setCustomerDetail(customerDetail);
 	            customer.setCustomerAddr(customerAddr);
 	        }
-	    
+	        rs.close();
+	  		stmt.close();  
+	  		conn.close();
 	    return customer;
 	}
 	
@@ -195,6 +197,9 @@ public class CustomerDao extends ClassDao {
         } else { 
         	row = -100; //현재 비밀번호 불일치 또는 고객정보 없음/ 조회실패
         }
+        rs.close();
+  		stmt0.close();  
+  		conn.close();
         return row;
 	}
 
@@ -229,7 +234,9 @@ public class CustomerDao extends ClassDao {
                 customer.setActive(rs.getString("active"));
                 customers.add(customer);
             }
-
+            rs.close();
+	  		stmt.close();  
+	  		conn.close();
             return customers;
          
     }
@@ -240,27 +247,20 @@ public class CustomerDao extends ClassDao {
     	 int row = 0;
     	 DBUtil dbUtil = new DBUtil();
          Connection conn = dbUtil.getConnection();
-         String sql0 = """
-         		SELECT customer_id , customer_pw 
-         		FROM customer
-         		WHERE customer_id = ? AND customer_pw = PASSWORD(?)
-         		""";
-         PreparedStatement stmt0 = conn.prepareStatement(sql0);
-         stmt0.setString(1 , customerId);
-         stmt0.setString(2 , customerPw);
-         ResultSet rs = stmt0.executeQuery();
-         if(rs.next()) {
+       
         	 String sql="""
         	 		UPDATE customer SET
-        	 		active = 'N'
-        	 		WHERE customer_id = ?
+        	 		active = 'Y'
+        	 		WHERE customer_pw = PASSWORD(?)
+        	 		AND customer_id = ?
         	 		""";
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setString(1 , customerId);
+        stmt.setString(1 , customerPw);
+        stmt.setString(2 , customerId);
         row = stmt.executeUpdate();
-         }
-         
-    	 return row;
+        stmt.close();
+        conn.close();
+        return row;
     }
 }
 

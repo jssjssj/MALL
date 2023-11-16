@@ -37,7 +37,7 @@
           	response.sendRedirect(request.getContextPath()+"/customer/customerOne.jsp.jsp?n1="+n1);
         } else if(row == -100){
         	String n2 = URLEncoder.encode("현재PW 불일치");
-        	response.sendRedirect(request.getContextPath()+"/customer/updateCustomerForm.jsp");
+        	response.sendRedirect(request.getContextPath()+"/customer/updateCustomerForm.jsp?n2="+n2);
         } else if(row==33) {
         	String n3 = URLEncoder.encode("변경PW와 변경PW확인 불일치");
         	response.sendRedirect(request.getContextPath()+"/customer/updateCustomerForm.jsp");

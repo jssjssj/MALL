@@ -2,14 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.net.URLEncoder"%>
 <%
-String msg = request.getParameter("msg");
-String msg3 = request.getParameter("msg3");
-String noMsg = request.getParameter("noMsg");
+
 
 if (session.getAttribute("loginId") != null) {
 	String msg2 = URLEncoder.encode("로그인 상태입니다!");
 	response.sendRedirect(request.getContextPath() + "/110011/index.jsp?msg2=" + msg2);
 }
+
+	String noUser = request.getParameter("noUser"); // ID , PW 일치하지 않습니다 -> 계정정보 불일치 시 확인메시지
 %>
 
 <!DOCTYPE html>
@@ -22,31 +22,7 @@ if (session.getAttribute("loginId") != null) {
 		<form style="width: 22rem;" method="post" id="logAction" action="customerLoginAction.jsp">
 			<div class="container">
 				<fieldset>
-	<%
-					if (msg3 != null) {
-	%>
-					<div class="msg"><%=msg3%></div>
-	
-	<%
-					}
-	%>
-					<div class="fs-3">로그인</div>
-	
-	<%
-					if (msg != null) {
-	%>
-					<div class="msg"><%=msg%></div>
-	
-	<%
-					}
-	%>
-	<%
-					if (noMsg != null) {
-	%>
-					<div><%=noMsg%></div>
-	<%
-					}
-	%>
+	<%if(noUser != null){%><div class="msg"><%=noUser%></div><%}%>
 					<!-- Email input -->
 					<div class="mb-4">
 						<div class="form-outline">
