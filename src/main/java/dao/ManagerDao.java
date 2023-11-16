@@ -192,8 +192,7 @@ public class ManagerDao extends ClassDao{
 
  // 매니저 정보 조회
     public List<Manager> selectManager() throws Exception {
-        DBUtil dbUtil = new DBUtil();
-        Connection conn = dbUtil.getConnection();
+        Connection conn = db.getConnection();
 
         try {
             String sql = "SELECT * FROM manager";
@@ -230,7 +229,7 @@ public class ManagerDao extends ClassDao{
         try {
             conn = db.getConnection(); // db 연결
 
-            String sql = "SELECT * FROM manager WHERE manager_id = ? AND manager_pw = PASSWORD(?)";
+            String sql = "SELECT * FROM manager WHERE manager_id = ? AND manager_pw = PASSWORD(?) AND active = 'Y' ";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, managerId);
             stmt.setString(2, managerPw);
