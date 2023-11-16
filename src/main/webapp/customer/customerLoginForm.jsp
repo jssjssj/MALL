@@ -8,7 +8,7 @@ if (session.getAttribute("loginId") != null) {
 	String msg2 = URLEncoder.encode("로그인 상태입니다!");
 	response.sendRedirect(request.getContextPath() + "/110011/index.jsp?msg2=" + msg2);
 }
-
+	String noMsg = request.getParameter("noMsg"); // 비활성화 계정 로그인 시 탈퇴한 계정입니다 표시
 	String noUser = request.getParameter("noUser"); // ID , PW 일치하지 않습니다 -> 계정정보 불일치 시 확인메시지
 %>
 
@@ -23,6 +23,7 @@ if (session.getAttribute("loginId") != null) {
 			<div class="container">
 				<fieldset>
 	<%if(noUser != null){%><div class="msg"><%=noUser%></div><%}%>
+	<%if(noMsg != null){ %><div class="msg"><%=noMsg%> </div><%}%>
 					<!-- Email input -->
 					<div class="mb-4">
 						<div class="form-outline">

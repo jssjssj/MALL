@@ -250,7 +250,7 @@ public class CustomerDao extends ClassDao {
        
         	 String sql="""
         	 		UPDATE customer SET
-        	 		active = 'Y'
+        	 		active = 'N'
         	 		WHERE customer_pw = PASSWORD(?)
         	 		AND customer_id = ?
         	 		""";
