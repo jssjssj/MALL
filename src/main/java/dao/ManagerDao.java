@@ -96,7 +96,7 @@ public class ManagerDao extends ClassDao{
 		// 변경할 비밀번호가 이전에 사용했던 비밀번호와 다른지 확인
 		String sql0 = """
 						SELECT manager_pw managerPw FROM manager_pw_history
-						WHERE manager_no = ? AND manager_pw = PASSWORD(?)"
+						WHERE manager_no = ? AND manager_pw = PASSWORD(?)
 					""";
 		PreparedStatement stmt0 = conn.prepareStatement(sql0);
 		stmt0.setInt(1, managerNo);
