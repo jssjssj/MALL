@@ -2,7 +2,7 @@
 <%@ page import="vo.* , dao.*" %>
 <%@ page import="java.util.*" %>
 <%
-	String customerId = (String)(session.getAttribute("loginId"));
+		String customerId = (String)(session.getAttribute("loginId"));
 
 		Orders orders = new Orders();
 		List<Orders> ordersList = new ArrayList<>();
@@ -10,7 +10,7 @@
 		OrdersDao ordersDao = new OrdersDao();
 		
 		ordersList = ordersDao.select(customerId);
-		ㅇㄴㄹ숫자형식 오류
+		// ㅇㄴㄹ숫자형식 오류
 		int ordersNo = Integer.parseInt(request.getParameter("ordersNo")); 
 		int row = ordersDao.delete(ordersNo); 
 		if(row >0 ){
