@@ -75,6 +75,8 @@
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center">
                             <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp">장바구니 담기
+                            </a>
+                            <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp">주문하기
                             </a></div>
                         </div>
                     </div>

@@ -88,129 +88,65 @@ public class ManagerDao extends ClassDao{
         return 1;
     }
 
-
- // 패스워드를 해싱하여 저장
-    private static String hashPassword(String password, byte[] salt) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(salt);
-            byte[] hashedPassword = md.digest(password.getBytes());
-
-            byte[] combined = new byte[salt.length + hashedPassword.length];
-            System.arraycopy(salt, 0, combined, 0, salt.length);
-            System.arraycopy(hashedPassword, 0, combined, salt.length, hashedPassword.length);
-
-            return Base64.getEncoder().encodeToString(combined);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    // 입력한 패스워드와 저장된 해싱된 패스워드의 일치 여부 확인
-    private static boolean checkPassword(String inputPassword, String storedPassword) {
-        try {
-            byte[] combined = Base64.getDecoder().decode(storedPassword);
-            byte[] salt = Arrays.copyOfRange(combined, 0, 16);
-            byte[] hashedInputPassword = Arrays.copyOfRange(combined, 16, combined.length);
-
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(salt);
-            byte[] hashedPassword = md.digest(inputPassword.getBytes());
-
-            return Arrays.equals(hashedInputPassword, hashedPassword);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // 매니저 정보 업데이트 (비밀번호 이력 저장)
-    public boolean updateManagerPassword(int managerNo, String currentPassword, String newPassword) throws Exception {
-        Connection conn = db.getConnection();
-        PreparedStatement stmt = null;
-
-        try {
-            conn.setAutoCommit(false);
-
-            // 현재 비밀번호 확인
-            String selectPasswordSql = "SELECT manager_pw, salt FROM manager WHERE manager_no = ?";
-            stmt = conn.prepareStatement(selectPasswordSql);
-            stmt.setInt(1, managerNo);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                String storedPassword = rs.getString("manager_pw");
-                byte[] salt = Base64.getDecoder().decode(rs.getString("salt"));
-
-                if (checkPassword(currentPassword, storedPassword)) {
-                    // 현재 비밀번호가 일치하면 이전 비밀번호를 manager_pw_history에 저장
-                    String insertHistorySql = "INSERT INTO manager_pw_history (manager_no, manager_pw, createdate) VALUES (?, ?, NOW())";
-                    PreparedStatement stmtHistory = conn.prepareStatement(insertHistorySql);
-                    stmtHistory.setInt(1, managerNo);
-                    stmtHistory.setString(2, storedPassword);
-                    stmtHistory.executeUpdate();
-
-                    // 새로운 비밀번호로 업데이트
-                    String updatePasswordSql = "UPDATE manager SET manager_pw = ?, salt = ? WHERE manager_no = ?";
-                    stmt = conn.prepareStatement(updatePasswordSql);
-
-                    // 새로운 salt 생성
-                    byte[] newSalt = new byte[16];
-                    new SecureRandom().nextBytes(newSalt);
-
-                    stmt.setString(1, hashPassword(newPassword, newSalt));
-                    stmt.setString(2, Base64.getEncoder().encodeToString(newSalt));
-                    stmt.setInt(3, managerNo);
-
-                    stmt.executeUpdate();
-                    conn.commit();
-                    return true; // 비밀번호 업데이트 성공
-                }
-            }
-
-            return false; // 현재 비밀번호가 일치하지 않음
-
-        } catch (Exception e) {
-            if (conn != null) {
-                conn.rollback();
-            }
-            e.printStackTrace();
-            return false; // 비밀번호 업데이트 실패
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conn != null) {
-                conn.setAutoCommit(true);
-                conn.close();
-            }
-        }
-    }
-
-
-
- // 매니저 정보 조회
-    public List<Manager> selectManager() throws Exception {
-        Connection conn = db.getConnection();
-
-        try {
-            String sql = "SELECT * FROM manager";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-            List<Manager> managers = new ArrayList<>();
-
-            while (rs.next()) {
-                Manager manager = converter.getManager(rs);
-                managers.add(manager);
-            }
-
-            return managers;
-        } finally {
-            conn.close(); // 연결 닫기
-        }
-    }
-    
+    public int updateManagerPw(int managerNo, String currentPassword, String newPassword) throws Exception {
+		
+		Connection conn = db.getConnection();
+		conn.setAutoCommit(false);
+		
+		// 변경할 비밀번호가 이전에 사용했던 비밀번호와 다른지 확인
+		String sql0 = """
+						SELECT manager_pw managerPw FROM manager_pw_history
+						WHERE manager_no = ? AND manager_pw = PASSWORD(?)"
+					""";
+		PreparedStatement stmt0 = conn.prepareStatement(sql0);
+		stmt0.setInt(1, managerNo);
+		stmt0.setString(2, newPassword);
+		ResultSet rs = stmt0.executeQuery();
+		if(rs.next()) { // 변경할 비밀번호가 이전에 사용했던 비밀번호와 같다면
+			conn.rollback();
+			return 1;
+		}
+		
+			
+		// 입력한 비밀번호가 원래 비밀번호와 일치하는지 대조하고 일치한다면 manager 테이블 데이터 수정(비밀번호 수정)
+		String sql1 = """
+					UPDATE manager SET manager_pw = password(?), updatedate = NOW() 
+					WHERE manager_no = ? AND manager_pw = password(?)
+					""";
+		PreparedStatement stmt1 = conn.prepareStatement(sql1);
+		stmt1.setString(1, newPassword);
+		stmt1.setInt(2, managerNo);
+		stmt1.setString(3, currentPassword);
+	
+		int row1 = stmt1.executeUpdate();
+		
+		if(row1 != 1) {
+			conn.rollback();
+			return 2;
+		}
+		
+		// 비밀번호를 수정하고 manager_pw_history 테이블에 비밀번호 변경 내역 추가
+		String sql2 = """
+					INSERT INTO manager_pw_history(manager_no, manager_pw, createdate) 
+					VALUES(?, PASSWORD(?), NOW())
+					""";
+		PreparedStatement stmt2 = conn.prepareStatement(sql2);
+		stmt2.setInt(1, managerNo);
+		stmt2.setString(2, newPassword);
+		int row2 = stmt2.executeUpdate();
+		
+		if(row2 != 1) {
+			conn.rollback();
+			return 3;
+		}
+		
+		conn.commit();
+		return 4;
+		
+	} 
+ 
+   
+    // managerOne 페이지
     public Manager getManagerOne(int manager_no) throws Exception {
     	ResultSet rs = db.executeQuery("SELECT * FROM manager WHERE manager_no = ?", manager_no);
     	Manager manager = null;
@@ -220,7 +156,7 @@ public class ManagerDao extends ClassDao{
     	return manager;
     }
     
- // 매니저 아이디와 패스워드로 매니저 조회
+ // 매니저 아이디와 패스워드로 매니저 로그인
     public Manager getManagerByIdAndPassword(String managerId, String managerPw) throws Exception {
         PreparedStatement stmt = null;
         ResultSet rs = null;

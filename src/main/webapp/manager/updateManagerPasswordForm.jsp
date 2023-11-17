@@ -1,5 +1,14 @@
-<%@ page import="vo.Manager" %>
+<%@ page import="vo.*,dao.*,java.net.*,java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
+<% 
+	// 매니저 세션 가져오기 
+	Manager loginManager = (Manager)session.getAttribute("loginManager");
+	// loginMnager 값 확인
+  	System.out.println(loginManager);
+  
+%>
 <!DOCTYPE html>
 <html>
 <jsp:include page="/inc/meta.jsp"></jsp:include>
@@ -8,9 +17,6 @@
     <jsp:include page="/inc/header.jsp"></jsp:include>	
 
     <form name="passwordForm" action="updateManagerPasswordAction.jsp" method="post" onsubmit="return validateForm()">
-        <%-- 매니저 세션 가져오기 --%>
-        <% Manager loginManager = (Manager)session.getAttribute("loginManager"); %>
-        
         <%-- 세션에서 가져온 매니저 정보를 이용하여 폼 필드 채우기 --%>
         <input type="hidden" name="managerNo" value="<%= loginManager.getManagerNo() %>">
         현재 비밀번호: <input type="password" name="currentPassword"><br>

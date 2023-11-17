@@ -15,7 +15,7 @@
     if (managerId != null && !managerId.isEmpty()) {
         ManagerDao managerDao = new ManagerDao();
 
-        // 회원 삭제
+        // 매니저 비활성화
         int row = managerDao.deleteManager(managerId);
 
         if (row == 1) {
