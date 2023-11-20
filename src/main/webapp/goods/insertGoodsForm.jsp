@@ -15,59 +15,33 @@
 <body>	
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
     <jsp:include page="/inc/header.jsp"></jsp:include>
-<form method="get" action="<%=request.getContextPath()%>/goods/insertGoodsAction.jsp">		
-	<fieldset>
-		<legend class="container">상품추가</legend>
-				<table border="1"  class="container">
-					<tr>
-						<th>상품명</th> <td><input type="text" name="goodsTitle"></td>
-					</tr>
-					
-					<tr>
-						<th>상품가격</th> <td><input type="number" name="goodsPrice"></td>
-					</tr>
-					
-					<tr>
-						<th>재고</th> 
-					<td>	
-						<select name="soldout">
-							<option  value ="Y">판매중</option>
-							<option  value ="N">품절</option>
-						</select>	
-					</td>
-					</tr>
-					
-					<tr>
-						<th>상품설명</th> <td><textarea rows="5" name="goodsMemo"></textarea></td>
-					</tr>
-					
-					<tr>
-						<th>상품이미지</th>
-						<td>
-							<input type="file" name="fileName">
-						</td>
-					</tr>
-					
-					<tr>
-						<th>originName</th> 
-						<td>
-							<input type="text" name="originName">
-						</td>
-					</tr>
-					
-					<tr>
-						<th>contentType</th> 
-						<td>
-							<input type="text" name="contentType">
-						</td>
-					</tr>
-											
-					<tr>
-						<td><button type="submit">등록하기</button></td>
-					</tr>				
-				</table>
-	</fieldset>
-</form>
+<!--상품 추가 내용-->
+	<section class="login_box_area section-margin">
+		<div class="container">
+			<div class="login_form_inner mx-auto" style="width:500px;">
+				<h3>상품 추가</h3>
+				<form method="post" enctype="multipart/form-data" class="row login_form" action="<%=request.getContextPath()%>/goods/insertGoodsAction.jsp">
+					<div class="col-md-12 form-group">
+						<input type="text" class="form-control" id="goodsTitle" name="goodsTitle" placeholder="상품 이름" maxlength="15" onfocus="this.placeholder = ''" onblur="this.placeholder = '상품 이름'">
+           				</div>
+		            <div class="col-md-12 form-group">
+						<input type="number" class="form-control" id="goodsPrice" name="goodsPrice" placeholder="상품 가격" onfocus="this.placeholder = ''" onblur="this.placeholder = '상품 가격'">
+		            </div>
+					<div class="col-md-12 form-group">
+						<textarea class="form-control" rows="7" name="goodsMemo" placeholder="메모" onfocus="this.placeholder = ''" onblur="this.placeholder = '메모'"></textarea>
+					</div>
+					<div class="col-md-12 form-group">
+						<input type="file" class="form-control" id="goodsImg" name="goodsImg">
+		            </div>
+		   
+					<div class="col-md-12 form-group">
+						<button type="submit" value="submit" class="button button-register w-100 mx-auto" style="margin:30px;">추가하기</button>
+					</div>
+				</form>
+			</div>		
+		</div>
+	</section>
+	<!--================상품 추가 폼 끝 =================-->
 <!-- footer 시작 -->
    <jsp:include page="/inc/footer.jsp"></jsp:include>
 <!-- footer 끝 -->

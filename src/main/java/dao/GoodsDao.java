@@ -3,65 +3,65 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.Converter;
-import util.DBUtil;
 import vo.Goods;
 import vo.GoodsImg;
 
 public class GoodsDao extends ClassDao {
 
 	// 상품과 굿즈 이미지 등록
-	public int insertGoods(Goods insertGoods, GoodsImg insertGoodsImg) throws Exception {
+public void addGoods(String goodsTitle, int goodsPrice, String goodsMemo, String contentType, String filename, String originName) throws Exception{
+		
 		Connection conn = db.getConnection();
-
-		conn.setAutoCommit(false); // 트랜잭션 시작
-
-		try {
-			// 상품 등록
-			String goodsInsertSQL = "INSERT INTO goods "
-					+ "(goods_title, goods_price, soldout, goods_memo, createdate, updatedate)"
-					+ " VALUES(?, ?, ?, ?, now(), now())";
-			PreparedStatement goodsInsertStmt = conn.prepareStatement(goodsInsertSQL);
-			goodsInsertStmt.setString(1, insertGoods.getGoodsTitle());
-			goodsInsertStmt.setInt(2, insertGoods.getGoodsPrice());
-			goodsInsertStmt.setString(3, insertGoods.getSoldout());
-			goodsInsertStmt.setString(4, insertGoods.getGoodsMemo());
-
-			int goodsInsertRow = goodsInsertStmt.executeUpdate();
-
-			// 굿즈 이미지 등록
-			if (goodsInsertRow == 1) {
-				String goodsImgInsertSQL = "INSERT INTO goods_img "
-						+ "(goods_no, filename, origin_name, content_type, createdate, updatedate) "
-						+ "VALUES(LAST_INSERT_ID(), ?, ?, ?, now(), now())";
-				PreparedStatement goodsImgInsertStmt = conn.prepareStatement(goodsImgInsertSQL);
-				goodsImgInsertStmt.setString(1, insertGoodsImg.getFileName());
-				goodsImgInsertStmt.setString(2, insertGoodsImg.getOriginName());
-				goodsImgInsertStmt.setString(3, insertGoodsImg.getContentType());
-
-				int goodsImgInsertRow = goodsImgInsertStmt.executeUpdate();
-
-				if (goodsImgInsertRow == 1) {
-					conn.commit(); // 모든 작업이 성공하면 커밋
-				} else {
-					conn.rollback(); // 굿즈 이미지 등록에 실패하면 롤백
-				}
-			} else {
-				conn.rollback(); // 상품 등록에 실패하면 롤백
-			}
-
-			return goodsInsertRow;
-
-		} catch (Exception e) {
-			conn.rollback(); // 예외 발생 시 롤백
-			throw e;
-		} finally {
-			conn.setAutoCommit(true); // 트랜잭션 종료
-			conn.close();
+		conn.setAutoCommit(false);
+		String sql1 = """
+					INSERT INTO goods(goods_title, goods_price, soldout, goods_memo, createdate, updatedate) 
+					VALUES(?, ?, 'N', ?, NOW(), NOW())
+					""";
+		// 입력시 생성된 AutoIncrement값을 ResultSet 받아오는 옵션 매개값 Statement.RETURN_GENERATED_KEYS
+		PreparedStatement stmt1 = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
+		stmt1.setString(1, goodsTitle);
+		stmt1.setInt(2, goodsPrice);
+		stmt1.setString(3, goodsMemo);
+		int row1 = stmt1.executeUpdate();
+		
+		ResultSet rs = stmt1.getGeneratedKeys();
+		int goodsNo = 0;
+		if(rs.next()) {
+			goodsNo = rs.getInt(1);
 		}
+		
+		if(row1 != 1) {
+			conn.rollback();
+			return;
+		}
+		
+		String sql2 = """
+					INSERT INTO goods_img(goods_no, filename, origin_name, content_type, createdate, updatedate) 
+					VALUES(?, ?, ?, ?, NOW(), NOW())
+					""";
+		PreparedStatement stmt2 = conn.prepareStatement(sql2);
+		stmt2.setInt(1, goodsNo); // 
+		stmt2.setString(2, filename); 
+		stmt2.setString(3, originName); 
+		stmt2.setString(4, contentType); 
+		int row2 = stmt2.executeUpdate();
+		
+		if(row2 != 1) {
+			conn.rollback();
+			return;
+		}
+		
+		conn.commit();
+		
+		stmt1.close();
+		rs.close();
+		stmt2.close();
+		conn.close();
+
 	}
 
 	// 상품 정보와 굿즈 이미지 정보 업데이트

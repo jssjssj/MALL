@@ -9,5 +9,6 @@
 	
     ManagerDao managerDao = new ManagerDao();
 	int result = managerDao.updateManagerPw(managerNo, currentPassword, newPassword);
-
+	
+	response.sendRedirect(request.getContextPath()+"/manager/dashboard.jsp");
 %>

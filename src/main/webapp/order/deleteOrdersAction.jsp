@@ -2,10 +2,14 @@
 <%@ page import="vo.* , dao.*" %>
 <%@ page import="java.util.*" %>
 <%
-	
+
+		String customerId = (String)(session.getAttribute("loginId"));
 
 
 		OrdersDao ordersDao = new OrdersDao();
+
+		// ㅇㄴㄹ숫자형식 오류
+
 		int ordersNo = Integer.parseInt(request.getParameter("ordersNo")); 
 		int row = ordersDao.delete(ordersNo); 
 		
