@@ -45,7 +45,6 @@ th, td {
 			<table border="1">
 					<tr>
 						<td>	</td>
-						
 						<td>주문번호</td>
 						<td>상품명</td>
 						<td>주문수량</td>

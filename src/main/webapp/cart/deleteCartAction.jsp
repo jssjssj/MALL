@@ -3,7 +3,7 @@
 <%@ page import="dao.*"%>
 <% 
 	CartDao cartDao = new CartDao();
-	String cartNo = request.getParameter("cartNo");
+	int cartNo = Integer.parseInt(request.getParameter("cartNo"));
 	String customerId = (String)(session.getAttribute("loginId"));
 	
 	System.out.println(cartNo +"<- cartNo");

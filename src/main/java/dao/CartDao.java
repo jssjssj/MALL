@@ -80,12 +80,10 @@ public class CartDao extends ClassDao{
   		
   		
   		String sql = """
-  				DELETE FROM cart WHERE customer_no=?
-  				AND goods_no=?
+  				DELETE FROM cart WHERE cart_no=?
   				""";
   		
   		PreparedStatement stmt = conn.prepareStatement(sql);
-  		stmt.setInt(1, cartNo);
   		stmt.setInt(1, cartNo);
   		row = stmt.executeUpdate();  
   		return row;
