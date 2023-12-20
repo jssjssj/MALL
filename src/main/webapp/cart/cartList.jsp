@@ -7,11 +7,15 @@
     String customerId = (String) session.getAttribute("loginId");
     CartDao cartDao = new CartDao();
     List<Cart> cartList = new ArrayList<>();
+ 
+    OrdersDao ordersDao = new OrdersDao();
+    int payment = ordersDao.selectTotalPayment(customerId);
     
     if (customerId == null) {
         response.sendRedirect(request.getContextPath() + "/customer/customerLoginForm.jsp");
     } else {
         cartList = cartDao.selectCart(customerId);
+       
     }
 %>
 
@@ -41,9 +45,15 @@ th, td {
     <h2 style="text-align: center;">장바구니</h2>
     
     <br>
-    
-    <div style="text-align: center;"><a href="<%=request.getContextPath()%>/order/orderForm.jsp"><button type="button">전체 주문</button></a></div>
-    <br>
+
+	<div style="text-align: center;">
+
+		<a class="btn btn-outline-dark mt-auto"
+			href="<%=request.getContextPath()%>/order/totalOrderForm.jsp"> 전체 주문</a>
+			<div>총 <%=payment%>원</div>
+	</div>
+	<br>
+	
 <form action = "<%=request.getContextPath()%>/cart/deleteCartAction.jsp">
     <table border="1" class="table" style="text-align: center;"> 
         <tr>      
@@ -69,9 +79,9 @@ th, td {
                 <td><%= (cart.getGoods() != null) ? cart.getGoods().getSoldout() : "" %></td>
                 <td><%= cart.getGoods().getGoodsPrice() * cart.getQuantity() %></td>
                 <td>
-                	<a href="<%=request.getContextPath()%>/cart/plusUpdateCartAction.jsp?cartNo=<%=cart.getCartNo()%>&quantity=<%=cart.getQuantity()%>"><button type="button">+</button></a>
+                	<a href="<%=request.getContextPath()%>/cart/plusUpdateCartAction.jsp?cartNo=<%=cart.getCartNo()%>&quantity=<%=cart.getQuantity()%>" class="btn btn-outline-dark mt-auto">+</a>
                 	<%if(cart.getQuantity() > 1){ %>
-                		<a href="<%=request.getContextPath()%>/cart/minusUpdateCartAction.jsp?cartNo=<%=cart.getCartNo()%>"><button type="button">-</button></a>
+                		<a href="<%=request.getContextPath()%>/cart/minusUpdateCartAction.jsp?cartNo=<%=cart.getCartNo()%>" class="btn btn-outline-dark mt-auto">-</a>
                 	<%}%>
                 </td>                
             </tr>

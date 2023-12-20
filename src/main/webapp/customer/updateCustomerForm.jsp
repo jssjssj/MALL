@@ -93,8 +93,8 @@ th, td {
                 </tr>
                 
             </table>
-       
-            <button type="button" id="actionBtn">저장하기</button>
+       			<br>
+            <button type="button" id="actionBtn" class="btn btn-outline-dark mt-auto">저장하기</button>
         </fieldset>
     </div>
 </form>

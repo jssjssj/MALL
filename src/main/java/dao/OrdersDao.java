@@ -1,7 +1,5 @@
 package dao;
 
-import java.sql.Connection;
-
 import java.sql.*;
 import java.util.*;
 
@@ -118,6 +116,40 @@ public class OrdersDao extends ClassDao {
 		row = stmt.executeUpdate();
 		return row;
 	}
+	
+	// totalPayment
+		public int selectTotalPayment(String customerId) throws Exception {
+			Connection conn = db.getConnection();
+			ResultSet rs = null;
+			int payment = 0;
+			
+			String sql = """
+					 SELECT SUM(re.상품소계) AS totalPayment
+	 FROM 
+	 (SELECT a.quantity * b.goods_price AS 상품소계 
+		            FROM cart a
+		            INNER JOIN goods b ON a.goods_no = b.goods_no
+		            INNER JOIN goods_img c ON b.goods_no = c.goods_no
+		            INNER JOIN customer d ON a.customer_no = d.customer_no
+		            WHERE d.customer_id = ?) re
+					""";
+			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+		        stmt.setString(1, customerId);
+		        rs = stmt.executeQuery();
+
+		        
+		        if (rs.next()) {
+		        	payment = rs.getInt("totalPayment");	           
+		        }
+
+		       
+		    } finally {
+		    	rs.close();
+		        conn.close();
+		    }
+		    return payment;
+		
+		}
 		
 }
 

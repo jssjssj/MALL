@@ -41,7 +41,7 @@ th, td {
 				<jsp:include page="/inc/menubar.jsp"></jsp:include>
 			    <jsp:include page="/inc/header.jsp"></jsp:include>
 		
-	<h2>주문화면</h2>
+	<h2 style="text-align: center;">주문화면</h2>
 			<table border="1" class="table">
 			<thead>
 					<tr>

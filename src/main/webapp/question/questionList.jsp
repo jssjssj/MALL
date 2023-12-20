@@ -57,7 +57,7 @@ th, td {
 		
 		    <% for (Question qu : qul) { %>
 		        <tr>
-		            <td><button type="submit" name="questionNo" value="<%=qu.getQuestionNo()%>">내용/답변보기</button></td>
+		            <td><button class="btn btn-outline-dark mt-auto" type="submit" name="questionNo" value="<%=qu.getQuestionNo()%>">내용/답변보기</button></td>
 		            <td><%=qu.getGoods().getGoodsTitle()%></td>
 		            <td><%= (qu.getQuestionTitle() != null)  	    ? qu.getQuestionTitle() 	:	  ""%></td>
 		            <td><%= (qu.getCreatedate() != null)      		? qu.getCreatedate()  	  : 	 "" %></td>  
@@ -67,9 +67,10 @@ th, td {
 		    <% } %>
 		</table>		
 	</div>
-		<br><div class="container"><a href="<%=request.getContextPath()%>/question/insertQuestionForm.jsp">문의글 쓰기</a></div>
+		<br>
+	<div style="margin-left: 10%;"><a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/question/insertQuestionForm.jsp">문의글 쓰기</a></div>
 </form>
-    
+    <br>
 <!-- footer 시작 -->
 <!-- footer 끝 -->	
 

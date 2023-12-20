@@ -76,8 +76,9 @@
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center">
-                            <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=<%=goods.getGoodsNo()%>&quantity=1">장바구니 담기
+                            <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=<%=goods.getGoodsNo()%>&quantity=1">장바구니+
                             </a>
+                           		 
                             <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/goods/goodsOne.jsp?goodsNo=<%=goods.getGoodsNo()%>">주문하기
                             </a></div>
                         </div>

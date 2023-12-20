@@ -343,6 +343,7 @@ label {
 }
 
 button {
+  outline-color:#8C8C8C;
   border-radius: 0;
 }
 

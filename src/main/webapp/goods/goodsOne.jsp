@@ -25,8 +25,7 @@
 				<br>
 				<br>
 		<div>
-			<a href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=<%=goods.getGoodsNo()%>&quantity=1""><button type="button">장바구니</button></a>			
-			<button type="submit">바로구매</button>	
+			<button type="submit" class="btn btn-outline-dark mt-auto">구매</button>	
 		</div>
 		
 		<br><br>
@@ -52,7 +51,7 @@
 		
 			<tr>
 				<td>수량</td>
-				<td><select name="quantity"><%for(int i=1; i<=10; i++) {%><option><%=i %></option><%}%></select></td>
+				<td><select id="quantity "name="quantity"><%for(int i=1; i<=10; i++) {%><option><%=i %></option><%}%></select></td>
 			</tr>
 			
 			<tr>

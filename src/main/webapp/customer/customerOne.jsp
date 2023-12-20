@@ -38,7 +38,7 @@
     	if (customer != null) { 
     %>    
     <form method="post" action="updateCustomerForm.jsp">
-		<div class="container">
+		<div style="margin-left: 40%;">
 			<fieldset>
 			
       <% if(n4!=null) {%><div><%=n4%></div> <%} %>
@@ -67,8 +67,9 @@
 						</tr>	
 						
 					</table>
-					<button type="submit">정보수정</button>	
-					<button><a href="<%=request.getContextPath()%>/customer/deleteCustomerForm.jsp">회원탈퇴</a></button>				
+						<br>
+					<button type="submit" class="btn btn-outline-dark mt-auto">정보수정</button>	
+					<a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/customer/deleteCustomerForm.jsp">회원탈퇴</a>			
 			</fieldset>
 		</div>
 	</form>
