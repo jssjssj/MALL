@@ -43,8 +43,8 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="#">바로구매</a>
-                                <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp">장바구니+</a></div>
+                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/goods/goodsOne.jsp?goodsNo=3">바로구매</a>
+                                <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=3&quantity=1">장바구니+</a></div>
                             </div>
                         </div>
                     </div>
@@ -74,8 +74,8 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                           		<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="#">바로구매</a>
-                                <a class="btn btn-outline-dark mt-auto" href="#">장바구니+</a></div>
+                           		<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/goods/goodsOne.jsp?goodsNo=4">바로구매</a>
+                                <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=4&quantity=1">장바구니+</a></div>
                             </div>
                         </div>
                     </div>
@@ -104,8 +104,8 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="#">바로구매</a>
-                                <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=<%= goods.getGoodsNo()%>">장바구니+</a></div>
+                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/goods/goodsOne.jsp?goodsNo=5">바로구매</a>
+                                <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=5&quantity=1">장바구니+</a></div>
                             </div>
                         </div>
                     </div>
@@ -132,8 +132,8 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="#">바로구매</a>
-                                <a class="btn btn-outline-dark mt-auto" href="#">장바구니+</a></div>
+                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/goods/goodsOne.jsp?goodsNo=6">바로구매</a>
+                                <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=6&quantity=1">장바구니+</a></div>
                             </div>
                         </div>
                     </div>
@@ -162,8 +162,8 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="#">바로구매</a>
-                                <a class="btn btn-outline-dark mt-auto" href="#">장바구니+</a></div>
+                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/goods/goodsOne.jsp?goodsNo=7">바로구매</a>
+                                <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=7&quantity=1">장바구니+</a></div>
                             </div>
                         </div>
                     </div>
@@ -189,8 +189,8 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="#">바로구매</a>
-                                <a class="btn btn-outline-dark mt-auto" href="#">장바구니+</a></div>
+                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/goods/goodsOne.jsp?goodsNo=8">바로구매</a>
+                                <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=8&quantity=1">장바구니+</a></div>
                             </div>
                         </div>
                     </div>
@@ -220,8 +220,8 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="#">바로구매</a>
-                                <a class="btn btn-outline-dark mt-auto" href="#">장바구니+</a></div>
+                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/goods/goodsOne.jsp?goodsNo=9">바로구매</a>
+                                <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=9&quantity=1">장바구니+</a></div>
                             </div>
                         </div>
                     </div>
@@ -248,8 +248,8 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="#">바로구매</a>
-                                <a class="btn btn-outline-dark mt-auto" href="#">장바구니+</a></div>
+                            	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/goods/goodsOne.jsp?goodsNo=10">바로구매</a>
+                                <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=10&quantity=1">장바구니+</a></div>
                             </div>
                         </div>
                     </div>
