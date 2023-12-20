@@ -63,7 +63,7 @@ th, td {
             <tr>        
             	    	                
                 <td><a href="<%=request.getContextPath()%>/cart/deleteCartAction.jsp?cartNo=<%= cart.getCartNo() %>">X</a></td>
-                <td><a href=""><%= (cart.getGoods() != null) ? cart.getGoods().getGoodsTitle() : "" %></a></td>
+                <td><a href="<%=request.getContextPath()%>/goods/goodsOne.jsp?goodsNo=<%=cart.getGoods().getGoodsNo()%>"><%= (cart.getGoods() != null) ? cart.getGoods().getGoodsTitle() : "" %></a></td>
                 <td><%= (cart.getGoods() != null) ? cart.getGoods().getGoodsPrice() : "" %></td>
                 <td><%= cart.getQuantity() %></td>
                 <td><%= (cart.getGoods() != null) ? cart.getGoods().getSoldout() : "" %></td>

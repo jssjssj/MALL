@@ -18,7 +18,7 @@
     <jsp:include page="/inc/header.jsp"></jsp:include>
     
 	<br>
-<form action="" method="get">
+<form action="orderOne" method="get">
 	<div style="text-align: center;">
 	
 		<img  src="/mall/<%= goodsImg.getFileName() %>" alt="..." style="width: 20%">
@@ -38,8 +38,8 @@
 		
 		
 			<tr>
-				<td>상품설명</td>
-				<td><%= goods.getGoodsMemo() %></td>
+				<td>수량</td>
+				<td><select><%for(int i=1; i<=10; i++) {%><option><%=i %></option><%}%></select></td>
 			</tr>
 			
 			<tr>
