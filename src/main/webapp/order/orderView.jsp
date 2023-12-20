@@ -42,7 +42,8 @@ th, td {
 			    <jsp:include page="/inc/header.jsp"></jsp:include>
 		
 	<h2>주문화면</h2>
-			<table border="1">
+			<table border="1" class="table">
+			<thead>
 					<tr>
 						<td>	</td>
 						<td>주문번호</td>
@@ -52,13 +53,14 @@ th, td {
 						<td>배송진행여부</td>
 						<td>배송주소</td>
 					</tr>
-			</table>
+			</thead>
+			<tbody>
 	<%
 		for(Orders o : ordersList) {
 	%>
-			<table border="1">
+			
 					<tr>
-						<td><a href="<%=request.getContextPath()%>/order/deleteOrdersAction.jsp">
+						<td><a href="<%=request.getContextPath()%>/order/deleteOrdersAction.jsp?ordersNo=<%=o.getOrdersNo()%>">
 						<button value="<%=o.getOrdersNo()%>" name="ordersNo" >X</button></a></td>
 						
 						<td>		<%=o.getOrdersNo()%>			 </td>
@@ -68,11 +70,11 @@ th, td {
 						<td>		<%=o.getOrdersState()%>			 </td>
 						<td>	<%=o.getCustomerAddr().getAddress()%></td>
 					</tr>
-			</table>
+			
 	<%		
 		 }
 	%>	
-		
+		</tbody></table>
 
 <!-- footer 시작 -->
    <jsp:include page="/inc/footer.jsp"></jsp:include>

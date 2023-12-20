@@ -23,8 +23,10 @@
     <jsp:include page="/inc/header.jsp"></jsp:include> 
 
 <!-- 내용 시작 -->
-    <div>
-        <h1>공지사항 상세보기</h1>
+	<br>
+  		  <div style="margin-left: 5%">   
+          <h1>공지사항 상세보기</h1>
+    <br>
         <div>
             <h2><%= notice.getNoticeTitle() %></h2>
             <p>작성자: <%= notice.getManager() != null ? notice.getManager().getManagerName() : "Unknown" %></p>

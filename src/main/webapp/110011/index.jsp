@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="vo.*, dao.*" %>
 <%	
-	
+	Goods goods = new Goods();
 	String msg1 = request.getParameter("msg1");
 	String msg2 = request.getParameter("msg2");
 	String msg4 = request.getParameter("msg4");
@@ -103,7 +104,7 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             	<div class="text-center" colspan="2"><a class="btn btn-outline-dark mt-auto" href="#">바로구매</a>
-                                <a class="btn btn-outline-dark mt-auto" href="#">장바구니+</a></div>
+                                <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=<%= goods.getGoodsNo()%>">장바구니+</a></div>
                             </div>
                         </div>
                     </div>

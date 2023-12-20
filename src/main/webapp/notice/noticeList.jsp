@@ -42,7 +42,9 @@
     <jsp:include page="/inc/header.jsp"></jsp:include>
     <!-- 내용 시작 -->
 <div>
-    <h1>공지사항 목록</h1>
+		<br>
+    <h1 style="margin-left: 5%">공지사항 목록</h1>
+    	<br>
     <%-- 공지사항 목록을 가져오기 --%>
     <%
         if (noticeList.isEmpty()) {
@@ -50,7 +52,7 @@
         } else {
             for (Notice notice : noticeList) {
     %>
-                <div>
+                <div style="margin-left: 5%">
                     <h2><a href="noticeOne.jsp?noticeNo=<%= notice.getNoticeNo() %>"><%= notice.getNoticeTitle() %></a></h2>
                     <!-- <p><%= notice.getNoticeContent() %></p>  -->  
                     <p>작성자: <%= notice.getManager() != null ? notice.getManager().getManagerName() : "Unknown" %></p>

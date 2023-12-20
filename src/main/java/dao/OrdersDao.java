@@ -62,7 +62,7 @@ public class OrdersDao extends ClassDao {
 	}
 	
 	
-	public int delete(int ordersNo) throws Exception {
+	public int deleteOrder(int ordersNo) throws Exception {
 		 DBUtil dbUtil = new DBUtil();
 		 Customer customer = null;
 		 int row = 0;

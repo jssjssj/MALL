@@ -7,9 +7,10 @@
 	int quantity = Integer.parseInt(request.getParameter("quantity"));
 	/*Cart cart = new Cart(); */
 	CartDao cartDao = new CartDao();
+	
 	int row = cartDao.insertCart(customerId , goodsNo , quantity);
 	if(row>0){
 		System.out.println("insertCart 성공");
-		response.sendRedirect(request.getContextPath()+"/goods/goodsOne.jsp");
+		response.sendRedirect(request.getContextPath()+"/goods/goodsList.jsp");
 	}
 %>

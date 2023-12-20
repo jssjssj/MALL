@@ -1,21 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="vo.*"%>
-<%@ page import="dao.*"%>
-<% 
-	CartDao cartDao = new CartDao();
+<%@page import="dao.CartDao"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
 	int cartNo = Integer.parseInt(request.getParameter("cartNo"));
-	String customerId = (String)(session.getAttribute("loginId"));
-	
-	System.out.println(cartNo +"<- cartNo");
+	CartDao cartDao = new CartDao();
+	cartDao.deleteCart(cartNo);
+	System.out.println(cartNo);
+	response.sendRedirect(request.getContextPath()+"/cart/cartList.jsp");
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<h4>ㅋㅋ</h4>
- 
-</body>
-</html>

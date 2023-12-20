@@ -30,7 +30,7 @@ th, td {
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
     <jsp:include page="/inc/header.jsp"></jsp:include>
    <form action="<%=request.getContextPath()%>/questionComment/insertQuestionCommentAction.jsp" id="insertComAct">
-	<table border="1">
+	<table border="1" class="table">
 		<tr>
 			<td>제목</td>
 		   	<td><%=q.getQuestionTitle()%></td>

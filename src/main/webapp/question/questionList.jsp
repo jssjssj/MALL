@@ -36,12 +36,13 @@ th, td {
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
     <jsp:include page="/inc/header.jsp"></jsp:include>
 	<!-- 메뉴 끝 -->
+	<br>
   <h2 class="container">Question 목록</h2>
 <%if(q != null){%><div><%=q%></div><%}%>	<!-- 문의글 등록 후 등록완료+답변대기 안내멘트 -->
 
 <form method="get" action="<%=request.getContextPath()%>/question/questionOne.jsp">
 	<div class="container">	
-		<table border="1">
+		<table border="1" class="table" style="text-align: center;">
 		    <tr>
 		        <th>내용/답변보기</th>
 		        <th>문의상품 </th>
@@ -50,8 +51,8 @@ th, td {
 		        <th>답변일 </th>
 		        <th>답변수정일</th>
 		    </tr>
-		</table>
-		<table border="1">
+		
+		
 		    <% for (Question qu : qul) { %>
 		        <tr>
 		            <td><button type="submit" name="questionNo" value="<%=qu.getQuestionNo()%>">내용/답변보기</button></td>

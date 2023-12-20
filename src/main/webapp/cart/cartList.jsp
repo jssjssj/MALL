@@ -35,40 +35,41 @@ th, td {
     <jsp:include page="/inc/menubar.jsp"></jsp:include>
 	 <jsp:include page="/inc/header.jsp"></jsp:include>
 	<!-- 메뉴 끝 -->
-    <h2>장바구니</h2>
+	<br>
+    <h2 style="text-align: center;">장바구니</h2>
 <form action = "<%=request.getContextPath()%>/cart/deleteCartAction.jsp">
-    <table border="1"> 
+    <table border="1" class="table" style="text-align: center;"> 
         <tr>      
-        	<th>	</th> 
-        	<th>  삭제  </th>  	       		        	
+        	
+        	<th>삭제</th>  	       		        	
             <th>상품이름</th>
             <th>상품단가</th>
             <th>선택수량</th>
             <th>품절여부</th>
-            <th>사진</th> 
             <th>소계</th> 
             <th>수량변경</th> 
             
         </tr>
-</table>
+ <tbody>
         <% for (Cart cart : cartList) { %>
-         <table border="1"> 
+       
             <tr>        
-            	<td><input type="hidden" readonly="readonly" value="<%= cart.getCartNo() %>" name="cartNo"></td>       	                
-                <td><a href="<%=request.getContextPath()%>/cart/deleteCartAction.jsp">X</a></td>
-                <td><%= (cart.getGoods() != null) ? cart.getGoods().getGoodsTitle() : "" %></td>
+            	    	                
+                <td><a href="<%=request.getContextPath()%>/cart/deleteCartAction.jsp?cartNo=<%= cart.getCartNo() %>">X</a></td>
+                <td><a href=""><%= (cart.getGoods() != null) ? cart.getGoods().getGoodsTitle() : "" %></a></td>
                 <td><%= (cart.getGoods() != null) ? cart.getGoods().getGoodsPrice() : "" %></td>
                 <td><%= cart.getQuantity() %></td>
                 <td><%= (cart.getGoods() != null) ? cart.getGoods().getSoldout() : "" %></td>
-                <td><%= (cart.getGoodsImg() != null) ? cart.getGoodsImg().getFileName() : "" %></td>
                 <td><%= cart.getGoods().getGoodsPrice() * cart.getQuantity() %></td>
                 <td><select class = "quantity" name = "quantity">              
                 		<%for(int i=1; i<=10; i++) { %><option><%=i%></option>
                 		 <% } %>
                 </select></td>                
             </tr>
-        </table>
+       
         <% } %> 
+         </tbody>
+        </table>
 </form>
     <!-- footer 시작 -->
     <jsp:include page="/inc/footer.jsp"></jsp:include>

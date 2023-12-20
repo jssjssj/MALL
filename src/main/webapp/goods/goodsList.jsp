@@ -13,7 +13,7 @@
 	for(int i = 0; i < 0; i++) {
 		Goods goods = sample.getGoods();
 		GoodsImg goodsImg = sample.getGoodsImg(); 
-		goodsDao.insertGoods(goods,goodsImg);
+		
 	}
 %>
 
@@ -74,9 +74,9 @@
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center">
-                            <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp">장바구니 담기
+                            <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=<%=goods.getGoodsNo()%>&quantity=1">장바구니 담기
                             </a>
-                            <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/cart/insertCartAction.jsp">주문하기
+                            <a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/goods/goodsOne.jsp?goodsNo=<%=goods.getGoodsNo()%>">주문하기
                             </a></div>
                         </div>
                     </div>

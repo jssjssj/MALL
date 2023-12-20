@@ -165,24 +165,3 @@ public class QuestionDao extends ClassDao{
  	  return question;
     }
 }
-    
-	    
-	    
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
