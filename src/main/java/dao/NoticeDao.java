@@ -5,11 +5,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.*;
-
-import util.DBUtil;
-import vo.Goods;
-import vo.GoodsImg;
 import vo.Manager;
 import vo.Notice;
 

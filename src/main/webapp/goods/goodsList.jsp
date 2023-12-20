@@ -6,7 +6,7 @@
 <%@ page import="util.*" %>
 
 <%
-	Manager loginManager = (Manager) session.getAttribute("loginManager");
+/* 	
 	// 샘플 데이터 입력.
 	GoodsDao goodsDao = new GoodsDao();
 	SampleData sample = new SampleData();
@@ -15,9 +15,11 @@
 		GoodsImg goodsImg = sample.getGoodsImg(); 
 		
 	}
+	*/
 %>
 
 <%
+	Manager loginManager = (Manager) session.getAttribute("loginManager");
 	/*
 		TODO:
 			1. 굿즈 리스트를 가져온다.
