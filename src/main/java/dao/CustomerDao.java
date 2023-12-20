@@ -93,7 +93,7 @@ public class CustomerDao extends ClassDao {
 	    Connection conn = dbUtil.getConnection();
 	    PreparedStatement stmt = null;
 	    String sql = "SELECT a.customer_no, a.customer_id, a.customer_pw, a.createdate, a.updatedate, a.active, "
-	            + "b.address, c.customer_name, c.customer_phone FROM customer a "
+	            + "b.address, b.customer_addr_no, c.customer_name, c.customer_phone FROM customer a "
 	            + "INNER JOIN customer_addr b ON a.customer_no = b.customer_no "
 	            + "INNER JOIN customer_detail c ON a.customer_no = c.customer_no "
 	            + "WHERE a.customer_id = ?";
@@ -116,6 +116,7 @@ public class CustomerDao extends ClassDao {
 	            customerDetail.setCustomerName(rs.getString("customer_name"));
 	            customerDetail.setCustomerPhone(rs.getString("customer_phone"));
 	            customerAddr.setAddress(rs.getString("address"));
+	            customerAddr.setCustomerAddrNo(rs.getInt("customer_addr_no"));
 
 	            customer.setCustomerDetail(customerDetail);
 	            customer.setCustomerAddr(customerAddr);

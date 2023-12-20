@@ -60,8 +60,11 @@ th, td {
 	%>
 			
 					<tr>
-						<td><a href="<%=request.getContextPath()%>/order/deleteOrdersAction.jsp?ordersNo=<%=o.getOrdersNo()%>">
-						<button value="<%=o.getOrdersNo()%>" name="ordersNo" >X</button></a></td>
+						<td>
+							<a href="<%=request.getContextPath()%>/order/deleteOrdersAction.jsp?ordersNo=<%=o.getOrdersNo()%>">
+								X
+							</a>
+						</td>
 						
 						<td>		<%=o.getOrdersNo()%>			 </td>
 						<td>		<%=o.getGoods().getGoodsTitle()%></td>

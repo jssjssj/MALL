@@ -84,11 +84,58 @@ public class OrdersDao extends ClassDao {
 		
 		 }
 	
-	
-		
+	public int insertOrder(Orders paramOrders) throws Exception {
+		int row=0;
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql="""
+				INSERT INTO orders (
+					goods_no,
+					customer_no,
+					customer_addr_no,
+					quantity,
+					total_price,
+					orders_state,
+					createdate,
+					updatedate
+				) VALUES (
+					?,
+					?,
+					?,
+					?,
+					?,
+					'주문완료',
+					NOW(),
+					NOW()
+				)
+				""";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1,paramOrders.getGoodsNo());
+		stmt.setInt(2,paramOrders.getCustomerNo());
+		stmt.setInt(3,paramOrders.getCustomerAddrNo());
+		stmt.setInt(4,paramOrders.getQuantity());
+		stmt.setInt(5,paramOrders.getTotalPrice());
+		row = stmt.executeUpdate();
+		return row;
 	}
+		
+}
 
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

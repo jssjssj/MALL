@@ -18,43 +18,69 @@
     <jsp:include page="/inc/header.jsp"></jsp:include>
     
 	<br>
-<form action="orderOne" method="get">
+<form action="<%=request.getContextPath()%>/order/orderOne.jsp" method="get">
 	<div style="text-align: center;">
-	
+		
 		<img  src="/mall/<%= goodsImg.getFileName() %>" alt="..." style="width: 20%">
+				<br>
+				<br>
+		<div>
+			<a href="<%=request.getContextPath()%>/cart/insertCartAction.jsp?goodsNo=<%=goods.getGoodsNo()%>&quantity=1""><button type="button">장바구니</button></a>			
+			<button type="submit">바로구매</button>	
+		</div>
 		
 		<br><br>
 		
 		<table class="table">
 			<tr>
 				<td>상품명</td>
-				<td><%= goods.getGoodsTitle() %></td>
+				<td>
+					<input type="hidden" name="goodsNo" value="<%= goods.getGoodsNo() %>">
+					<input type="hidden" name="goodsTitle" value="<%= goods.getGoodsTitle() %>">
+					<%= goods.getGoodsTitle() %>
+				</td>
 			</tr>
 			
 			<tr>
 				<td>가격</td>
-				<td><%= goods.getGoodsPrice() %></td>
+				<td>
+					<input type="hidden" name="goodsPrice" value="<%= goods.getGoodsPrice() %>">
+					<%= goods.getGoodsPrice() %>
+				</td>
 			</tr>
 		
 		
 			<tr>
 				<td>수량</td>
-				<td><select><%for(int i=1; i<=10; i++) {%><option><%=i %></option><%}%></select></td>
+				<td><select name="quantity"><%for(int i=1; i<=10; i++) {%><option><%=i %></option><%}%></select></td>
 			</tr>
 			
 			<tr>
 				<td>매진여부</td>
-				<td><%= goods.getSoldout() %></td>
-			</tr>
+				<td>
+					<input type="hidden" name="soldout" value="<%= goods.getSoldout() %>">
+					<%= goods.getSoldout() %>
+				</td>
+			</tr>						
 		
-		<tr>
-			<td></td>
-			<td><button type="submit">바로구매</button></td>
-		</tr>
+			</table>
+			
+			<br>
+			
+				<div>상품소개</div>
+				
+					<textarea readonly style="outline:none; border: none; resize: none; 
+					font-size:50; width: 70%; height: 100em;"><%= goods.getGoodsMemo() %></textarea>
+				
+			
 		
-		</table>
+		
 	</div>
 
 </form>
+	<br>
+	<br>
+	<br>
+	<br>
 </body>
 </html>
