@@ -61,10 +61,12 @@ th, td {
                 <td><%= cart.getQuantity() %></td>
                 <td><%= (cart.getGoods() != null) ? cart.getGoods().getSoldout() : "" %></td>
                 <td><%= cart.getGoods().getGoodsPrice() * cart.getQuantity() %></td>
-                <td><select class = "quantity" name = "quantity">              
-                		<%for(int i=1; i<=10; i++) { %><option><%=i%></option>
-                		 <% } %>
-                </select></td>                
+                <td>
+                	<a href="<%=request.getContextPath()%>/cart/plusUpdateCartAction.jsp?cartNo=<%=cart.getCartNo()%>&quantity=<%=cart.getQuantity()%>"><button type="button">+</button></a>
+                	<%if(cart.getQuantity() > 1){ %>
+                		<a href="<%=request.getContextPath()%>/cart/minusUpdateCartAction.jsp?cartNo=<%=cart.getCartNo()%>"><button type="button">-</button></a>
+                	<%}%>
+                </td>                
             </tr>
        
         <% } %> 

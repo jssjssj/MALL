@@ -1,10 +1,7 @@
-<<<<<<< HEAD
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="vo.*, dao.*" %>
-=======
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
->>>>>>> branch 'master' of https://github.com/jssjssj/MALL.git
 <%	
 	Goods goods = new Goods();
 	String msg1 = request.getParameter("msg1");

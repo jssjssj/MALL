@@ -1,3 +1,4 @@
+<%@page import="javax.swing.plaf.synth.SynthOptionPaneUI"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="vo.*, dao.*" %>
@@ -23,6 +24,11 @@
     
     
     String t = request.getParameter("t"); // 회원탈퇴 시 탈퇴완료 메시지
+    
+    // 장바구니 옆 숫자 세팅
+    CartDao cartDao = new CartDao();
+    System.out.println(customerId + "<----customerId");
+    int cnt = cartDao.countCart(customerId);
 %>
 
 <% if (loginManager == null) { 
@@ -65,7 +71,7 @@
             <button class="btn btn-outline-dark" type="submit"> 
 		             <i class="bi-cart-fill me-1"></i>
 		             장바구니
-		             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span> 
+		             <span class="badge bg-dark text-white ms-1 rounded-pill"><%=cnt%></span> 
 		         </button>
 		         </form>
 <%

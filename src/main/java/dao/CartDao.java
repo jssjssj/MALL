@@ -44,33 +44,7 @@ public class CartDao extends ClassDao{
 	}
 
 
-  	// insert
-  	public int insertCart(String customerId, int goodsNo , int quantity) throws Exception {
-  		DBUtil dbUtil = new DBUtil();
-  		Connection conn = dbUtil.getConnection();
-  		int row = 0;
-  		String sql0 = """
-  				SELECT customer_no FROM customer
-  				WHERE customer_id = ?
-  				""";
-  		PreparedStatement stmt0 = conn.prepareStatement(sql0);
-  		stmt0.setString(1, customerId);
-  		ResultSet rs = stmt0.executeQuery();
-  		if(rs.next()) {
-  			Customer customer = new Customer();
-  			customer.setCustomerNo(rs.getInt("customer_no"));
-  			
-  		String sql = "INSERT INTO cart(goods_no , customer_no , quantity , createdate , updatedate)"
-  				+ "VALUES (? , ? , ? , NOW() , NOW())";
-  		PreparedStatement stmt = conn.prepareStatement(sql);
-  		stmt.setInt(1, goodsNo);
-  		stmt.setInt(2, customer.getCustomerNo());
-  		stmt.setInt(3 , quantity);
-  		row = stmt.executeUpdate();
-  		}
-  		
-  		return row;
-  	}
+  	
   	
   	// delete
   	public int deleteCart(int cartNo) throws Exception {
@@ -91,21 +65,109 @@ public class CartDao extends ClassDao{
   	}
 
  // update
-   	public int updateCart(int quantity , int cartNo) throws Exception {
+   	public int plusCart(int cartNo) throws Exception {
    		int row = 0;
    		DBUtil dbUtil = new DBUtil();
    		Connection conn = dbUtil.getConnection();
    		String sql = """
-   				UPDATE cart SET quantity = ? , 
-   				updatedate = NOW() WHERE cartNo = ?
+   				UPDATE cart SET 
+   					quantity = quantity+1 , 
+   					updatedate = NOW() 
+   				WHERE cart_no = ?
    				""";
    		PreparedStatement stmt = conn.prepareStatement(sql);
-   		stmt.setInt(1, quantity);
-   		stmt.setInt(2, cartNo);  		
+   		stmt.setInt(1, cartNo);  		
    		row = stmt.executeUpdate();
    		return row;
    	}
-  	
+   	
+ // update
+   	public int minusCart(int cartNo) throws Exception {
+   		int row = 0;
+   		DBUtil dbUtil = new DBUtil();
+   		Connection conn = dbUtil.getConnection();
+   		String sql = """
+   				UPDATE cart SET 
+   					quantity = quantity-1 , 
+   					updatedate = NOW() 
+   				WHERE cart_no = ?
+   				""";
+   		PreparedStatement stmt = conn.prepareStatement(sql);
+   		stmt.setInt(1, cartNo);  		
+   		row = stmt.executeUpdate();
+   		return row;
+   	}
+   	
+    // count
+   	public int countCart(String customerId) throws Exception {
+   		int cnt = 0;
+   		DBUtil dbUtil = new DBUtil();
+   		Connection conn = dbUtil.getConnection();
+   		ResultSet rs = null;
+   		String sql = """
+   				SELECT COUNT(cart_no) AS cnt
+			FROM cart c 
+			INNER JOIN customer cu
+			ON c.customer_no = cu.customer_no
+			WHERE cu.customer_id = ?
+   				""";
+   		PreparedStatement stmt = conn.prepareStatement(sql);
+   		stmt.setString(1, customerId);
+   		rs = stmt.executeQuery();
+   		if(rs.next()) {
+   		cnt = rs.getInt("cnt");
+   		}
+   		return cnt;
+   	}
+   	
+   	// select
+   	public int selectCart(int godosNo) throws Exception {
+   		int cartNo = 0;
+   		DBUtil dbUtil = new DBUtil();
+	  	Connection conn = dbUtil.getConnection();
+	  	String sql="""
+	  		SELECT cart_no AS cartNo FROM cart
+	  			WHERE goods_no = ?
+	  			""";
+	  	PreparedStatement stmt= conn.prepareStatement(sql);
+	  	stmt.setInt(1, godosNo);
+	  	ResultSet rs = stmt.executeQuery();
+	  	if(rs.next()) {
+	  	cartNo = rs.getInt("cartNo");
+	  	}
+   		return cartNo;
+   	}
+   	
+   	
+   		// insert
+   		  	public int insertCart(String customerId, int goodsNo , int quantity) throws Exception {
+   		  		DBUtil dbUtil = new DBUtil();
+   		  		Connection conn = dbUtil.getConnection();
+   		  		int row = 0;
+   		  		String sql0 = """
+   		  				SELECT customer_no FROM customer
+   		  				WHERE customer_id = ?
+   		  				""";
+   		  		PreparedStatement stmt0 = conn.prepareStatement(sql0);
+   		  		stmt0.setString(1, customerId);
+   		  		ResultSet rs = stmt0.executeQuery();
+   		  		if(rs.next()) {
+   		  			Customer customer = new Customer();
+   		  			customer.setCustomerNo(rs.getInt("customer_no"));
+   		  			
+   		  		String sql = "INSERT INTO cart(goods_no , customer_no , quantity , createdate , updatedate)"
+   		  				+ "VALUES (? , ? , ? , NOW() , NOW())";
+   		  		PreparedStatement stmt = conn.prepareStatement(sql);
+   		  		stmt.setInt(1, goodsNo);
+   		  		stmt.setInt(2, customer.getCustomerNo());
+   		  		stmt.setInt(3 , quantity);
+   		  		row = stmt.executeUpdate();
+   		  		}
+   		  		
+   		  		return row;
+   		  	}
+   		  	
+  
 }
 
 

@@ -8,9 +8,15 @@
 	/*Cart cart = new Cart(); */
 	CartDao cartDao = new CartDao();
 	
-	int row = cartDao.insertCart(customerId , goodsNo , quantity);
-	if(row>0){
-		System.out.println("insertCart 성공");
-		response.sendRedirect(request.getContextPath()+"/goods/goodsList.jsp");
+	int cartNo = cartDao.selectCart(goodsNo);
+	int row = 0;
+	if(cartNo==0){
+		cartDao.insertCart(customerId , goodsNo , quantity);
+	} else {
+		cartDao.plusCart(cartNo);
 	}
+
+	System.out.println(cartNo+"<-- cartNo");
+		response.sendRedirect(request.getContextPath()+"/goods/goodsList.jsp");
+	
 %>
