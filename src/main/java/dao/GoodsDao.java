@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import vo.Goods;
 import vo.GoodsImg;
@@ -206,5 +208,67 @@ public void addGoods(String goodsTitle, int goodsPrice, String goodsMemo, String
 		ResultSet rs = db.executeQuery(sql);
 		if (rs.next()) cnt = rs.getInt(1);
 		return cnt;
+	}
+	
+	public Goods selectGoodsOne(int goodsNo) throws Exception {
+		Connection conn = db.getConnection();
+		PreparedStatement stmt0 = null;	
+		ResultSet rs0 = null;	
+		Goods goods = null;
+		
+	try {
+		String sql0 = """
+		  		SELECT * FROM goods
+		  		WHERE goods_no = ?
+		""";
+		stmt0 = conn.prepareStatement(sql0);
+		stmt0.setInt(1, goodsNo);
+		rs0 = stmt0.executeQuery();
+				
+		if(rs0.next()) {			
+			 goods = converter.getGoods(rs0);
+		}
+		
+	} catch (Exception e) {
+		conn.rollback(); // 예외 발생 시 롤백
+		throw e;
+	} finally {	
+		rs0.close();		
+		stmt0.close();
+		conn.close();
+		
+	}
+		return goods;
+	}
+	
+	public GoodsImg selectGoodsOneImg(int goodsNo) throws Exception {
+		Connection conn = db.getConnection();
+		PreparedStatement stmt0 = null;	
+		ResultSet rs0 = null;	
+		GoodsImg goods = null;
+		
+	try {
+		String sql0 = """
+		  		SELECT * FROM goods_img
+		  		WHERE goods_no = ?
+		""";
+		stmt0 = conn.prepareStatement(sql0);
+		stmt0.setInt(1, goodsNo);
+		rs0 = stmt0.executeQuery();
+				
+		if(rs0.next()) {			
+			 goods = converter.getGoodsImg(rs0);
+		}
+		
+	} catch (Exception e) {
+		conn.rollback(); // 예외 발생 시 롤백
+		throw e;
+	} finally {	
+		rs0.close();		
+		stmt0.close();
+		conn.close();
+		
+	}
+		return goods;
 	}
 }

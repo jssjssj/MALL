@@ -35,8 +35,15 @@ th, td {
     <jsp:include page="/inc/menubar.jsp"></jsp:include>
 	 <jsp:include page="/inc/header.jsp"></jsp:include>
 	<!-- 메뉴 끝 -->
+	
 	<br>
+	
     <h2 style="text-align: center;">장바구니</h2>
+    
+    <br>
+    
+    <div style="text-align: center;"><a href="<%=request.getContextPath()%>/order/orderForm.jsp"><button type="button">전체 주문</button></a></div>
+    <br>
 <form action = "<%=request.getContextPath()%>/cart/deleteCartAction.jsp">
     <table border="1" class="table" style="text-align: center;"> 
         <tr>      
@@ -77,33 +84,5 @@ th, td {
     <jsp:include page="/inc/footer.jsp"></jsp:include>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

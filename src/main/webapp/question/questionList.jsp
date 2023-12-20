@@ -11,6 +11,7 @@
 	String customerId = (String)(session.getAttribute("loginId"));
     List<Question> qul = new ArrayList<>();
     qul = questionDao.selectQuestion();
+ 	System.out.println(qul);
 	String q = request.getParameter("q"); // 문의글 등록 후 등록완료+답변대기 안내멘트
 	/* if(customerId==null){ 비회원도 접근가능토록 변경-> 주석처리함
 		response.sendRedirect(request.getContextPath()+"/customer/customerLoginForm.jsp");
@@ -33,6 +34,7 @@ th, td {
 </style>
 <jsp:include page="/inc/meta.jsp"></jsp:include>
 <body style="min-height: 100vh">	
+
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
     <jsp:include page="/inc/header.jsp"></jsp:include>
 	<!-- 메뉴 끝 -->
@@ -70,6 +72,7 @@ th, td {
     
 <!-- footer 시작 -->
 <!-- footer 끝 -->	
+
 </body>
 <jsp:include page="/inc/footer.jsp"></jsp:include>
 </html>
