@@ -8,6 +8,7 @@ public class Manager {
 	private	String createdate;
 	private	String updatedate;
 	private	String active;
+	
 	public int getManagerNo() {
 		return managerNo;
 	}

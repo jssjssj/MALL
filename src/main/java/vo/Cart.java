@@ -7,28 +7,7 @@ public class Cart {
 	private	int quantity;
 	private	String createdate;
 	private	String updatedate;
-	Customer customer;
-	Goods goods;
-	GoodsImg goodsImg;
 	
-	public Customer getCustomer() {
-		return customer;
-	}
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-	public Goods getGoods() {
-		return goods;
-	}
-	public void setGoods(Goods goods) {
-		this.goods = goods;
-	}
-	public GoodsImg getGoodsImg() {
-		return goodsImg;
-	}
-	public void setGoodsImg(GoodsImg goodsImg) {
-		this.goodsImg = goodsImg;
-	}
 	public int getCartNo() {
 		return cartNo;
 	}
@@ -64,12 +43,6 @@ public class Cart {
 	}
 	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
-	}		
-	
-	
-	
-	
-	
-	
+	}
 	
 }

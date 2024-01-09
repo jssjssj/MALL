@@ -7,21 +7,7 @@ public class Customer {
 	private	String createdate;
 	private	String updatedate;
 	private	String active;
-	CustomerAddr customerAddr; 
-    CustomerDetail customerDetail; 
-    
-	public CustomerAddr getCustomerAddr() {
-		return customerAddr;
-	}
-	public void setCustomerAddr(CustomerAddr customerAddr) {
-		this.customerAddr = customerAddr;
-	}
-	public CustomerDetail getCustomerDetail() {
-		return customerDetail;
-	}
-	public void setCustomerDetail(CustomerDetail customerDetail) {
-		this.customerDetail = customerDetail;
-	}
+	
 	public int getCustomerNo() {
 		return customerNo;
 	}
@@ -51,7 +37,7 @@ public class Customer {
 	}
 	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
-	}	
+	}
 	public String getActive() {
 		return active;
 	}

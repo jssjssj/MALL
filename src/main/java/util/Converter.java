@@ -5,159 +5,215 @@ import java.util.Map;
 
 import vo.*;
 
-public class Converter {
-	public Goods getGoods(ResultSet rs) {
-		Goods goods = new Goods();
-		try {			
-			goods.setGoodsNo(rs.getInt("goods_no"));
-			goods.setGoodsTitle(rs.getString("goods_title"));
-			goods.setGoodsPrice(rs.getInt("goods_price"));
-			goods.setSoldout(rs.getString("soldout"));
-			goods.setGoodsMemo(rs.getString("goods_memo"));
-			goods.setCreatedate(rs.getString("createdate"));
-			goods.setUpdatedate(rs.getString("updatedate"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return goods;
-	}	
-
-	public GoodsImg getGoodsImg(ResultSet rs) {
-		GoodsImg goodsImg = new GoodsImg();
-		try {
-            goodsImg.setFileName(rs.getString("filename"));
-            goodsImg.setOriginName(rs.getString("origin_name"));
-            goodsImg.setContentType(rs.getString("content_type"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return goodsImg;
-	}
-	
-	
-	
-	public Manager getManager(ResultSet rs) {
-		Manager manager = new Manager();
-		try {			
-			manager.setManagerNo(rs.getInt("manager_no"));
-			manager.setManagerId(rs.getString("manager_id"));
-			manager.setManagerPw(rs.getString("manager_pw"));
-			manager.setManagerName(rs.getString("manager_name"));
-			manager.setCreatedate(rs.getString("createdate"));
-			manager.setUpdatedate(rs.getString("updatedate"));
-			manager.setActive(rs.getString("Active"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return manager;
-	}
-	
-	public Question getQuestion(ResultSet rs) {
-		Question question = new Question();
-		try {
-			question.setQuestionNo(rs.getInt("question_no"));
-			question.setGoodsNo(rs.getInt("goods_no"));
-			question.setCustomerNo(rs.getInt("customer_no"));
-			question.setQuestionTitle(rs.getString("question_title"));
-			question.setQuestionContent(rs.getString("question_content"));
-			question.setCreatedate(rs.getString("createdate"));
-			question.setUpdatedate(rs.getString("updatedate"));
-			Customer customer = new Customer();
-			customer.setCustomerNo(rs.getInt("customer_no"));;
-			customer.setCustomerId(rs.getString("customer_id"));
-			customer.setCustomerPw(rs.getString("customer_pw"));
-			customer.setCreatedate(rs.getString("createdate"));
-			customer.setUpdatedate(rs.getString("updatedate"));
-			customer.setActive(rs.getString("active"));
-			CustomerDetail customerDetail = new CustomerDetail();
-			customerDetail.setCustomerNo(rs.getInt("customer_no"));
-			customerDetail.setCustomerName(rs.getString("customer_name"));
-			customerDetail.setCustomerPhone(rs.getString("customer_phone"));
-			customerDetail.setCreatedate(rs.getString("createdate"));
-			customerDetail.setUpdatedate("updatedate");
-			Goods goods = new Goods();
-			goods.setGoodsNo(rs.getInt("goods_no"));
-			goods.setGoodsTitle(rs.getString("goods_title"));
-			goods.setGoodsPrice(rs.getInt("goods_price"));
-			goods.setSoldout(rs.getString("soldout"));
-			goods.setGoodsMemo(rs.getString("goods_memo"));
-			goods.setCreatedate(rs.getString("createdate"));
-			goods.setUpdatedate(rs.getString("updatedate"));
-			QuestionComment questionComment = new QuestionComment();
-			questionComment.setQuestionCommentNo(rs.getInt("question_comment_no"));
-			questionComment.setQuestionNo(rs.getInt("question_no"));
-			questionComment.setManagerNo(rs.getInt("manager_no"));
-			questionComment.setComment(rs.getString("comment"));
-			questionComment.setCreatedate(rs.getString("createdate"));
-			questionComment.setUpdatedate(rs.getString("updatedate"));
-			
-			
-			question.setCustomerDetail(customerDetail);
-			question.setGoods(goods); 
-			question.setCustomer(customer);
-			question.setQuestionComment(questionComment);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return question;
-	}
-	
-    public Manager createManagerFromMap(Map<String, Object> managerData) {
-        Manager manager = new Manager();
-        manager.setManagerNo((Integer) managerData.get("managerNo"));
-        manager.setManagerId((String) managerData.get("managerId"));
-        manager.setManagerPw((String) managerData.get("managerPw"));
-        manager.setManagerName((String) managerData.get("managerName"));
-        manager.setCreatedate((String) managerData.get("createdate"));
-        manager.setUpdatedate((String) managerData.get("updatedate"));
-        manager.setActive((String) managerData.get("active"));
-        return manager;
-    }
-    
-    public Cart getCart(ResultSet rs) {
-    	Cart cart = new Cart();
-    	try {
-    		cart.setCartNo(rs.getInt("cart_no"));
-    		cart.setGoodsNo(rs.getInt("goods_no"));
-    		cart.setCustomerNo(rs.getInt("customer_no"));
-    		cart.setQuantity(rs.getInt("quantity"));
-    		cart.setCreatedate(rs.getString("createdate"));
-    		cart.setUpdatedate(rs.getString("updatedate"));
-            Customer customer = new Customer();
-            customer.setCustomerNo(rs.getInt("customer_no"));
-            Goods goods = new Goods();  
-            goods.setGoodsNo(rs.getInt("goods_no"));
-            goods.setGoodsTitle(rs.getString("goods_title"));
-            goods.setSoldout(rs.getString("soldout"));
-            goods.setGoodsPrice(rs.getInt("goods_price"));
-            GoodsImg goodsImg = new GoodsImg();
-            goodsImg.setFileName(rs.getString("filename"));
-            cart.setGoodsImg(goodsImg);
-            cart.setGoods(goods); 
-            cart.setCustomer(customer);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
-     	return cart;
-    }
-    
-    public Notice getNotice(ResultSet rs) {
-		Notice notice = new Notice();
-		try {			
-			 notice.setNoticeNo(rs.getInt("notice_no"));
-             notice.setManagerNo(rs.getInt("manager_no"));
-             notice.setNoticeTitle(rs.getString("notice_title"));
-             notice.setNoticeContent(rs.getString("notice_content"));
-             notice.setCreatedate(rs.getString("createdate"));
-             notice.setUpdatedate(rs.getString("updatedate"));
-             
-             
-             Manager manager = new Manager();
-             manager.setManagerName(rs.getString("manager_name"));
-             notice.setManager(manager);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return notice;
-	}
+public class Converter {	
+	 public Cart getCart(ResultSet rs) {
+	    	Cart param = new Cart();
+	    	try {
+	    		param.setCartNo(rs.getInt("cart_no"));
+	    		param.setGoodsNo(rs.getInt("goods_no"));
+	    		param.setCustomerNo(rs.getInt("customer_no"));
+	    		param.setQuantity(rs.getInt("quantity"));
+	    		param.setCreatedate(rs.getString("createdate"));
+	    		param.setUpdatedate(rs.getString("updatedate"));	            
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
+	 
+	 public Customer getCustomer(ResultSet rs) {
+		 Customer param = new Customer();
+	    	try {
+	    		param.setCustomerNo(rs.getInt("customer_no"));
+	    		param.setCustomerId(rs.getString("customer_id"));
+	    		param.setCreatedate(rs.getString("createdate"));
+	    		param.setUpdatedate(rs.getString("updatedate"));
+	    		param.setActive(rs.getString("active"));
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
+	 
+	 public CustomerAddr getCustomerAddr(ResultSet rs) {
+		 CustomerAddr param = new CustomerAddr();
+	    	try {
+	    		param.setCustomerAddrNo(rs.getInt("customer_addr_no"));
+	    		param.setCustomerNo(rs.getInt("customer_no"));
+	    		param.setAddress(rs.getString("address"));
+	    		param.setCreatedate(rs.getString("createdate"));
+	    		param.setUpdatedate(rs.getString("updatedate"));
+	    		
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
+	 
+	 public CustomerDetail getCustomerDetail(ResultSet rs) {
+		 CustomerDetail param = new CustomerDetail();
+	    	try {
+	    		param.setCustomerNo(rs.getInt("customer_no"));
+	    		param.setCustomerName(rs.getString("customer_name"));
+	    		param.setCustomerPhone(rs.getString("customer_phone"));
+	    		param.setCreatedate(rs.getString("createdate"));
+	    		param.setUpdatedate(rs.getString("updatedate"));
+	    		
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
+	 
+	 public CustomerPwHistory getCustomerPwHistory(ResultSet rs) {
+		 CustomerPwHistory param = new CustomerPwHistory();
+	    	try {
+	    		param.setCustomerPwHistoryNo(rs.getInt("customer_pw_history_no"));
+	    		param.setCustomerNo(rs.getInt("customer_no"));
+	    		param.setCustomerPw(rs.getString("customer_pw"));
+	    		param.setCreatedate(rs.getString("createdate"));    		
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
+	 
+	 public Goods getGoods(ResultSet rs) {
+		 Goods param = new Goods();
+	    	try {
+	    		param.setGoodsNo(rs.getInt("goods_no"));
+	    		param.setGoodsTitle(rs.getString("goods_title"));
+	    		param.setGoodsPrice(rs.getInt("goods_price"));
+	    		param.setSoldout(rs.getString("soldout"));
+	    		param.setGoodsMemo(rs.getString("goods_memo"));
+	    		param.setCreatedate(rs.getString("createdate"));
+	    		param.setUpdatedate(rs.getString("updatedate"));
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
+	 	
+	 public GoodsImg getGoodsImg(ResultSet rs) {
+		 GoodsImg param = new GoodsImg();
+	    	try {
+	    		param.setGoodsNo(rs.getInt("goods_no"));
+	    		param.setFileName(rs.getString("filename"));
+	    		param.setOriginName(rs.getString("origin_name"));
+	    		param.setContentType(rs.getString("content_type"));
+	    		param.setCreatedate(rs.getString("createdate"));
+	    		param.setUpdatedate(rs.getString("updatedate"));
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
+	 
+	 public Manager Manager(ResultSet rs) {
+		 Manager param = new Manager();
+	    	try {
+	    		param.setManagerNo(rs.getInt("manager_no"));
+	    		param.setManagerId(rs.getString("manager_id"));
+	    		param.setManagerPw(rs.getString("manager_pw"));
+	    		param.setManagerName(rs.getString("manager_name"));
+	    		param.setCreatedate(rs.getString("createdate"));
+	    		param.setUpdatedate(rs.getString("updatedate"));
+	    		param.setActive(rs.getString("active"));
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
+	 
+	 public ManagerPwHistory getManagerPwHistory(ResultSet rs) {
+		 ManagerPwHistory param = new ManagerPwHistory();
+	    	try {
+	    		param.setManagerPwHistoryNo(rs.getInt("manager_pw_history_no"));
+	    		param.setManagerNo(rs.getInt("manager_no"));
+	    		param.setManagerPw(rs.getString("manager_pw"));
+	    		param.setCreatedate(rs.getString("createdate"));
+	    		
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
+	 
+	 public Notice getNotice(ResultSet rs) {
+		 Notice param = new Notice();
+	    	try {
+	    		param.setNoticeNo(rs.getInt("notice_no"));
+	    		param.setManagerNo(rs.getInt("manager_no"));
+	    		param.setNoticeTitle(rs.getString("notice_title"));
+	    		param.setNoticeContent(rs.getString("notice_content"));
+	    		param.setCreatedate(rs.getString("createdate"));
+	    		param.setUpdatedate(rs.getString("updatedate"));
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
+	 
+	 public Orders getOrders(ResultSet rs) {
+		 Orders param = new Orders();
+	    	try {
+	    		param.setOrdersNo(rs.getInt("orders_no"));
+	    		param.setGoodsNo(rs.getInt("goods_no"));
+	    		param.setCustomerNo(rs.getInt("customer_no"));
+	    		param.setCustomerAddrNo(rs.getInt("customer_addr_no"));
+	    		param.setQuantity(rs.getInt("quantity"));
+	    		param.setTotalPrice(rs.getInt("total_price"));
+	    		param.setOrdersState(rs.getString("orders_state"));
+	    		param.setCreatedate(rs.getString("createdate"));
+	    		param.setUpdatedate(rs.getString("updatedate"));	    		
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
+	 
+	 public Question getQuestion(ResultSet rs) {
+		 Question param = new Question();
+	    	try {
+	    		param.setQuestionNo(rs.getInt("question_no"));
+	    		param.setGoodsNo(rs.getInt("goods_no"));
+	    		param.setCustomerNo(rs.getInt("customer_no"));
+	    		param.setQuestionTitle(rs.getString("question_title"));
+	    		param.setQuestionContent(rs.getString("question_content"));
+	    		param.setCreatedate(rs.getString("createdate"));
+	    		param.setUpdatedate(rs.getString("updatedate"));
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
+	 
+	 public QuestionComment QuestionComment(ResultSet rs) {
+		 QuestionComment param = new QuestionComment();
+	    	try {
+	    		param.setQuestionCommentNo(rs.getInt("question_comment_no"));
+	    		param.setQuestionNo(rs.getInt("question_no"));
+	    		param.setManagerNo(rs.getInt("manager_no"));
+	    		param.setComment(rs.getString("comment"));
+	    		param.setCreatedate(rs.getString("createdate"));
+	    		param.setUpdatedate(rs.getString("updatedate"));
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
+	 
+	 public Review getReview(ResultSet rs) {
+		 Review param = new Review();
+	    	try {
+	    		param.setReviewNo(rs.getInt("goods_no"));
+	    		param.setOrdersNo(rs.getInt("goods_no"));
+	    		param.setReviewContent(rs.getString("goods_memo"));
+	    		param.setCreatedate(rs.getString("createdate"));
+	    		param.setUpdatedate(rs.getString("updatedate"));
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
+	     	return param;
+	    }
 }

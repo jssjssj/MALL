@@ -5,6 +5,7 @@ public class CustomerPwHistory {
 	private	int customerNo;
 	private	String customerPw;
 	private	String createdate;
+	
 	public int getCustomerPwHistoryNo() {
 		return customerPwHistoryNo;
 	}

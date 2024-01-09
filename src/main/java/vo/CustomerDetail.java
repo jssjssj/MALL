@@ -6,6 +6,7 @@ public class CustomerDetail {
 	private	String customerPhone;
 	private	String createdate;
 	private	String updatedate;
+	
 	public int getCustomerNo() {
 		return customerNo;
 	}

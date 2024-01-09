@@ -2,170 +2,186 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import vo.Manager;
+import util.Converter;
+import util.DBUtil;
 import vo.Notice;
 
 public class NoticeDao extends ClassDao {
-	// 공지사항 추가
-	public int insertNotice(Notice insertNotice) throws Exception {
-	    Connection conn = db.getConnection();
-
-	    try {
-	        // 입력(insert) SQL
-	        String sql = "INSERT INTO notice"
-	                     + "(manager_no, notice_title, notice_content, createdate, updatedate) "
-	                     + "VALUES(?, ?, ?, now(), now())";
-	        PreparedStatement stmt = conn.prepareStatement(sql);
-	        stmt.setInt(1, insertNotice.getManagerNo()); // 매니저의 manager_no 설정
-	        stmt.setString(2, insertNotice.getNoticeTitle());
-	        stmt.setString(3, insertNotice.getNoticeContent());
-
-	        int row = stmt.executeUpdate();
-
-	        if (row == 1) {
-	            System.out.println("공지사항 생성 성공");
-	        } else {
-	            System.out.println("공지사항 생성 실패");
-	        }
-
-	        return row;
-	    } finally {
-	        conn.close(); // 연결 닫기
-	    }
-	}
-
-
-
-    // 공지사항 정보 업데이트
-    public int updateNotice(Notice updateNotice) throws Exception {
-        Connection conn = db.getConnection();
-
-        try {
-            // 업데이트 SQL
-            String sql = "UPDATE notice SET "
-	            		+ "notice_title=?, notice_content=?, updatedate=now() "
-	            		+ "WHERE notice_no=?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, updateNotice.getNoticeTitle());
-            stmt.setString(2, updateNotice.getNoticeContent());
-            stmt.setInt(3, updateNotice.getNoticeNo());
-
-            int row = stmt.executeUpdate();
-
-            if (row == 1) {
-                System.out.println("공지사항 업데이트 성공");
-            } else {
-                System.out.println("공지사항 업데이트 실패");
-            }
-
-            return row;
-        } finally {
-            conn.close(); // 연결 닫기
-        }
-    }
-
-    // 공지사항 정보 삭제
-    public int deleteNotice(int noticeNo) throws Exception {
-        Connection conn = db.getConnection();
-
-        try {
-            // 삭제 SQL
-            String sql = "DELETE FROM notice WHERE notice_no=?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, noticeNo);
-
-            int row = stmt.executeUpdate();
-
-            if (row == 1) {
-                System.out.println("공지사항 삭제 성공");
-            } else {
-                System.out.println("공지사항 삭제 실패");
-            }
-
-            return row;
-        } finally {
-            conn.close(); // 연결 닫기
-        }
-     }
-
-	 // 공지사항 정보 조회
-	    public List<Notice> selectNotice() throws Exception {
-	        Connection conn = db.getConnection();
-	        List<Notice> result = new ArrayList<>();
-	        // 조회 SQL (manager 테이블과 조인)
-	        String sql = """
-	        			SELECT n.*, m.manager_name 
-	        			FROM notice n 
-	        			JOIN manager m ON n.manager_no = m.manager_no
-	        		""";
-	        try {
-	        	ResultSet rs =  db.executeQuery(sql);
-	        	
-	        	List<Notice> noticeList = new ArrayList<>();
-	            while (rs.next()) {
-	                Notice notice = converter.getNotice(rs);
-	                Manager manager = converter.getManager(rs);
-	                notice.setManager(manager);  
-	                noticeList.add(notice);
-	            }
+	Converter converter = null;
 	
-	            result = noticeList;
-	        } finally {
-	            conn.close(); // 연결 닫기
-	        }
-	        
-	        return result;
-	    }
-	    
-	    public List<Notice> selectNotice(int page, int perPage) throws Exception {
-			List<Notice> result = new ArrayList<>();
-			String sql = """
-	        			SELECT n.*, m.manager_name 
-	        			FROM notice n 
-	        			JOIN manager m ON n.manager_no = m.manager_no
-	        			LIMIT ? , ?
-        		""";
-
-			try {
-				// 조회 SQL
-				ResultSet rs = db.executeQuery(sql, (page - 1) * perPage, perPage);
-
-				List<Notice> noticeList = new ArrayList<>();
-				while (rs.next()) {
-					Notice notice = converter.getNotice(rs);
-	                noticeList.add(notice);
-				}
-
-				result = noticeList;
-			} catch (Exception e) {}
-
-			return result;
-		}
-
-		/**
-		 * 페이징을 위한 게시글 총 개수를 카운팅하는 함수
-		 * @param page
-		 * @param perPage
-		 * @return
-		 * @throws Exception
-		 */
-		public int getAllNoticeCount() throws Exception {
-			int cnt = 0;
-			String sql = "SELECT COUNT(*) as cnt FROM notice";
-			ResultSet rs = db.executeQuery(sql);
-			if (rs.next()) cnt = rs.getInt(1);
-			return cnt;
-		}
+	public Map<String, Object> noticeList(Map<String, Integer> paramMap) throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		PreparedStatement stmt = null;
 		
-		 public Notice getNoticeOne(int notice_no) throws Exception {
-		    	ResultSet rs = db.executeQuery("SELECT * FROM notice WHERE notice_no = ?", notice_no);
-		    	Notice notice = null;
-		    	if (rs.next()) {
-		    		notice = converter.getNotice(rs);
-		    	}
-		    	return notice;
-		    }
+		ResultSet rs = null;
+		Map<String, Object> resultMap = null;
+		 try {
+			 String sql = """
+			 		SELECT
+			 			n.notice_no,
+			 			n.notice_title,
+			 			n.notice_content,
+			 			n.createdate,
+			 			n.updatedate,
+			 			m.manager_id
+			 		FROM notice n
+			 		INNER JOIN manager m
+			 		ON n.manager_no = m.manager_no
+			 		
+			 		LIMIT ?, ?
+			 		""";
+			 stmt = conn.prepareStatement(sql);
+			 stmt.setInt(1, paramMap.get("beginRow"));
+			 stmt.setInt(2, paramMap.get("rowPerPage"));
+			 rs = stmt.executeQuery();
+			 
+			 if(rs.next()) {
+				 resultMap = new HashMap<>();
+				 resultMap.put("noticeNo", rs.getInt("notice_no"));
+				 resultMap.put("noticeTitle", rs.getInt("notice_title"));
+				 resultMap.put("noticeContent", rs.getInt("notice_content"));
+				 resultMap.put("createdate", rs.getInt("createdate"));
+				 resultMap.put("updatedate", rs.getInt("updatedate"));
+				 resultMap.put("managerId", rs.getInt("manager_id"));
+			 }
+		 } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			
+		}
+		 return resultMap;
+	}
+	
+	public int insert(Notice paramNotice) throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		PreparedStatement stmt = null;
+		
+		int result = 0;
+		try {
+			String sql = """
+					INSERT INTO notice (
+						manager_no,
+						notice_title,
+						notice_content
+					) VALUES (
+						?,
+						?,
+						?
+					)
+					""";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, paramNotice.getManagerNo());
+			stmt.setString(2, paramNotice.getNoticeTitle());
+			stmt.setString(3, paramNotice.getNoticeContent());
+			
+			result = stmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			stmt.close();
+			conn.close();
+		}
+			return result;
+	}
+	
+	public int delete(Notice paramNotice) throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		PreparedStatement stmt = null;
+		
+		int result = 0;
+		try {
+			String sql = """
+					DELETE FROM notice
+						WHERE notice_no = ?
+					""";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, paramNotice.getNoticeNo());
+			
+			result = stmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			stmt.close();
+			conn.close();
+		}
+			return result;
+	}
+	
+	public int update(Notice paramNotice) throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		PreparedStatement stmt = null;
+		
+		int result = 0;
+		try {
+			String sql = """
+					UPDATE notice SET
+						manager_no = ?,
+						notice_title = ?,
+						notice_content = ?,
+						updatedate = NOW()
+					WHERE notice_no = ?
+					""";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, paramNotice.getManagerNo());
+			stmt.setString(2, paramNotice.getNoticeTitle());
+			stmt.setString(3, paramNotice.getNoticeContent());
+			stmt.setInt(4, paramNotice.getNoticeNo());
+			
+			result = stmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			stmt.close();
+			conn.close();
+		}
+			return result;
+	}
+	
+	public Notice noticeOne(Notice paramNotice) throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		Notice notice = null;
+		try {
+			String sql = """
+					SELECT
+						notice_no,
+						notice_title,
+						notice_content,
+						createdate,
+						updatedate,
+						manager_id
+					FROM notice
+					WHERE notice_no = ?
+					""";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, paramNotice.getNoticeNo());
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				converter = new Converter();
+				notice = converter.getNotice(rs);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			stmt.close();
+			conn.close();
+		}
+			return notice;
+	}
+	
 }

@@ -6,6 +6,7 @@ public class CustomerAddr {
 	private	String address;
 	private	String createdate;
 	private	String updatedate;
+	
 	public int getCustomerAddrNo() {
 		return customerAddrNo;
 	}
@@ -36,5 +37,6 @@ public class CustomerAddr {
 	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
 	}
-		
+
+	
 }

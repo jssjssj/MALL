@@ -7,6 +7,7 @@ public class QuestionComment {
 	private	String comment;
 	private	String createdate;
 	private	String updatedate;
+	
 	public int getQuestionCommentNo() {
 		return questionCommentNo;
 	}

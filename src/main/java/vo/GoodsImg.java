@@ -7,6 +7,7 @@ public class GoodsImg {
 	private	String contentType;
 	private	String createdate;
 	private	String updatedate;
+	
 	public int getGoodsNo() {
 		return goodsNo;
 	}
@@ -43,5 +44,6 @@ public class GoodsImg {
 	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
 	}
-			
+	
+	
 }

@@ -5,6 +5,7 @@ public class ManagerPwHistory {
 	private	int managerNo;
 	private	String managerPw;
 	private	String createdate;
+	
 	public int getManagerPwHistoryNo() {
 		return managerPwHistoryNo;
 	}
