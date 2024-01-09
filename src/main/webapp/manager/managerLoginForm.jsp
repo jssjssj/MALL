@@ -24,37 +24,7 @@
 <body>	
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
     <jsp:include page="/inc/header.jsp"></jsp:include>
-    <section class="w-100 p-4 d-flex justify-content-center pb-4">
-    <form style="width: 22rem;" method="post" 
-    action="managerLoginAction.jsp" id="logAction">
-     <div class="container">>
-  	   <fieldset>
-  	   <!-- Id input -->
-  	   	<div class="mb-4">
-  	   		<div class="form-outline">
-  	   			<input type="text" name="managerId" id="id" class="form-control"/>
-  	   			<label class="form-label" for="id">ID</label>
-			</div>
-			<div id="idMsg" class="form-text text-danger"></div>
-		</div>
-		<!-- Password input -->
-		<div class="mb-4">
-			<div class="form-outline">
-				<input type="password" name="managerPw" id="pw" class="form-control" />
-				<label class="form-label" for="pw">PASSWORD</label>
-			</div>
-			<div id="pwMsg" class="form-text text-danger"></div>
-		</div>
-		<!-- 실행 button -->
-		<button type="submit" class="btn btn-primary btn-block mb-4" id="loginBtn">로그인</button>
-		<!-- 관리자 추가 buttons -->
-		<div class="text-center">
-			<a href="<%=request.getContextPath()%>/manager/insertManagerForm.jsp">관리자 추가</a>
-		</div>
-        </fieldset> 
-      </div>
-    </form>
-   </section> 
+   
     <script>
 	$('#id').click(function() {
 		$('#id').val('');
