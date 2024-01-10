@@ -1,18 +1,13 @@
-<%@ page import="vo.*,dao.*,java.net.*,java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-
-<% 
-	// 매니저 세션 가져오기 
-	Manager loginManager = (Manager)session.getAttribute("loginManager");
-	// loginMnager 값 확인
-  	System.out.println(loginManager);
-  
-%>
+<%@ page import="vo.*, dao.* "%>
 <!DOCTYPE html>
 <html>
+<head>
 <jsp:include page="/inc/meta.jsp"></jsp:include>
-<body>	
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
     <jsp:include page="/inc/header.jsp"></jsp:include>	
 

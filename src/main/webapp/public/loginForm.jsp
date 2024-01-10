@@ -12,7 +12,7 @@
     </div>	
  <div id="customerBox">
 	<section class="w-100 p-4 d-flex justify-content-center pb-4">
-		<form style="width: 22rem;" method="post" id="logAction" action="customerLoginAction.jsp">
+		<form style="width: 22rem;" method="post" id="logAction" action="<%= request.getContextPath() %>/customer/loginAction.jsp">
 			<div class="container">
 				<fieldset>
 	
@@ -39,7 +39,7 @@
 	
 					<!-- Register buttons -->
 					<div class="text-center">
-						<p>회원이 아니신가요? <a href="<%=request.getContextPath()%>/customer/insertForm.jsp">가입하기</a></p>
+						<p>회원이 아니신가요? <a href="<%= request.getContextPath() %>/customer/insertForm.jsp">가입하기</a></p>
 					</div>
 	
 				</fieldset>
@@ -53,7 +53,7 @@
  <div id="managerBox">	
 	 <section class="w-100 p-4 d-flex justify-content-center pb-4" id="employeeBox">
     <form style="width: 22rem;" method="post" 
-    action="managerLoginAction.jsp" id="logAction">
+    action="<%= request.getContextPath() %>/manager/loginAction.jsp" id="logAction">
      <div class="container">
   	   <fieldset>
   	   <!-- Id input -->
@@ -76,7 +76,7 @@
 		<button type="submit" class="btn btn-primary btn-block mb-4" id="loginBtn">로그인</button>
 		<!-- 관리자 추가 buttons -->
 		<div class="text-center">
-			<a href="<%=request.getContextPath()%>/manager/insertManagerForm.jsp">관리자 추가</a>
+			<a href="<%= request.getContextPath() %>/manager/insertForm.jsp">관리자 추가</a>
 		</div>
         </fieldset> 
       </div>

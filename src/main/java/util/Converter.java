@@ -114,7 +114,6 @@ public class Converter {
 	    	try {
 	    		param.setManagerNo(rs.getInt("manager_no"));
 	    		param.setManagerId(rs.getString("manager_id"));
-	    		param.setManagerPw(rs.getString("manager_pw"));
 	    		param.setManagerName(rs.getString("manager_name"));
 	    		param.setCreatedate(rs.getString("createdate"));
 	    		param.setUpdatedate(rs.getString("updatedate"));
