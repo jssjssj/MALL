@@ -1,26 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="dao.* , vo.*" %>
+<%@ page import="dao.* , vo.*, java.util.Map " %>
 <%
-	String customerId = (String)(session.getAttribute("loginId"));
+	ManagerDao managerDao = new ManagerDao();
+	Manager loginManager = (Manager)session.getAttribute("loginManager");
+
+	QuestionDao questionDao = new QuestionDao();	
 	int questionNo = Integer.parseInt(request.getParameter("questionNo"));
-	System.out.print(questionNo);
-	Question q = new Question();
-	QuestionDao questionDao = new QuestionDao();
-	q = questionDao.QuestionOne(questionNo);
-	Manager loginManager = (Manager) session.getAttribute("loginManager");
+	Map<String, Object> resultMap = questionDao.questionOne(questionNo);
+	
 %>
 <!DOCTYPE html>
 <html>
-<style>
-table, td, th {
-  border : 1px solid black;
-  border-collapse : collapse;
-}
-
-th, td {
-  text-align: center;
-}
-</style>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -30,45 +20,39 @@ th, td {
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
     <jsp:include page="/inc/header.jsp"></jsp:include>
    <form action="<%=request.getContextPath()%>/questionComment/insertQuestionCommentAction.jsp" id="insertComAct">
-	<table border="1" class="table">
-		<tr>
-			<td>제목</td>
-		   	<td><%=q.getQuestionTitle()%></td>
-		</tr>  	
-		   	
-		   	
-		 <tr>
-		   	<td>작성자ID</td>
-		   	<td><%=q.getCustomer().getCustomerId()%></td>
-		 </tr>
-		
-		<tr>
-			<td>답변일</td>
-		   	<td><%=q.getQuestionComment().getCreatedate()%></td>
-		</tr>
-		
-		<tr>
-		   	<td>수정일</td>
-		   	<td><%=q.getQuestionComment().getUpdatedate()%></td>
-		</tr>
-		
-		<tr>
-			<td>내용</td>
-			<td><%=q.getQuestionContent()%></td>
-		</tr>
-		
-		<tr>
-			<td>답변</td>
-		   	<td><%=(q.getQuestionComment().getComment()!=null) ? q.getQuestionComment().getComment() : "답변대기중"%></td>
-		</tr>
-<%if(loginManager!=null){%>
-		<tr>
-			<td>답변 입력</td>
-			<td><input type="text" name="comment" id="comment"></td>
-		</tr>
-
-<%}%>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>No</th>
+			   	<td><%= resultMap.get("questionNo") %></td>
+			   	
+			   	<th>작성자</th>
+			   	<td><%= resultMap.get("customerId") %></td>
+			</tr>		   	
+			   	
+			 <tr>
+				<th>제목</th>
+			   	<td><%= resultMap.get("questionTitle") %></td>
+			   	
+			   	<th>문의상품</th>
+			   	<td><%= resultMap.get("goodsTitle") %></td>
+			</tr>  
+			
+			<tr>
+				<th>작성일</th>
+			   	<td><%= resultMap.get("createdate") %></td>
+			   	
+			   	<th>수정일</th>
+			   	<td><%= resultMap.get("createdate") == resultMap.get("updatedate") ? "-" : resultMap.get("updatedate") %></td>
+			</tr>		
+		</thead>
 	</table>
+	<div style="margin-left: 85%">
+		<a href="<%= request.getContextPath() %>/question/updateForm.jsp?questionNo=<%= resultMap.get("questionNo") %>" class="btn btn-success">수정</a>
+		<a href="<%= request.getContextPath() %>/question/deleteAction.jsp?questionNo=<%= resultMap.get("questionNo") %>" class="btn btn-success">삭제</a>
+	</div>
+			<br>
+	<textarea style="resize: none;" cols="155" rows="10"><%= resultMap.get("questionContent") %></textarea>
 <%if(loginManager!=null){%>	
 	<a href="<%=request.getContextPath()%>/question/deleteQuestionForm.jsp"><button>해당글 삭제</button></a>
 	<!-- 나중에 제이쿼리 이용 후 버튼타입은 없앨예정 --><button type="submit" id="insertComBtn">답변 등록</button>
@@ -76,19 +60,9 @@ th, td {
 </form>
 
 
-<script>
-	$('#insertComBtn').click(function(){
-		if($('#comment').val().length <15){
-			return;
-			alert('답변은 15자 이상 입력필요');
-		} else{
-			$('#insertComAct').submit();
-		}
-	});
-	<!-- footer 시작 -->
-	   <div class="footer"><jsp:include page="/inc/footer.jsp"></jsp:include></div>
-	<!-- footer 끝 -->
-</script>	
+<!-- footer 시작 -->
+<jsp:include page="/inc/footer.jsp"></jsp:include>
+<!-- footer 끝 -->	
 </body>
 </html>
 

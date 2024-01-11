@@ -10,13 +10,14 @@ import vo.*;
 public class QuestionDao extends ClassDao{
 	Converter converter = null;
 	
-	public Map<String, Object> questionList(Map<String, Integer> paramMap) throws Exception {
+	@SuppressWarnings("null")
+	public List<Map<String, Object>> questionList(Map<String, Integer> paramMap) throws Exception {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		PreparedStatement stmt = null;
 		
 		ResultSet rs = null;
-		Map<String, Object> resultMap = null;
+		List<Map<String, Object>> resultList = null;
 		try {
 			 String sql = """
 			 		SELECT
@@ -34,16 +35,16 @@ public class QuestionDao extends ClassDao{
 			 stmt.setInt(1, paramMap.get("beginRow"));
 			 stmt.setInt(2, paramMap.get("rowPerPage"));
 			 rs = stmt.executeQuery();
-			 
-			 if(rs.next()) {
-				 resultMap = new HashMap<>();
-				 resultMap.put("questionNo", rs.getInt("question_no"));
-				 resultMap.put("goodsTitle", rs.getInt("goods_title"));
-				 resultMap.put("customerId", rs.getInt("customer_id"));
-				 resultMap.put("questionTitle", rs.getInt("question_title"));
-				 resultMap.put("questionContent", rs.getInt("question_content"));
-				 resultMap.put("createdate", rs.getInt("createdate"));
-				 resultMap.put("updatedate", rs.getInt("updatedate"));
+			 Map<String, Object> map = null;
+			 resultList = new ArrayList<>();
+			 while(rs.next()) {
+				 map = new HashMap<>();
+				 map.put("questionNo", rs.getInt("question_no"));
+				 map.put("goodsTitle", rs.getString("goods_title"));
+				 map.put("questionTitle", rs.getString("question_title"));
+				 map.put("createdate", rs.getString("createdate"));
+				 map.put("updatedate", rs.getString("updatedate"));
+				 resultList.add(map);
 			 }
 		 } catch (Exception e) {
 			e.printStackTrace();
@@ -52,7 +53,7 @@ public class QuestionDao extends ClassDao{
 			stmt.close();
 			conn.close();
 		}
-		 return resultMap;
+		 return resultList;
 	}
 	
 	public int insert(Question paramQuestion) throws Exception {
@@ -149,7 +150,7 @@ public class QuestionDao extends ClassDao{
 			return result;
 	}
 	
-	public Map<String, Object> questionOne(Question paramQuestion) throws Exception {
+	public Map<String, Object> questionOne(int questionNo) throws Exception {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		PreparedStatement stmt = null;
@@ -174,7 +175,7 @@ public class QuestionDao extends ClassDao{
 			 		WHERE q.question_no = ?
 					""";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, paramQuestion.getQuestionNo());
+			stmt.setInt(1, questionNo);
 			rs = stmt.executeQuery();
 			
 			if(rs.next()) {
@@ -186,6 +187,7 @@ public class QuestionDao extends ClassDao{
 				resultMap.put("questionContent", rs.getString("question_content"));
 				resultMap.put("createdate", rs.getString("createdate"));
 				resultMap.put("updatedate", rs.getString("updatedate"));
+				rs.close();
 			}
 			
 		} catch (Exception e) {
@@ -195,6 +197,32 @@ public class QuestionDao extends ClassDao{
 			conn.close();
 		}
 			return resultMap;
+	}
+	
+	public int countOfQuestion() throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		int result = 0;
+		try {
+			String sql = """
+					SELECT
+						COUNT(*) count
+					FROM question
+					""";
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			
+		}
+			return result;
 	}
 	
 /*											question 종료 - questionComment 시작										*/

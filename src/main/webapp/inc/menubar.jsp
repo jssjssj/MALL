@@ -64,14 +64,14 @@
         <div class="collapse navbar-collapse" id="http://localhost/mall/public/loginForm.jsp">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="<%= request.getContextPath() %>/manager/dashboard.jsp">Home</a></li>                
-                <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/goods/goodsList.jsp">상품 관리</a></li>
+                <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/goods/list.jsp">상품 관리</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/question/questionList.jsp">문의내용 확인</a></li>                        
                 <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/notice/insertNoticeForm.jsp">공지 작성</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/notice/noticeList.jsp">공지 확인</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/customer/allCustomerList.jsp">고객 관리</a></li>
             </ul>
 
-            <div class="nav-link">님 반갑습니다.</div>
+            <div class="nav-link"><%= loginManager.getManagerName() %>님 반갑습니다.</div>
             <a href="<%= request.getContextPath() %>/public/logoutAction.jsp">
             <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">
             로그아웃

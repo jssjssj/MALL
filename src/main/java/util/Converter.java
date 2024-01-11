@@ -100,7 +100,7 @@ public class Converter {
 	    		param.setGoodsNo(rs.getInt("goods_no"));
 	    		param.setFileName(rs.getString("filename"));
 	    		param.setOriginName(rs.getString("origin_name"));
-	    		param.setContentType(rs.getString("content_type"));
+	    		param.setFileType(rs.getString("content_type"));
 	    		param.setCreatedate(rs.getString("createdate"));
 	    		param.setUpdatedate(rs.getString("updatedate"));
 	    	} catch (Exception e) {

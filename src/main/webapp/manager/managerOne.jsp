@@ -2,7 +2,6 @@
 <%@ page import="vo.*, dao.* "%>
 <%
 	Manager loginManager = (Manager)session.getAttribute("loginManager");	
-
 %>
 <!DOCTYPE html>
 <html>

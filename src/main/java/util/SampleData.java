@@ -59,7 +59,7 @@ public class SampleData {
 		
 		goodsImg.setFileName(titles.get(rand(titles.size())));
 		goodsImg.setOriginName(titles.get(rand(titles.size())));
-		goodsImg.setContentType(titles.get(rand(titles.size())).split("[.]")[1]);
+		goodsImg.setFileType(titles.get(rand(titles.size())).split("[.]")[1]);
 		
 		return goodsImg;
 	}

@@ -2,9 +2,10 @@ package vo;
 
 public class GoodsImg {
 	private	int goodsNo;
-	private	String fileName;
 	private	String originName;
-	private	String contentType;
+	private String fileName;
+	private int fileSize;
+	private String fileType;
 	private	String createdate;
 	private	String updatedate;
 	
@@ -14,23 +15,29 @@ public class GoodsImg {
 	public void setGoodsNo(int goodsNo) {
 		this.goodsNo = goodsNo;
 	}
-	public String getFileName() {
-		return fileName;
-	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
 	public String getOriginName() {
 		return originName;
 	}
 	public void setOriginName(String originName) {
 		this.originName = originName;
 	}
-	public String getContentType() {
-		return contentType;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public int getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(int fileSize) {
+		this.fileSize = fileSize;
+	}
+	public String getFileType() {
+		return fileType;
+	}
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
 	}
 	public String getCreatedate() {
 		return createdate;
