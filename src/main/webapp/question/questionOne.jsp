@@ -43,7 +43,7 @@
 			   	<td><%= resultMap.get("createdate") %></td>
 			   	
 			   	<th>수정일</th>
-			   	<td><%= resultMap.get("createdate") == resultMap.get("updatedate") ? "-" : resultMap.get("updatedate") %></td>
+			   	<td><%= resultMap.get("createdate").equals(resultMap.get("updatedate")) ? "-" : resultMap.get("updatedate") %></td>
 			</tr>		
 		</thead>
 	</table>
@@ -52,7 +52,7 @@
 		<a href="<%= request.getContextPath() %>/question/deleteAction.jsp?questionNo=<%= resultMap.get("questionNo") %>" class="btn btn-success">삭제</a>
 	</div>
 			<br>
-	<textarea style="resize: none;" cols="155" rows="10"><%= resultMap.get("questionContent") %></textarea>
+	<textarea style="resize: none;" cols="155" rows="10" readonly="readonly"><%= resultMap.get("questionContent") %></textarea>
 <%if(loginManager!=null){%>	
 	<a href="<%=request.getContextPath()%>/question/deleteQuestionForm.jsp"><button>해당글 삭제</button></a>
 	<!-- 나중에 제이쿼리 이용 후 버튼타입은 없앨예정 --><button type="submit" id="insertComBtn">답변 등록</button>

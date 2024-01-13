@@ -20,13 +20,12 @@ public class GoodsDao extends ClassDao {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		PreparedStatement stmt = null;
-		PreparedStatement stmt1 = null;
 		PreparedStatement stmt2 = null;
 		
 		ResultSet rs = null;
 		int result = 0;
 		int row = 0;
-		
+		int row2 = 0;
 		try {
 			 String sql = """
 		                INSERT INTO goods (
@@ -73,7 +72,10 @@ public class GoodsDao extends ClassDao {
 		            stmt2.setString(3, (String) paramMap.get("fileName"));
 		            stmt2.setInt(4, (int) paramMap.get("fileSize"));
 		            stmt2.setString(5, (String) paramMap.get("fileType"));
-		            stmt2.executeUpdate();
+		            row2 = stmt2.executeUpdate();
+		        }
+		        if (row > 0 && row2 >0 ) {
+		        	result = 1;
 		        }
 		} catch (Exception e) {
 			e.printStackTrace();

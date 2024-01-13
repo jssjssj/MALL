@@ -38,17 +38,18 @@
 		</a>
 	</div>
 	
-<form method="get" action="<%=request.getContextPath()%>/question/questionOne.jsp">
-	<div class="container">	
-		<table class="table table-hover" style="text-align: center;">
-		    <tr>
-		        <th>No</th>
-		        <th>제목 </th>
-		        <th>문의상품 </th>
-		        <th>작성일 </th>
-		        <th>답변수정일</th>
-		    </tr>
-		
+
+	
+		<table class="table table-hover">
+			<thead>
+			    <tr>
+			        <th>No</th>
+			        <th>제목 </th>
+			        <th>문의상품 </th>
+			        <th>작성일 </th>
+			        <th>답변수정일</th>
+			    </tr>
+			</thead>
 		
 		    <% for (Map<String, Object> question : questionList) { %>
 		    <tbody>
@@ -62,10 +63,10 @@
 		    </tbody>
 		    <% } %>
 		</table>		
-	</div>
+	
 		<br>
 	
-</form>
+
     <br>
 <!-- footer 시작 -->
 <jsp:include page="/inc/footer.jsp"></jsp:include>

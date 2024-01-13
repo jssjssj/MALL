@@ -34,16 +34,17 @@ public class OrdersDao extends ClassDao {
 					""";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, paramOrders.getGoodsNo());
-			stmt.setInt(1, paramOrders.getCustomerNo());
-			stmt.setInt(1, paramOrders.getCustomerAddrNo());
-			stmt.setInt(1, paramOrders.getQuantity());
-			stmt.setInt(1, paramOrders.getTotalPrice());
+			stmt.setInt(2, paramOrders.getCustomerNo());
+			stmt.setInt(3, paramOrders.getCustomerAddrNo());
+			stmt.setInt(4, paramOrders.getQuantity());
+			stmt.setInt(5, paramOrders.getTotalPrice());
 			
 			result = stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			
+			stmt.close();
+			conn.close();
 		}
 			return result;
 	}
@@ -66,7 +67,8 @@ public class OrdersDao extends ClassDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			
+			stmt.close();
+			conn.close();
 		}
 			return result;
 	}
@@ -100,7 +102,8 @@ public class OrdersDao extends ClassDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			
+			stmt.close();
+			conn.close();
 		}
 			return result;
 	}

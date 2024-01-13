@@ -31,19 +31,19 @@
             </button>
             </a>
            
-            <form class="d-flex" action="<%= request.getContextPath() %>/cart/cartList.jsp">
+           
 		     <a href="<%= request.getContextPath() %>/customer/customerOne.jsp">
             <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">
           마이페이지
             </button>
             </a>
             
-            <button class="btn btn-outline-dark" type="submit"> 
+            <a href="<%= request.getContextPath() %>/cart/list.jsp" class="btn btn-outline-dark" type="submit"> 
 		             <i class="bi-cart-fill me-1"></i>
 		             장바구니
 		             <span class="badge bg-dark text-white ms-1 rounded-pill"></span> 
-		         </button>
-		         </form>
+		         </a>
+		         
        	</div>
         </div>    
 </nav>

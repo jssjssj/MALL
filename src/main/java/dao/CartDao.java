@@ -9,13 +9,13 @@ import util.DBUtil;
 public class CartDao extends ClassDao{
 	Converter converter = null;
 	
-	public Map<String, Object> cartList(Customer paramCustomer) throws Exception {
+	public List<Map<String, Object>> cartList(Customer paramCustomer) throws Exception {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		PreparedStatement stmt = null;
 		
 		ResultSet rs = null;
-		Map<String, Object> resultMap = null;
+		List<Map<String, Object>> resultList = null;
 		
 		try {
 			String sql = """
@@ -24,7 +24,8 @@ public class CartDao extends ClassDao{
 						g.goods_title,
 						c.quantity,
 						g.goods_price,
-						g.soldout
+						g.soldout,
+						g.goods_no
 					FROM cart c
 					INNER JOIN goods g
 					ON c.goods_no = g.goods_no
@@ -33,22 +34,26 @@ public class CartDao extends ClassDao{
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, paramCustomer.getCustomerNo());
 			rs = stmt.executeQuery();
-			if(rs.next()) {
-				resultMap = new HashMap<>();
-				resultMap.put("cartNo", rs.getInt("cart_no"));
-				resultMap.put("goodsTitle", rs.getString("goods_title"));
-				resultMap.put("quantity", rs.getInt("quantity"));
-				resultMap.put("goodsPrice", rs.getInt("goods_price"));
-				resultMap.put("soldout", rs.getString("soldout"));
-			}			
+			Map<String, Object> paramMap = null;
+			resultList = new ArrayList<>();
+			while(rs.next()) {
+				paramMap = new HashMap<>();
+				paramMap.put("cartNo", rs.getInt("cart_no"));
+				paramMap.put("goodsTitle", rs.getString("goods_title"));
+				paramMap.put("quantity", rs.getInt("quantity"));
+				paramMap.put("goodsPrice", rs.getInt("goods_price"));
+				paramMap.put("soldout", rs.getString("soldout"));
+				paramMap.put("goodsNo", rs.getInt("goods_no"));				
+				resultList.add(paramMap);
+				rs.close();
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}	finally {
-			rs.close();
 			stmt.close();
 			conn.close();
 		}
-		return resultMap;
+		return resultList;
 	}
 	
 	public int insert(Cart paramCart) throws Exception {
@@ -136,6 +141,7 @@ public class CartDao extends ClassDao{
 		}
 		return result;
 	}
+	
 }
 
 

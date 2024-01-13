@@ -4,6 +4,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,12 +25,15 @@ public class CustomerDao extends ClassDao {
 		try {
 			String sql = """
 					SELECT
-						customer_no,
-						customer_id,
-						active,
-						createdate,
-						updatedate
-					FROM customer
+						c.customer_no,
+						c.customer_id,
+						c.active,
+						c.createdate,
+						c.updatedate,
+						cd.customer_addr_no
+					FROM customer c
+					INNER JOIN customer_addr cd
+					ON c.customer_no = cd.customer_no
 					WHERE customer_id = ?
 					AND customer_pw = password(?)
 					AND active = 'Y'
@@ -79,7 +83,7 @@ public class CustomerDao extends ClassDao {
 			stmt.setString(2, (String) paramMap.get("customerPw"));
 			row = stmt.executeUpdate();
 			if(row > 0) {
-				String sql1 = "select LAST_INSERT_ID()";
+				String sql1 = "select LAST_INSERT_ID()"; // Statement.RETURN_GENERATED_KEYS 오류로 방법대체
 				stmt1 = conn.prepareStatement(sql1);
 				rs = stmt1.executeQuery();
 				if(rs.next()) {

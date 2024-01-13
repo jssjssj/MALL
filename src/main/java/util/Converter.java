@@ -29,6 +29,7 @@ public class Converter {
 	    		param.setCreatedate(rs.getString("createdate"));
 	    		param.setUpdatedate(rs.getString("updatedate"));
 	    		param.setActive(rs.getString("active"));
+	    		param.setCustomerAddrNo(rs.getInt("customer_addr_no"));
 	    	} catch (Exception e) {
 	    		e.printStackTrace();
 	    	}

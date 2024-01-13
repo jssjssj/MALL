@@ -7,6 +7,7 @@ public class Customer {
 	private	String createdate;
 	private	String updatedate;
 	private	String active;
+	private int customerAddrNo;
 	
 	public int getCustomerNo() {
 		return customerNo;
@@ -44,6 +45,13 @@ public class Customer {
 	public void setActive(String active) {
 		this.active = active;
 	}
+	public int getCustomerAddrNo() {
+		return customerAddrNo;
+	}
+	public void setCustomerAddrNo(int customerAddrNo) {
+		this.customerAddrNo = customerAddrNo;
+	}
+	
 	
 		
 }
