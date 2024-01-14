@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="dao.* , vo.*, java.util.Map " %>
 <%
+	
+	Customer loginCustomer = (Customer)session.getAttribute("loginCustomer");
 	ManagerDao managerDao = new ManagerDao();
 	Manager loginManager = (Manager)session.getAttribute("loginManager");
 
 	QuestionDao questionDao = new QuestionDao();	
 	int questionNo = Integer.parseInt(request.getParameter("questionNo"));
 	Map<String, Object> resultMap = questionDao.questionOne(questionNo);
+	
+	Map<String, Object> commentMap = questionDao.commentOne(questionNo);
 	
 %>
 <!DOCTYPE html>
@@ -18,8 +22,7 @@
 <jsp:include page="/inc/meta.jsp"></jsp:include>
 <body>
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
-    <jsp:include page="/inc/header.jsp"></jsp:include>
-   <form action="<%=request.getContextPath()%>/questionComment/insertQuestionCommentAction.jsp" id="insertComAct">
+    <jsp:include page="/inc/header.jsp"></jsp:include>   
 	<table class="table table-bordered">
 		<thead>
 			<tr>
@@ -47,17 +50,45 @@
 			</tr>		
 		</thead>
 	</table>
+		<% if( (loginCustomer != null && resultMap.get("customerId").equals(loginCustomer.getCustomerId())) || loginManager!=null ) { %>
 	<div style="margin-left: 85%">
-		<a href="<%= request.getContextPath() %>/question/updateForm.jsp?questionNo=<%= resultMap.get("questionNo") %>" class="btn btn-success">수정</a>
 		<a href="<%= request.getContextPath() %>/question/deleteAction.jsp?questionNo=<%= resultMap.get("questionNo") %>" class="btn btn-success">삭제</a>
 	</div>
+		<% } %>
 			<br>
-	<textarea style="resize: none;" cols="155" rows="10" readonly="readonly"><%= resultMap.get("questionContent") %></textarea>
+	<textarea readonly style="outline:none; border: none; resize: none; 
+					font-size:50; width: 70%; height: 100em;"><%= resultMap.get("questionContent") %></textarea>
+	
+	<%if(commentMap != null) {%>
+		<table class="table table-bordered">
+			<tr>
+				<th>No</th>
+				<td><%= commentMap.get("questionCommentNo") %></td>
+				
+				<th>직원명</th>
+				<td><%= commentMap.get("managerName") %></td>
+			</tr>
+			
+			<tr>
+				<th>작성일</th>
+				<td><%= commentMap.get("createdate") %></td>
+				
+				<th>수정일</th>
+				<td><%= commentMap.get("createdate").equals(commentMap.get("updatedate")) ? "-" : commentMap.get("updatedate") %></td>
+			</tr>
+		</table>
+			<a style="margin-left: 83%;" href="<%= request.getContextPath() %>/question/deleteComment.jsp" class="btn btn-success">삭제</a><br>
+		<textarea readonly style="outline:none; border: none; resize: none; 
+					font-size:50; width: 70%; height: 100em;"><%= commentMap.get("comment") %></textarea>
+	<% } %>	
 <%if(loginManager!=null){%>	
-	<a href="<%=request.getContextPath()%>/question/deleteQuestionForm.jsp"><button>해당글 삭제</button></a>
-	<!-- 나중에 제이쿼리 이용 후 버튼타입은 없앨예정 --><button type="submit" id="insertComBtn">답변 등록</button>
+	<form method="get" action="<%=request.getContextPath()%>/question/commentAct.jsp">
+	<input type="hidden" name="questionNo" value="<%= resultMap.get("questionNo") %>" />
+	<textarea rows="10" cols="100" name="comment"></textarea>
+	<button type="submit" class="btn btn-success">답변 등록</button>
+	</form>
 <%}%>
-</form>
+
 
 
 <!-- footer 시작 -->

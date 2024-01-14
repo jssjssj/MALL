@@ -1,8 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="vo.*" %>
-<%@ page import="java.net.URLEncoder.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="vo.*, dao.*, java.util.* "%>
 <%request.setCharacterEncoding("UTF-8"); %>
+<%
+	Manager loginManager = (Manager)session.getAttribute("loginManager");
+%>
 <!DOCTYPE html>
 <html>
 <jsp:include page="/inc/meta.jsp"></jsp:include>
@@ -10,30 +11,33 @@
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
     <jsp:include page="/inc/header.jsp"></jsp:include>
 	<form method="post" id="createNoticeForm"
-		action="<%=request.getContextPath()%>/notice/insertNoticeAction.jsp">
-		<input type="hidden" name="managerNo" value="<%= ((Manager)session.getAttribute("loginManager")).getManagerNo()%>">
+		action="<%=request.getContextPath()%>/notice/insertAction.jsp">
+		<input type="hidden" name="managerNo" value="<%= loginManager.getManagerNo()%>">
 		<div class="outer">
 			<div class="inner">
 				<fieldset>
 					<legend>공지사항 등록</legend>
-					<table border="1">
+					<table class="table">
+						<tr>
+							<th>작성자</th>
+							<td><%= loginManager.getManagerId() %></td>
+						</tr>
 						<!-- 제목 -->
 						<tr>
 							<th>제목</th>
-							<td><input type="text"  name="noticeTitle" id="title"
-								class="title"> <span id="titleMsg" class="msg"></span></td>
+							<td><input type="text" name="noticeTitle"
+								class="title"></td>
 						</tr>
 						<!-- 내용 -->
 						<tr>
 							<th>내용</th>
-							<td><textarea cols="100	" rows="20" name="noticeContent" id="content"  class="content">
-							</textarea>
-							<span id="contentMsg" class="msg"></span>
+							<td><textarea cols="100	" rows="20" name="noticeContent" id="content">
+							</textarea>							
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<button type="submit" id="createBtn">등록하기</button>
+								<button class="btn btn-success" type="submit">등록하기</button>
 							</td>
 						</tr>
 					</table>

@@ -3,16 +3,19 @@
 <%
 	Customer loginCustomer = (Customer)session.getAttribute("loginCustomer");
 	
+	
 	Orders orders = new Orders();
 	orders.setGoodsNo(Integer.parseInt(request.getParameter("goodsNo")));
 	orders.setCustomerNo(loginCustomer.getCustomerNo());
 	orders.setCustomerAddrNo(loginCustomer.getCustomerAddrNo());
 	orders.setQuantity(Integer.parseInt(request.getParameter("quantity")));
-	orders.setTotalPrice(totalPrice);
+	
+	orders.setTotalPrice(Integer.parseInt(request.getParameter("totalPrice")));
+	
 	
 	System.out.println(orders.toString());
 	OrdersDao ordersDao = new OrdersDao();
-
+	ordersDao.insert(orders);
 
 
 

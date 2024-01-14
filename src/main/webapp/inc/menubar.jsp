@@ -24,7 +24,7 @@
                 <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/notice/list.jsp">공지사항</a></li>
             </ul>
           
-           	   
+           	  <% if(loginCustomer != null) {%> 
 	          <a href="<%= request.getContextPath() %>/order/orderView.jsp">
             <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">
             주문기록
@@ -43,7 +43,7 @@
 		             장바구니
 		             <span class="badge bg-dark text-white ms-1 rounded-pill"></span> 
 		         </a>
-		         
+		     <% } %>    
        	</div>
         </div>    
 </nav>
@@ -65,9 +65,9 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="<%= request.getContextPath() %>/manager/dashboard.jsp">Home</a></li>                
                 <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/goods/list.jsp">상품 관리</a></li>
-                <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/question/questionList.jsp">문의내용 확인</a></li>                        
+                <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/question/list.jsp">문의내용 확인</a></li>                        
                 <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/notice/insertNoticeForm.jsp">공지 작성</a></li>
-                <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/notice/noticeList.jsp">공지 확인</a></li>
+                <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/notice/list.jsp">공지 확인</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/customer/allCustomerList.jsp">고객 관리</a></li>
             </ul>
 

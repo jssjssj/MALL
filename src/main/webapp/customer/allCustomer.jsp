@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="vo.*"%>
-<%@ page import="dao.*"%>  
-<%@ page import="java.util.*"%>
+<%@ page import="vo.*, dao.*"%>
+<%request.setCharacterEncoding("UTF-8"); %>
 
 <% 
 	CustomerDao customerDao = new CustomerDao();

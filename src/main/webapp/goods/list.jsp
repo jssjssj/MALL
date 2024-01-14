@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="vo.*, dao.*, java.util.* "%>
+<%request.setCharacterEncoding("UTF-8"); %>
 <%
 
 	Manager loginManager = (Manager)session.getAttribute("loginManager");
@@ -77,7 +78,7 @@
                            		 
                             <a class="btn btn-outline-dark mt-auto" 
                             	href="<%=request.getContextPath()%>/goods/goodsOne.jsp?goodsNo=<%= goods.get("goodsNo") %>">
-                            	주문하기
+                            	바로주문
                             </a>
                             </div>
                         </div>

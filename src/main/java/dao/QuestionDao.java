@@ -10,7 +10,7 @@ import vo.*;
 public class QuestionDao extends ClassDao{
 	Converter converter = null;
 	
-	@SuppressWarnings("null")
+	
 	public List<Map<String, Object>> questionList(Map<String, Integer> paramMap) throws Exception {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
@@ -29,6 +29,7 @@ public class QuestionDao extends ClassDao{
 			 		FROM question q
 			 		INNER JOIN goods g
 			 		ON q.goods_no = g.goods_no
+			 		ORDER BY q.updatedate DESC
 			 		LIMIT ?, ?
 			 		""";
 			 stmt = conn.prepareStatement(sql);
@@ -64,7 +65,7 @@ public class QuestionDao extends ClassDao{
 		int result = 0;
 		try {
 			String sql = """
-					INSERT INTO notice (
+					INSERT INTO question (
 						goods_no,
 						customer_no,
 						question_title,
@@ -106,38 +107,6 @@ public class QuestionDao extends ClassDao{
 					""";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, paramQuestion.getQuestionNo());
-			
-			result = stmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			stmt.close();
-			conn.close();
-		}
-			return result;
-	}
-	
-	public int update(Question paramQuestion) throws Exception {
-		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
-		PreparedStatement stmt = null;
-		
-		int result = 0;
-		try {
-			String sql = """
-					UPDATE question SET
-						goods_no = ?,
-						question_title = ?,
-						question_content = ?,
-						updatedate = NOW()
-					WHERE question_no = ?
-					""";
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, paramQuestion.getGoodsNo());
-			stmt.setString(2, paramQuestion.getQuestionTitle());
-			stmt.setString(3, paramQuestion.getQuestionContent());
-			stmt.setInt(4, paramQuestion.getQuestionNo());
 			
 			result = stmt.executeUpdate();
 			
@@ -227,7 +196,7 @@ public class QuestionDao extends ClassDao{
 	
 /*											question 종료 - questionComment 시작										*/
 	
-	public Map<String, Object> commentOne(Question paramQuestion) throws Exception {
+	public Map<String, Object> commentOne(int questionNo) throws Exception {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		PreparedStatement stmt = null;
@@ -250,7 +219,7 @@ public class QuestionDao extends ClassDao{
 					WHERE q.question_no = ?
 					""";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, paramQuestion.getQuestionNo());
+			stmt.setInt(1, questionNo);
 			rs = stmt.executeQuery();
 			
 			if(rs.next()) {
@@ -329,46 +298,6 @@ public class QuestionDao extends ClassDao{
 		}
 			return result;
 	}
-	
-	public int updateComment(QuestionComment paramQuestionComment) throws Exception {
-		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
-		PreparedStatement stmt = null;
-		
-		int result = 0;
-		try {
-			String sql = """
-					UPDATE question_comment SET
-						mamager_no = ?,
-						comment = ?,
-						updatedate = NOW()
-					WHERE question_comment_no
-					""";
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, paramQuestionComment.getQuestionCommentNo());
-			
-			result = stmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			stmt.close();
-			conn.close();
-		}
-			return result;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

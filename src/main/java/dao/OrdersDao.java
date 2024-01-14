@@ -23,7 +23,7 @@ public class OrdersDao extends ClassDao {
 						customer_no,
 						customer_addr_no,
 						quantity,
-						total_price,
+						total_price
 					) VALUES (
 						?,
 						?,

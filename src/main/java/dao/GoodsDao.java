@@ -303,12 +303,42 @@ public class GoodsDao extends ClassDao {
 		}
 			return result;
 	}
-		
-
-	
 	
 
-	
+	// 전체 상품리스트 - 상품보기 페이지
+		public List<Goods> goodsAll() throws Exception {
+			DBUtil dbUtil = new DBUtil();
+			Connection conn = dbUtil.getConnection();
+			PreparedStatement stmt = null;
+			
+			ResultSet rs = null;
+			List<Goods> resultList = null;
+			try {
+				String sql = """
+						SELECT
+							goods_no,
+							goods_title
+						FROM goods
+						ORDER BY createdate DESC
+						""";
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				resultList = new ArrayList<>();
+				while(rs.next()) {
+					Goods goods = new Goods();
+					goods.setGoodsNo(rs.getInt("goods_no"));
+					goods.setGoodsTitle(rs.getString("goods_title"));
+					resultList.add(goods);
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				stmt.close();
+				conn.close();
+			}
+				return resultList;
+		}
 	
 
 	

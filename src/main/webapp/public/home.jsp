@@ -66,7 +66,7 @@
                            		 
                             <a class="btn btn-outline-dark mt-auto" 
                             	href="<%=request.getContextPath()%>/goods/goodsOne.jsp?goodsNo=<%= goods.get("goodsNo") %>">
-                            	주문하기
+                            	바로주문
                             </a>
                             </div>
                         </div>

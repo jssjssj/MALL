@@ -1,19 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "vo.*,dao.*" %>    
+<%@ page import = "vo.*,dao.*, java.util.*" %>    
 <%
-	// noticeNo 파라미터 확인
-	String noticeNoParam = request.getParameter("noticeNo");
-	if (noticeNoParam == null || noticeNoParam.equals("")) {
-	    // noticeNo가 없으면 예외 처리 또는 리다이렉트 등을 수행
-	    response.sendRedirect("noticeList.jsp");
-	}
-	
-	int noticeNo = Integer.parseInt(noticeNoParam);
-	
-	// NoticeDao 한테서 noticeNo에 해당하는 공지사항 가져오기
-	NoticeDao dao = new NoticeDao();
-	Notice notice = dao.getNoticeOne(noticeNo);
+	int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+	Manager loginManager = (Manager)session.getAttribute("loginManager");
+	NoticeDao noticeDao = new NoticeDao();
+	Map<String, Object> resultMap = noticeDao.noticeOne(noticeNo);
+
 %>    
 <!DOCTYPE html>
 <html>
@@ -23,30 +16,40 @@
     <jsp:include page="/inc/header.jsp"></jsp:include> 
 
 <!-- 내용 시작 -->
-	<br>
-  		  <div style="margin-left: 5%">   
-          <h1>공지사항 상세보기</h1>
-    <br>
-        <div>
-            <h2><%= notice.getNoticeTitle() %></h2>
-            <p>작성자: <%= notice.getManager() != null ? notice.getManager().getManagerName() : "Unknown" %></p>
-            <p>작성일: <%= notice.getCreatedate() %></p>
-            <p>no: <%= notice.getNoticeNo() %></p>
-            <p><%= notice.getNoticeContent() %></p>
-
-            <!-- 수정 버튼 -->
-            <form action="updateNoticeForm.jsp" method="post">
-                <input type="hidden" name="noticeNo" value="<%= notice.getNoticeNo() %>">
-                <input type="submit" value="수정">
-            </form>
-
-            <!-- 삭제 버튼 -->
-            <form action="deleteNoticeAction.jsp" method="post">
-                <input type="hidden" name="noticeNo" value="<%= notice.getNoticeNo() %>">
-                <input type="submit" value="삭제">
-            </form>
-        </div>
-    </div>
+<br><br>
+		
+		
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<td>No</td>
+			   	<td><%= resultMap.get("noticeNo") %></td>
+			   	  
+			   	<td>작성자</td>
+			   	<td><%= resultMap.get("managerId") %></td>
+			</tr>	   	
+			   	 
+			 <tr>
+				<td>제목</td>
+			   	<td><%= resultMap.get("noticeTitle") %></td>
+			   	  
+			  	<td>작성일</td>
+			   	<td><%= resultMap.get("createdate").equals(resultMap.get("updatedate")) ? "-" : resultMap.get("updatedate") %></td>
+			</tr>
+			     
+			<tr>				
+				<td colspan="4">
+					<p>내용 
+					<% if(loginManager != null) { %><a style="margin-left: 60%;" href="<%= request.getContextPath() %>/notice/deleteAction.jsp?noticeNo=<%= resultMap.get("noticeNo") %>" class="btn btn-success">
+					삭제</a>
+					<% } %></p>
+					<textarea readonly style="outline:none; border: none; resize: none; 
+					font-size:50; width: 70%; height: 100em;"><%= resultMap.get("noticeContent") %></textarea>
+				</td>
+			</tr> 			
+		</thead>
+	</table>
+	
     <!-- 내용 끝 -->
 <!-- footer 시작 -->
    <jsp:include page="/inc/footer.jsp"></jsp:include>

@@ -115,7 +115,7 @@ public class CartDao extends ClassDao{
 		return result;
 	}
 	
-	public int update(Cart paramCart) throws Exception {	//update - Quantity
+	public int plusUpdate(Cart paramCart) throws Exception {	//update - Quantity
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		PreparedStatement stmt = null;
@@ -125,12 +125,11 @@ public class CartDao extends ClassDao{
 		try {
 			String sql = """
 					UPDATE cart SET
-						quantity = ?
+						quantity = quantity+1
 					WHERE cart_no = ?
 					""";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, paramCart.getCartNo());
-			stmt.setInt(2, paramCart.getQuantity());
 			result = stmt.executeUpdate();
 			
 		} catch(Exception e) {
@@ -142,6 +141,63 @@ public class CartDao extends ClassDao{
 		return result;
 	}
 	
+	public int minusUpdate(Cart paramCart) throws Exception {	//update - Quantity
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		PreparedStatement stmt = null;
+		
+		int result = 0;
+		
+		try {
+			String sql = """
+					UPDATE cart SET
+						quantity = quantity-1
+					WHERE cart_no = ?
+					""";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, paramCart.getCartNo());
+			result = stmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}	finally {
+			stmt.close();
+			conn.close();
+		}
+		return result;
+	}
+	
+	public Cart selectGoods(Cart paramCart) throws Exception {	// 장바구니 추가 전 이미 추가된 상품일 시 수량 변경하기 위한 장바구니 내 상품찾기 기능
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		Cart cart = null;
+		try {
+			String sql = """
+					SELECT 
+						cart_no,
+						goods_no
+					FROM cart
+					WHERE goods_no = ?
+					""";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, paramCart.getGoodsNo());
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				cart = new Cart();
+				cart.setCartNo(rs.getInt("cart_no"));
+				cart.setGoodsNo(rs.getInt("goods_no"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {		
+			
+		}
+			return cart;
+	}
 }
 
 

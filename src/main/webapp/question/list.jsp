@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="vo.*, dao.*, java.util.* "%>
 <%
+	Customer loginCustomer = (Customer)session.getAttribute("loginCustomer");
 	QuestionDao questionDao = new QuestionDao();
 
 	Integer currentPage = 1;
@@ -32,10 +33,12 @@
 	
 	<div style="text-align: center;">
  	<h2>문의 목록</h2>
+ 		<% if(loginCustomer != null) { %>
 		<a class="btn btn-success mt-auto" 
-			href="<%=request.getContextPath()%>/question/insertQuestionForm.jsp">
+			href="<%=request.getContextPath()%>/question/insertForm.jsp">
 			문의글 쓰기
 		</a>
+		<% } %>
 	</div>
 	
 
@@ -47,7 +50,7 @@
 			        <th>제목 </th>
 			        <th>문의상품 </th>
 			        <th>작성일 </th>
-			        <th>답변수정일</th>
+			        <th>수정일</th>
 			    </tr>
 			</thead>
 		

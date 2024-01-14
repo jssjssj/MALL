@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="vo.*, dao.*"%>
+<%request.setCharacterEncoding("UTF-8"); %>
 <%
 	Customer loginCustomer = (Customer)session.getAttribute("loginCustomer");
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
@@ -9,11 +10,15 @@
 	cart.setCustomerNo(loginCustomer.getCustomerNo());
 	cart.setGoodsNo(goodsNo);
 	cart.setQuantity(quantity);
-	
-	System.out.println(cart);
-	
+
 	CartDao cartDao = new CartDao();
-	cartDao.insert(cart);
+	Cart checkCart = cartDao.selectGoods(cart);
+	if(checkCart == null){
+		cartDao.insert(cart);
+	} else {
+		cartDao.plusUpdate(checkCart);
+	}
 	
-	response.sendRedirect(request.getContextPath()+"goods/list.jsp");
+	
+	response.sendRedirect(request.getContextPath()+"/goods/list.jsp");
 %>
