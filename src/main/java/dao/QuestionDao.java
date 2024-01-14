@@ -94,7 +94,7 @@ public class QuestionDao extends ClassDao{
 			return result;
 	}
 	
-	public int delete(Question paramQuestion) throws Exception {
+	public int delete(int questionNo) throws Exception {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		PreparedStatement stmt = null;
@@ -106,7 +106,7 @@ public class QuestionDao extends ClassDao{
 						WHERE question_no = ?
 					""";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, paramQuestion.getQuestionNo());
+			stmt.setInt(1, questionNo);
 			
 			result = stmt.executeUpdate();
 			
@@ -249,7 +249,7 @@ public class QuestionDao extends ClassDao{
 		int result = 0;
 		try {
 			String sql = """
-					INSERT INTO notice (
+					INSERT INTO question_comment (
 						question_no,
 						manager_no,
 						comment										
@@ -274,7 +274,7 @@ public class QuestionDao extends ClassDao{
 			return result;
 	}
 	
-	public int deleteCommet(Question paramQuestion) throws Exception {
+	public int deleteComment(int questionNo) throws Exception {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		PreparedStatement stmt = null;
@@ -286,7 +286,7 @@ public class QuestionDao extends ClassDao{
 						WHERE question_no = ?
 					""";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, paramQuestion.getQuestionNo());
+			stmt.setInt(1, questionNo);
 			
 			result = stmt.executeUpdate();
 			

@@ -77,14 +77,17 @@
 				<td><%= commentMap.get("createdate").equals(commentMap.get("updatedate")) ? "-" : commentMap.get("updatedate") %></td>
 			</tr>
 		</table>
-			<a style="margin-left: 83%;" href="<%= request.getContextPath() %>/question/deleteComment.jsp" class="btn btn-success">삭제</a><br>
+			<a style="margin-left: 83%;" href="<%= request.getContextPath() %>/question/deleteCommentAction.jsp?questionNo=<%=commentMap.get("questionNo") %>" class="btn btn-success">삭제</a><br>
 		<textarea readonly style="outline:none; border: none; resize: none; 
 					font-size:50; width: 70%; height: 100em;"><%= commentMap.get("comment") %></textarea>
 	<% } %>	
-<%if(loginManager!=null){%>	
-	<form method="get" action="<%=request.getContextPath()%>/question/commentAct.jsp">
+<%if(loginManager!=null && commentMap==null){%>	
+	<form method="post" action="<%=request.getContextPath()%>/question/insertCommentAction.jsp" style="margin-left: 10%;">
 	<input type="hidden" name="questionNo" value="<%= resultMap.get("questionNo") %>" />
-	<textarea rows="10" cols="100" name="comment"></textarea>
+	<div>작성직원 : <input readonly value="<%= loginManager.getManagerName()%>"/></div>
+				<input type="hidden" name="managerNo" value="<%= loginManager.getManagerNo()%>"/>
+	<br>
+	<textarea rows="10" cols="100" name="comment" style="resize: none;"></textarea>
 	<button type="submit" class="btn btn-success">답변 등록</button>
 	</form>
 <%}%>

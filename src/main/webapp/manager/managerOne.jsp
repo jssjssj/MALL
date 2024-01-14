@@ -14,7 +14,7 @@
 	<jsp:include page="/inc/menubar.jsp"></jsp:include>
     <jsp:include page="/inc/header.jsp"></jsp:include>
     
-<form method="post" action="updateManagerPasswordForm.jsp">
+
 		<div class="container">
 			<fieldset>
 				<legend class="container">관리자 정보</legend>
@@ -44,11 +44,11 @@
 							<td><%=loginManager.getCreatedate().equals(loginManager.getUpdatedate()) ? "-" : loginManager.getUpdatedate()%></td>	
 						</tr>
 					</table>
-					<button type="submit">비밀번호 변경</button>	
-					<button><a href="<%=request.getContextPath()%>/manager/deleteManagerAction.jsp">관리자 비활성화</a></button>				
+					<a class="btn btn-success" href="<%=request.getContextPath()%>/manager/updatePwForm.jsp">비밀번호 변경</a>
+					<a class="btn btn-success" href="<%=request.getContextPath()%>/manager/deleteAction.jsp">관리자 비활성화</a>
 			</fieldset>
 		</div>
-	</form>
+
 <!-- footer 시작 -->
    <jsp:include page="/inc/footer.jsp"></jsp:include>
 <!-- footer 끝 -->	

@@ -4,8 +4,9 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import util.Converter;
@@ -341,6 +342,57 @@ public class CustomerDao extends ClassDao {
 		}
 		return customer;
 	} 
+	
+	public List<Map<String, Object>> allCustomer() throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		List<Map<String, Object>> list = null;
+		
+		try {
+			String sql = """
+					SELECT 
+						c.customer_no,
+						c.customer_id,
+						c.active,
+						c.createdate,
+						ca.customer_addr_no,
+						ca.address,
+						cd.customer_name,
+						cd.customer_phone
+					FROM customer c
+					LEFT OUTER JOIN customer_addr ca
+					ON c.customer_no = ca.customer_no
+					LEFT OUTER JOIN customer_detail cd
+					ON c.customer_no = cd.customer_no						
+					""";
+			stmt = conn.prepareStatement(sql);
+			
+			rs = stmt.executeQuery();
+			list = new ArrayList<>();
+			while(rs.next()) {
+				Map<String, Object> map = new HashMap<>();
+				map.put("customerNo", rs.getInt("customer_no"));
+				map.put("customerId", rs.getString("customer_id"));
+				map.put("active", rs.getString("active"));
+				map.put("createdate", rs.getString("createdate"));
+				map.put("customerAddrNo", rs.getInt("customer_addr_no"));
+				map.put("address", rs.getString("address"));
+				map.put("customerName", rs.getString("customer_name"));
+				map.put("customerPhone", rs.getString("customer_phone"));
+				list.add(map);
+				rs.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			stmt.close();
+			conn.close();
+		}
+			return list;
+	}
 }
 
         

@@ -65,10 +65,9 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="<%= request.getContextPath() %>/manager/dashboard.jsp">Home</a></li>                
                 <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/goods/list.jsp">상품 관리</a></li>
-                <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/question/list.jsp">문의내용 확인</a></li>                        
-                <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/notice/insertNoticeForm.jsp">공지 작성</a></li>
+                <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/question/list.jsp">문의내용 확인</a></li>        
                 <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/notice/list.jsp">공지 확인</a></li>
-                <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/customer/allCustomerList.jsp">고객 관리</a></li>
+                <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/customer/list.jsp">고객 관리</a></li>
             </ul>
 
             <div class="nav-link"><%= loginManager.getManagerName() %>님 반갑습니다.</div>
