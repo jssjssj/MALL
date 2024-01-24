@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
 <%request.setCharacterEncoding("UTF-8"); %>
+<%
+
+	if(session.getAttribute("loginCustomer")!=null){
+		response.sendRedirect(request.getContextPath() + "/public/home.jsp") ;
+		return;
+	}
+
+%>
 <!DOCTYPE html>
 <html>
 <head>

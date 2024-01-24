@@ -247,7 +247,6 @@ public class GoodsDao extends ClassDao {
 					FROM goods g
 					INNER JOIN goods_img gi
 					ON g.goods_no = gi.goods_no
-					WHERE g.soldout = 'Y'
 					ORDER BY g.createdate DESC
 					LIMIT ?, ?
 					""";

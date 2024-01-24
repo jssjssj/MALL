@@ -7,6 +7,7 @@
 	GoodsDao goodsDao = new GoodsDao();
 	Map<String, Object> goodsMap = goodsDao.select(goodsNo);
 %>
+
 <!DOCTYPE html>
 <html>
 <jsp:include page="/inc/meta.jsp"></jsp:include>
@@ -15,14 +16,18 @@
     <jsp:include page="/inc/header.jsp"></jsp:include>
     
 	<br>
-
+		<% if(goodsMap.get("soldout").equals("Y")) { %>
+			<div class="alert alert-warning" style="text-align: center;">
+	  			<strong>매진!</strong> 해당상품은 현재 매진되어 주문할 수 없습니다. 재입고를 기다려주세요.
+			</div>		
+		<% } %>
 	<div style="text-align: center;">
-		
-		<img  src="/mall/<%= goodsMap.get("originName") %>" alt="..." style="width: 20%">
+		<form action="<%= request.getContextPath() %>/order/insertForm.jsp" method="post">
+		<img src="/mall/<%= goodsMap.get("originName") %>" alt="..." style="width: 20%">
 				<br>
 				<br>
 		<div>
-			<button type="button" id="orderBtn" class="btn btn-outline-dark mt-auto">구매</button>	
+			<button type="submit" id="orderBtn" class="btn btn-outline-dark mt-auto">구매</button>	
 		</div>
 		
 		<br><br>
@@ -48,14 +53,13 @@
 		
 			<tr>
 				<td>수량</td>
-				<td><select id="quantity "name="quantity"><%for(int i=1; i<=10; i++) {%><option value="<%=i%>"><%=i %></option><%}%></select></td>
+				<td><select id="quantity"name="quantity"><%for(int i=1; i<=10; i++) {%><option value="<%=i%>"><%=i %></option><%}%></select></td>
 			</tr>
 			
 			<tr>
 				<td>매진여부</td>
 				<td>
-					<input type="hidden" name="soldout" value="<%= goodsMap.get("soldout") %>">
-					<%= goodsMap.get("soldout") %>
+					<span id="soldout"><%= goodsMap.get("soldout") %></span>
 				</td>
 			</tr>						
 		
@@ -63,22 +67,24 @@
 			
 			<br>
 			
-				<div>상품소개</div>
+				<h3>상품소개</h3>
 				
 					<textarea readonly style="outline:none; border: none; resize: none; 
-					font-size:50; width: 70%; height: 100em;"><%= goodsMap.get("goodsMemo") %></textarea>	
+					font-size:50; width: 70%; height: 80em;"><%= goodsMap.get("goodsMemo") %></textarea>	
+		</form>
 	</div>
 
 
 	<br>
-	<br>
-	<br>
-	<br>
-	
+
+	<jsp:include page="/inc/footer.jsp"></jsp:include>
 <script>
-	$('#orderBtn').click(function() {
-		alert('기능 준비 중');
+	$(document).ready(function() {
+		if(<%= goodsMap.get("soldout").equals("Y") %>){
+			$('#orderBtn').attr("disabled", "true")
+		}
 	});
+
 </script>
 </body>
 </html>

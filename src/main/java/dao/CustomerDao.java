@@ -31,7 +31,8 @@ public class CustomerDao extends ClassDao {
 						c.active,
 						c.createdate,
 						c.updatedate,
-						cd.customer_addr_no
+						cd.customer_addr_no,
+						cd.address
 					FROM customer c
 					INNER JOIN customer_addr cd
 					ON c.customer_no = cd.customer_no

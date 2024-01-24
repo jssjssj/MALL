@@ -63,7 +63,8 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="http://localhost/mall/public/loginForm.jsp">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="<%= request.getContextPath() %>/manager/dashboard.jsp">Home</a></li>                
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="<%= request.getContextPath() %>/public/home.jsp">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/order/managerOrderView.jsp">주문현황</a></li> 
                 <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/goods/list.jsp">상품 관리</a></li>
                 <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/question/list.jsp">문의내용 확인</a></li>        
                 <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/notice/list.jsp">공지 확인</a></li>

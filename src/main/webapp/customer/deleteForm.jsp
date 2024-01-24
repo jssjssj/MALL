@@ -2,6 +2,13 @@
 <%@ page import="vo.*, dao.*, java.util.* "%>
 <%request.setCharacterEncoding("UTF-8"); %>
 <%
+
+	if(session.getAttribute("loginCustomer")==null){
+		response.sendRedirect(request.getContextPath() + "/public/loginForm.jsp") ;
+		return;
+	}
+
+
  	Customer loginCustomer = (Customer)session.getAttribute("loginCustomer");
 %>
 <!DOCTYPE html>

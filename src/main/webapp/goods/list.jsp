@@ -13,6 +13,7 @@
 	if(request.getParameter("currentPage") != null){
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	}
+	
 	int rowPerPage = 12;
 	int beginRow = (currentPage - 1) * rowPerPage;
 	int totalRow = goodsDao.countOfGoods();
@@ -96,13 +97,12 @@
 				<nav aria-label="Page navigation example">
 				  <ul class="pagination">
 				  <% if(rowPerPage < totalRow) { %>
-				  	<% if(currentPage != 1) { %>
-					<a class="btn btn-success" href="<%= request.getContextPath() %>/goods/list.jsp?currentPage=1">맨앞</a>
+				  	<% if(currentPage > 1) { %>
 					<a class="btn btn-success" href="<%= request.getContextPath() %>/goods/list.jsp?currentPage=<%=currentPage-1%>">이전</a>
 					<% } %>
-					<% if(currentPage != lastPage) { %>
+					<a class="btn btn-success"><%=currentPage%></a>
+					<% if(currentPage < lastPage) { %>
 					<a class="btn btn-success" href="<%= request.getContextPath() %>/goods/list.jsp?currentPage=<%=currentPage+1%>">다음</a>
-					<a class="btn btn-success" href="<%= request.getContextPath() %>/goods/list.jsp?currentPage=<%=lastPage%>">맨뒤</a>
 				  	<% } %>
 				  <% } %>
 				  </ul>

@@ -16,19 +16,17 @@
 			<div class="container">
 				<fieldset>
 	
-					<!-- Email input -->
 					<div class="mb-4">
 						<div class="form-outline">
-							<input type="text" name="customerId" id="id" class="form-control" />
+							<input type="text" name="customerId" id="id" class="form-control"  value="test" />
 							<label class="form-label" for="id">아이디</label>
 						</div>
 						<div id="idMsg" class="form-text text-danger"></div>
 					</div>
 	
-					<!-- Password input -->
 					<div class="mb-4">
 						<div class="form-outline">
-							<input type="password" name="customerPw" id="pw" class="form-control" />
+							<input type="password" name="customerPw" id="pw" class="form-control"  value="1234" />
 							<label class="form-label" for="pw">비밀번호</label>
 						</div>
 						<div id="pwMsg" class="form-text text-danger"></div>
@@ -59,7 +57,7 @@
   	   <!-- Id input -->
   	   	<div class="mb-4">
   	   		<div class="form-outline">
-  	   			<input type="text" name="managerId" id="id" class="form-control"/>
+  	   			<input type="text" name="managerId" id="id" class="form-control"  value="test" />
   	   			<label class="form-label" for="id">ID</label>
 			</div>
 			<div id="idMsg" class="form-text text-danger"></div>
@@ -67,7 +65,7 @@
 		<!-- Password input -->
 		<div class="mb-4">
 			<div class="form-outline">
-				<input type="password" name="managerPw" id="pw" class="form-control" />
+				<input type="password" name="managerPw" id="pw" class="form-control"  value="1234"/>
 				<label class="form-label" for="pw">PASSWORD</label>
 			</div>
 			<div id="pwMsg" class="form-text text-danger"></div>

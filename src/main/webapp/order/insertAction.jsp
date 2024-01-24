@@ -15,18 +15,8 @@
 	
 	System.out.println(orders.toString());
 	OrdersDao ordersDao = new OrdersDao();
-	ordersDao.insert(orders);
-
-
-
-
-
-
-
-
-
-
-
-
+	int result = ordersDao.insert(orders);
+	
+	response.sendRedirect(request.getContextPath()+ "/order/orderView.jsp");
 
 %> 

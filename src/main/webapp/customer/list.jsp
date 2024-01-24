@@ -1,7 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="vo.*, dao.*, java.util.* "%>
 <%request.setCharacterEncoding("UTF-8"); %>
-<%
+<%	
+	if(session.getAttribute("loginCustomer")!=null){
+		response.sendRedirect(request.getContextPath() + "/public/home.jsp") ;
+		return;
+	} else if(session.getAttribute("loginManager")==null){
+		response.sendRedirect(request.getContextPath() + "/public/loginForm.jsp") ;
+		return;
+	}
+
+
+
 	CustomerDao customerDao = new CustomerDao();
 	List<Map<String,Object>> list = customerDao.allCustomer();
  	

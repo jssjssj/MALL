@@ -8,6 +8,7 @@ public class Customer {
 	private	String updatedate;
 	private	String active;
 	private int customerAddrNo;
+	private String address;
 	
 	public int getCustomerNo() {
 		return customerNo;
@@ -50,6 +51,12 @@ public class Customer {
 	}
 	public void setCustomerAddrNo(int customerAddrNo) {
 		this.customerAddrNo = customerAddrNo;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	
 	

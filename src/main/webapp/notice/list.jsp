@@ -2,6 +2,7 @@
 <%@ page import="vo.*, dao.*, java.util.* "%>
 <%request.setCharacterEncoding("UTF-8"); %>
 <%
+	
 	Customer loginCustomer = (Customer)session.getAttribute("loginCustomer");
 	Manager loginManager = (Manager)session.getAttribute("loginManager");
 	NoticeDao noticeDao = new NoticeDao();
@@ -49,6 +50,9 @@
 			        <th>작성자 </th>
 			        <th>작성일 </th>
 			        <th>수정일</th>
+		        <% if(loginManager != null) { %>
+		        	<th>수정</th>
+		        <% } %>
 			    </tr>
 			</thead>
 		
@@ -59,7 +63,13 @@
 		            <td><a href="<%= request.getContextPath() %>/notice/noticeOne.jsp?noticeNo=<%= notice.get("noticeNo") %>"><%= notice.get("noticeTitle") %></a></td>  
 		            <td><%= notice.get("managerId") %></td>
 		            <td><%= notice.get("createdate") %></td> 
-		            <td><%= notice.get("createdate").equals(notice.get("updatedate"))  ? "-" : notice.get("updatedate") %></td>               
+		            <td><%= notice.get("createdate").equals(notice.get("updatedate"))  ? "-" : notice.get("updatedate") %></td>
+		        <% if(loginManager != null) { %>
+		        	<td>
+		        		<a class="btn btn-success" href="<%= request.getContextPath() %>/notice/updateForm.jsp?noticeNo=<%= notice.get("noticeNo") %>">수정</a>
+		        		<a class="btn btn-success" href="<%= request.getContextPath() %>/notice/deleteAction.jsp?noticeNo=<%= notice.get("noticeNo") %>">삭제</a>
+		        	</td>
+		        <% } %>              
 		        </tr>
 		    </tbody>
 		    <% } %>
